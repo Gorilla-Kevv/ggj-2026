@@ -39,7 +39,7 @@ src/
 │   ├── sandfall.gd              # Intermittent sandfall hazard
 │   ├── wind_zone.gd             # Constant directional wind zone
 │   ├── spike.gd                 # Instant-kill spike area
-│   └── kill_floor.gd            # Ground/floor death trigger
+│   └── kill_zone.gd             # Bottomless pit/abyss death trigger
 ├── level/
 │   ├── level_manager.gd         # Scene management, checkpoint respawn
 │   └── checkpoint.gd            # Checkpoint activation + save
@@ -560,16 +560,17 @@ git commit -m "feat: add HUD with energy bar and target display"
 ### Task 8: Death zone and respawn system
 
 **Files:**
-- Create: `src/environment/kill_floor.gd`
+- Create: `src/environment/kill_zone.gd`
 - Create: `src/environment/spike.gd`
 - Create: `src/level/checkpoint.gd`
 - Modify: `src/autoload/global.gd`
 
-- [ ] **Step 1: Kill floor script**
+- [ ] **Step 1: Abyss kill zone script**
 
-`src/environment/kill_floor.gd`:
+`src/environment/kill_zone.gd`:
 ```gdscript
 extends Area2D
+## Placed at bottomless pits / abyss boundaries. Touching = instant death.
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -645,8 +646,8 @@ func _respawn() -> void:
 - [ ] **Step 5: Commit**
 
 ```bash
-git add src/environment/kill_floor.gd src/environment/spike.gd src/level/checkpoint.gd src/actors/player.gd
-git commit -m "feat: add death zones, spike hazards, checkpoints, and respawn"
+git add src/environment/kill_zone.gd src/environment/spike.gd src/level/checkpoint.gd src/actors/player.gd
+git commit -m "feat: add death zones (abyss/spikes), checkpoints, and respawn"
 ```
 
 ---
