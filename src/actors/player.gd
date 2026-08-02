@@ -18,7 +18,7 @@ const MAX_SPEED: float = 600.0
 const AIR_FRICTION: float = 0.95
 const GROUND_FRICTION: float = 0.7
 const COLLISION_RADIUS: float = 20.0
-const WIND_FORCE_MULTIPLIER: float = 0.02
+const WIND_FORCE_MULTIPLIER: float = 0.2
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
