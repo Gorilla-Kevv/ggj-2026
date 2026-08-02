@@ -11,12 +11,14 @@ config_version=5
 [application]
 
 config/name="GGJ2026"
+run/main_scene="res://src/scenes/test_level.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 MCPRuntimeProbe="*uid://bsg12huaf1u5i"
+Global="*res://src/autoload/global.gd"
 
 [editor_plugins]
 

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dabbr3phkpidy"]
+
+[ext_resource type="Script" uid="uid://qof7sulbhere" path="res://src/ui/hud.gd" id="1_mr4ol"]
+
+[node name="hud" type="CanvasLayer" unique_id=1694471426]
+script = ExtResource("1_mr4ol")
+
+[node name="EnergyBar" type="ProgressBar" parent="." unique_id=278860218]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 47.0
+
+[node name="TargetLabel" type="Label" parent="." unique_id=1948874300]
+offset_left = 20.0
+offset_top = 46.0
+offset_right = 21.0
+offset_bottom = 69.0

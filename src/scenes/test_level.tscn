@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://djdphk1kp64rg"]
+
+[ext_resource type="Script" uid="uid://b13yfxxf8xtgr" path="res://src/systems/wind_system.gd" id="1_ewkv2"]
+[ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="2_ttxux"]
+[ext_resource type="Script" uid="uid://cj0dhvn07qmgj" path="res://src/ui/wind_line.gd" id="3_xugx2"]
+[ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="4_fexyi"]
+[ext_resource type="Script" uid="uid://qof7sulbhere" path="res://src/ui/hud.gd" id="5_xl6m3"]
+[ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="6_tooya"]
+[ext_resource type="Script" uid="uid://ck2pnn6g1wik0" path="res://src/actors/player.gd" id="7_nqp6k"]
+[ext_resource type="Script" uid="uid://js6ugvwt1txj" path="res://src/interactables/pushable_box.gd" id="8_cojgl"]
+[ext_resource type="Script" uid="uid://cgdjcrtf1sxrs" path="res://src/environment/spike.gd" id="9_waduv"]
+[ext_resource type="Script" uid="uid://c5brne66srlk6" path="res://src/environment/kill_zone.gd" id="10_wxtme"]
+[ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="11_eqw1l"]
+
+[node name="test_level" type="Node2D" unique_id=1588863134]
+
+[node name="WindSystem" type="Node2D" parent="." unique_id=2008395390]
+script = ExtResource("1_ewkv2")
+
+[node name="TargetSelector" type="Node2D" parent="." unique_id=1847600204]
+script = ExtResource("2_ttxux")
+
+[node name="WindLine" type="Node2D" parent="." unique_id=949357405]
+script = ExtResource("3_xugx2")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1694471426 instance=ExtResource("4_fexyi")]
+script = ExtResource("5_xl6m3")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=100373247 instance=ExtResource("6_tooya")]
+position = Vector2(400, 300)
+script = ExtResource("7_nqp6k")
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=83958086]
+position = Vector2(600, 700)
+
+[node name="PushableBox" type="RigidBody2D" parent="." unique_id=976641431]
+position = Vector2(600, 630)
+script = ExtResource("8_cojgl")
+
+[node name="SpikeTrap" type="Area2D" parent="." unique_id=179373147]
+position = Vector2(200, 650)
+script = ExtResource("9_waduv")
+
+[node name="KillZone" type="Area2D" parent="." unique_id=1038574261]
+position = Vector2(1000, 800)
+script = ExtResource("10_wxtme")
+
+[node name="Checkpoint" type="Area2D" parent="." unique_id=606422918]
+position = Vector2(400, 500)
+script = ExtResource("11_eqw1l")
