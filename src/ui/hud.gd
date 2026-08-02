@@ -18,7 +18,7 @@ func _on_energy_changed(new_energy: float) -> void:
 
 func _process(_delta: float) -> void:
 	var global := get_node("/root/Global")
-	var target := global.selected_target
+	var target: Node2D = global.selected_target
 	if target and is_instance_valid(target):
 		var display_name: String = target.get_meta("display_name", target.name)
 		target_label.text = display_name

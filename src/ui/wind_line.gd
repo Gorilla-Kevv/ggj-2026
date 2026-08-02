@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var global := get_node("/root/Global")
-	var target := global.selected_target
+	var target: Node2D = global.selected_target
 	if target == null or not is_instance_valid(target):
 		_hide_all()
 		return
@@ -50,7 +50,7 @@ func _hide_all() -> void:
 
 func _draw() -> void:
 	var global := get_node("/root/Global")
-	var target := global.selected_target
+	var target: Node2D = global.selected_target
 	if target == null or not is_instance_valid(target):
 		return
 	var mouse_pos := get_viewport().get_mouse_position()
