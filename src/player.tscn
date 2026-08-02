@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://bdlom736orpb"]
 
 [ext_resource type="Script" uid="uid://ck2pnn6g1wik0" path="res://src/actors/player.gd" id="1_lowyb"]
+[ext_resource type="Texture2D" uid="uid://ddwvf73jcsrr7" path="res://assets/characters/tumbleweed_approved_spritesheet_12f.png" id="2_gmfve"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehvfd"]
-radius = 21.023796
+radius = 25.019993
 
 [sub_resource type="Animation" id="Animation_bktlc"]
 length = 0.001
@@ -29,7 +30,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [6]
+"values": [13]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -70,7 +71,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [13]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -87,7 +88,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_21lrq"]
 resource_name = "rolling"
-length = 0.6
+length = 0.43333334
 loop_mode = 1
 step = 0.0333
 tracks/0/type = "value"
@@ -112,7 +113,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [6]
+"values": [13]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -121,10 +122,10 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.10000001, 0.20000002, 0.3, 0.40000004, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.0333, 0.0666, 0.09990001, 0.1332, 0.1665, 0.19980001, 0.23310001, 0.2664, 0.29970002, 0.333, 0.36630002, 0.39960003),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rq7o7"]
@@ -137,28 +138,18 @@ _data = {
 [node name="Player" type="CharacterBody2D" unique_id=100373247]
 script = ExtResource("1_lowyb")
 
+[node name="WindAnchor" type="Marker2D" parent="." unique_id=1712369073]
+position = Vector2(0, -27)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1619334777]
-position = Vector2(1, -25)
+position = Vector2(0, -27)
 shape = SubResource("CircleShape2D_ehvfd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1348321025]
-position = Vector2(0, -25)
-region_enabled = true
-region_rect = Rect2(0, 0, 64, 64)
+position = Vector2(0, -27)
+texture = ExtResource("2_gmfve")
+hframes = 13
+region_rect = Rect2(128, 0, 384, 64)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1385665740]
 libraries/ = SubResource("AnimationLibrary_rq7o7")
-
-[node name="BreatheParticles" type="CPUParticles2D" parent="." unique_id=605665378]
-emitting = false
-amount = 6
-lifetime = 1.5
-explosiveness = 1.0
-direction = Vector2(0, -1)
-spread = 90.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 10.0
-initial_velocity_max = 25.0
-scale_amount_min = 0.5
-scale_amount_max = 1.5
-color = Color(0.55, 0.65, 0.45, 0.5)

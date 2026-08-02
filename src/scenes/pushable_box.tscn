@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ca0ak74bdf06l"]
+
+[ext_resource type="Script" uid="uid://js6ugvwt1txj" path="res://src/interactables/pushable_box.gd" id="1_x67a3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kbjhy"]
+size = Vector2(78, 74)
+
+[node name="PushableBox" type="RigidBody2D" unique_id=1646842403]
+script = ExtResource("1_x67a3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=696968148]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_kbjhy")

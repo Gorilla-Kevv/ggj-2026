@@ -21,7 +21,7 @@ var current_anim: AnimState = AnimState.IDLE
 # GROUND_FRICTION:        地面摩擦系数 (接地时水平速度 *= 0.7)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数 (调大 = 风更"猛")
-const GRAVITY_SCALE: float = 0.1
+const GRAVITY_SCALE: float = 0.3
 const MAX_SPEED: float = 600.0
 const AIR_FRICTION: float = 0.95
 const GROUND_FRICTION: float = 0.7
@@ -30,9 +30,7 @@ const WIND_FORCE_MULTIPLIER: float = 0.2
 
 # ---------- 子节点引用 ----------
 # anim_player:       主动画控制器 (idle / rolling)
-# breathe_particles: 辅助粒子 (idle 时呼吸效果)
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var breathe_particles: CPUParticles2D = $BreatheParticles
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
@@ -40,13 +38,6 @@ signal player_died()
 func _ready() -> void:
 	# 注册到 "player" 组，供 TargetSelector / 敌人 / 检查点查找
 	add_to_group("player")
-	# 动态创建圆形碰撞体
-	var shape := CircleShape2D.new()
-	shape.radius = COLLISION_RADIUS
-	$CollisionShape2D.shape = shape
-	# 初始状态
-	if breathe_particles:
-		breathe_particles.emitting = false
 	_connect_wind_system()
 
 # 连接到场景中的 WindSystem 节点 (通过 "wind_system" 组查找)
@@ -99,8 +90,6 @@ func _enter_idle() -> void:
 	current_anim = AnimState.IDLE
 	if anim_player and anim_player.has_animation("idle"):
 		anim_player.play("idle")
-	if breathe_particles:
-		breathe_particles.emitting = true
 
 # 进入 rolling 状态：播放 AnimationPlayer 的 "rolling" + 停止呼吸粒子
 func _enter_rolling() -> void:
@@ -109,8 +98,6 @@ func _enter_rolling() -> void:
 	current_anim = AnimState.ROLLING
 	if anim_player and anim_player.has_animation("rolling"):
 		anim_player.play("rolling")
-	if breathe_particles:
-		breathe_particles.emitting = false
 
 # ---------- 物理 ----------
 
