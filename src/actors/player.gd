@@ -3,6 +3,10 @@
 # CharacterBody2D，全程悬浮漂行，可着陆于地面
 # 通过 WindSystem 信号接收风力推动
 # 死亡条件：尖刺 / 敌人触碰 / 深渊
+#
+# 动画驱动：
+#   AnimationPlayer  — 主动画 (idle / rolling 精灵帧)
+#   BreatheParticles — 辅助粒子 (仅 idle 时发射呼吸粒子)
 # ============================================================
 extends CharacterBody2D
 
@@ -24,19 +28,11 @@ const GROUND_FRICTION: float = 0.7
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.2
 
-# ---------- 动画参数 ----------
-# ROLLING_SPIN_SPEED:  空中旋转速度 (弧度/秒，风滚草翻滚)
-# IDLE_BREATHE_SCALE:  地面呼吸缩放幅度
-# IDLE_BREATHE_SPEED:  地面呼吸频率 (周期/秒)
-const ROLLING_SPIN_SPEED: float = 8.0
-const IDLE_BREATHE_SCALE: float = 0.05
-const IDLE_BREATHE_SPEED: float = 2.0
-
 # ---------- 子节点引用 ----------
-# sprite:         主角精灵 (占位用 Sprite2D，后续替换为 AnimatedSprite2D)
-# breathe_particles: 地面呼吸粒子 (CPUParticles2D)
-var sprite: Node2D = null
-var breathe_particles: CPUParticles2D = null
+# anim_player:       主动画控制器 (idle / rolling)
+# breathe_particles: 辅助粒子 (idle 时呼吸效果)
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var breathe_particles: CPUParticles2D = $BreatheParticles
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
@@ -48,16 +44,10 @@ func _ready() -> void:
 	var shape := CircleShape2D.new()
 	shape.radius = COLLISION_RADIUS
 	$CollisionShape2D.shape = shape
-	# 获取子节点引用
-	_setup_nodes()
-	_connect_wind_system()
-
-# 获取并初始化所有子节点引用
-func _setup_nodes() -> void:
-	sprite = $Sprite2D
-	breathe_particles = $BreatheParticles
+	# 初始状态
 	if breathe_particles:
 		breathe_particles.emitting = false
+	_connect_wind_system()
 
 # 连接到场景中的 WindSystem 节点 (通过 "wind_system" 组查找)
 func _connect_wind_system() -> void:
@@ -75,19 +65,26 @@ func _on_wind_started(_target: Node2D, _direction: Vector2) -> void:
 		_enter_rolling()
 
 # 持续吹风回调：按住左键期间每帧触发
+# target:    风作用的目标 (仅当 target == self 时才对自己生效)
+# direction: 风向单位向量 (鼠标→目标)
+# strength:  风力强度 [0.0, 1.0] (随按住时间递增)
 func _on_wind_updated(target: Node2D, direction: Vector2, strength: float) -> void:
 	if target == self:
 		var force := direction * 800.0 * strength * WIND_FORCE_MULTIPLIER
 		apply_wind_force(force)
-		# 风力强度影响旋转速度
-		_update_rolling_speed(strength)
+		# 风力强度影响 rolling 动画播放速度
+		if anim_player and anim_player.current_animation == "rolling":
+			anim_player.speed_scale = maxf(strength, 0.3)
 
 func _on_wind_stopped() -> void:
-	# 风停后如果落地则回到 idle
+	# 风停 → 恢复动画默认速度
+	if anim_player:
+		anim_player.speed_scale = 1.0
+	# 落地则回到 idle
 	if is_on_floor():
 		_enter_idle()
 
-# 短点微风回调
+# 短点微风回调：松开左键时按住时间 < 阈值触发
 func _on_micro_burst(target: Node2D, direction: Vector2) -> void:
 	if target == self:
 		var force := direction * 200.0 * WIND_FORCE_MULTIPLIER
@@ -95,60 +92,36 @@ func _on_micro_burst(target: Node2D, direction: Vector2) -> void:
 
 # ---------- 动画状态切换 ----------
 
-# 进入 idle 状态：地面呼吸
+# 进入 idle 状态：播放 AnimationPlayer 的 "idle" + 启动呼吸粒子
 func _enter_idle() -> void:
 	if current_anim == AnimState.IDLE:
 		return
 	current_anim = AnimState.IDLE
+	if anim_player and anim_player.has_animation("idle"):
+		anim_player.play("idle")
 	if breathe_particles:
 		breathe_particles.emitting = true
 
-# 进入 rolling 状态：空中翻滚
+# 进入 rolling 状态：播放 AnimationPlayer 的 "rolling" + 停止呼吸粒子
 func _enter_rolling() -> void:
 	if current_anim == AnimState.ROLLING:
 		return
 	current_anim = AnimState.ROLLING
+	if anim_player and anim_player.has_animation("rolling"):
+		anim_player.play("rolling")
 	if breathe_particles:
 		breathe_particles.emitting = false
-
-# 根据风力强度调整翻滚速度
-func _update_rolling_speed(strength: float) -> void:
-	if sprite == null:
-		return
-	var spin := ROLLING_SPIN_SPEED * maxf(strength, 0.2)
-	sprite.rotation += spin * get_process_delta_time()
-
-# ---------- 每帧视觉更新 ----------
-
-func _process(_delta: float) -> void:
-	match current_anim:
-		AnimState.IDLE:
-			_update_idle_visual(_delta)
-		AnimState.ROLLING:
-			_update_rolling_visual(_delta)
-
-# idle 呼吸动画：缩放微微脉动，模拟呼吸感
-func _update_idle_visual(delta: float) -> void:
-	if sprite == null:
-		return
-	var breathe := sin(Time.get_ticks_msec() * 0.001 * PI * IDLE_BREATHE_SPEED)
-	sprite.scale = Vector2.ONE * (1.0 + breathe * IDLE_BREATHE_SCALE)
-
-# rolling 动画：持续旋转 (基础旋转 + 风强驱动在 _update_rolling_speed 中)
-func _update_rolling_visual(delta: float) -> void:
-	if sprite == null:
-		return
-	# 空中基础慢转，风力驱动的高速旋转在 wind_updated 回调中处理
-	sprite.rotation += ROLLING_SPIN_SPEED * 0.3 * delta
 
 # ---------- 物理 ----------
 
 # 每物理帧：施加重力、摩擦、限速、碰撞检测
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
+		# 空中：轻重力 + 空气阻力缓慢减速
 		velocity.y += ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE * delta
 		velocity *= AIR_FRICTION
 	else:
+		# 地面：仅水平方向受地面摩擦 (可着陆不死亡)
 		velocity.x *= GROUND_FRICTION
 	velocity = velocity.limit_length(MAX_SPEED)
 	move_and_slide()
@@ -166,10 +139,12 @@ func apply_wind_force(force: Vector2) -> void:
 
 # ---------- 死亡与重生 ----------
 
+# 死亡入口：由 kill_zone / spike / 敌人 调用
 func die() -> void:
 	player_died.emit()
 	call_deferred("_respawn")
 
+# 重生逻辑：重载检查点所在关卡，传送到检查点位置，能量回满
 func _respawn() -> void:
 	var global := get_node("/root/Global")
 	if global.last_checkpoint_level != "":
