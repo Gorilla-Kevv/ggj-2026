@@ -1,8 +1,15 @@
+# ============================================================
+# KillZone — 深渊/无底边界 (即死区域)
+# 放置在关卡底部或不可到达的区域边缘
+# 任何进入此区域的 "player" 组节点立即死亡
+# 对应策划案中的"落入深渊"死亡条件
+# ============================================================
 extends Area2D
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 
+# 碰撞回调：检测到玩家进入 → 调用 die()
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.die()
