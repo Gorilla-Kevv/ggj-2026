@@ -3,6 +3,11 @@
 # 挂载于每个关卡场景的 Node2D 节点
 # 在鼠标与选中目标之间绘制半透明虚线 + 流动粒子
 # 线宽随风力强度变化，给玩家直观的操作反馈
+#
+# 连接点规则：
+#   1. 优先取目标的 "WindAnchor" 子节点位置 (Marker2D)
+#   2. 没有 WindAnchor → 使用目标的 global_position (原点)
+#   设计师可在任何可交互物体下放置 Marker2D 改名为 "WindAnchor" 来自定义连接点
 # ============================================================
 extends Node2D
 
@@ -36,16 +41,26 @@ func _process(_delta: float) -> void:
 		_hide_all()
 		return
 
-	# 更新粒子位置 + 触发 _draw() 重绘虚线
+	# 解析连接点：优先 WindAnchor → 回退 global_position
+	var anchor_pos := _get_target_anchor_pos(target)
 	var mouse_pos := get_viewport().get_mouse_position()
-	_update_particles(mouse_pos, target.global_position)
+	_update_particles(mouse_pos, anchor_pos)
 	queue_redraw()
+
+# 获取目标上的连线连接点
+# 优先查找子节点中名为 "WindAnchor" 的 Marker2D
+# 没有则返回目标原点
+func _get_target_anchor_pos(target: Node2D) -> Vector2:
+	var anchor := target.get_node_or_null("WindAnchor") as Marker2D
+	if anchor:
+		return anchor.global_position
+	return target.global_position
 
 # 供 WindSystem 调用：更新当前风力强度
 func set_strength(s: float) -> void:
 	current_strength = s
 
-# 更新流动粒子位置：沿鼠标→目标方向均匀分布
+# 更新流动粒子位置：沿鼠标→连接点方向均匀分布
 func _update_particles(mouse_pos: Vector2, target_pos: Vector2) -> void:
 	var diff := target_pos - mouse_pos
 	var dist := diff.length()
@@ -71,6 +86,7 @@ func _draw() -> void:
 	var target: Node2D = global.selected_target
 	if target == null or not is_instance_valid(target):
 		return
+	var anchor_pos := _get_target_anchor_pos(target)
 	var mouse_pos := get_viewport().get_mouse_position()
 	var width := line_width * (1.0 + current_strength * 3.0)
-	draw_dashed_line(mouse_pos, target.global_position, line_color, width, 8.0, true)
+	draw_dashed_line(mouse_pos, anchor_pos, line_color, width, 8.0, true)
