@@ -28,12 +28,22 @@ const GROUND_FRICTION: float = 0.7
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.2
 
+# CO碰撞回弹参数 (可在编辑器中调整) ----------
+# BOUNCE_FACTOR:           回弹系数 (0=不弹, 1=完全弹性，风滚草推荐 0.3~0.5)
+# BOUNCE_MIN_SPEED:        触发回弹的最小速度 (px/s)，低于此值不弹
+# BOUNCE_WALL_ONLY:        仅墙壁反弹 (true=地面不弹, false=所有碰撞都弹)
+const BOUNCE_FACTOR: float = 0.35
+const BOUNCE_MIN_SPEED: float = 50.0
+const BOUNCE_WALL_ONLY: bool = true
+
 # ---------- 子节点引用 ----------
 # anim_player:       主动画控制器 (idle / rolling)
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
+# 碰撞回弹信号 (碰撞点, 碰撞前速度, 反弹后速度)
+signal player_bounced(collision_point: Vector2)
 
 func _ready() -> void:
 	# 注册到 "player" 组，供 TargetSelector / 敌人 / 检查点查找
@@ -123,7 +133,7 @@ func _process(_delta: float) -> void:
 
 # ---------- 物理 ----------
 
-# 每物理帧：施加重力、摩擦、限速、碰撞检测
+# 每物理帧：施加重力、摩擦、限速、碰撞检测 + 墙壁回弹
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		# 空中：轻重力 + 空气阻力缓慢减速
@@ -134,12 +144,37 @@ func _physics_process(delta: float) -> void:
 		velocity.x *= GROUND_FRICTION
 	velocity = velocity.limit_length(MAX_SPEED)
 	move_and_slide()
+	_handle_bounce()
 
 	# 落地且未被吹 → 回到 idle
 	if is_on_floor() and current_anim == AnimState.ROLLING:
 		var wind_system := get_tree().get_first_node_in_group("wind_system")
 		if wind_system == null or not wind_system.is_blowing:
 			_enter_idle()
+
+# 碰撞回弹：检测 move_and_slide 后的碰撞，速度足够时沿法线反弹
+func _handle_bounce() -> void:
+	var collision_count := get_slide_collision_count()
+	if collision_count == 0:
+		return
+
+	for i in range(collision_count):
+		var collision := get_slide_collision(i)
+		var normal := collision.get_normal()
+
+		# 仅墙壁反弹模式下跳过地面/天花板碰撞
+		if BOUNCE_WALL_ONLY and abs(normal.x) < 0.5:
+			continue
+
+		var speed := velocity.length()
+		if speed < BOUNCE_MIN_SPEED:
+			continue
+
+		# 沿法线反射速度 + 弹性系数
+		var reflected := velocity.bounce(normal) * BOUNCE_FACTOR
+		velocity = reflected
+		player_bounced.emit(collision.get_position())
+		break
 
 # 施加风力冲量 (由 WindSystem 和 环境风带 调用)
 func apply_wind_force(force: Vector2) -> void:
