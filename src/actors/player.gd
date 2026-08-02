@@ -51,8 +51,13 @@ func _connect_wind_system() -> void:
 
 # ---------- 风力回调 ----------
 
+# 当前风力强度缓存 (吹风时更新，风停后保留最后一次值供衰减参考)
+var _last_wind_strength: float = 0.0
+var _is_being_blown: bool = false
+
 func _on_wind_started(_target: Node2D, _direction: Vector2) -> void:
 	if _target == self:
+		_is_being_blown = true
 		_enter_rolling()
 
 # 持续吹风回调：按住左键期间每帧触发
@@ -63,14 +68,11 @@ func _on_wind_updated(target: Node2D, direction: Vector2, strength: float) -> vo
 	if target == self:
 		var force := direction * 800.0 * strength * WIND_FORCE_MULTIPLIER
 		apply_wind_force(force)
-		# 风力强度影响 rolling 动画播放速度
-		if anim_player and anim_player.current_animation == "rolling":
-			anim_player.speed_scale = maxf(strength, 0.3)
+		_last_wind_strength = strength
 
 func _on_wind_stopped() -> void:
-	# 风停 → 恢复动画默认速度
-	if anim_player:
-		anim_player.speed_scale = 1.0
+	# 风停后不再标记为吹风状态，动画速度交由 _process 根据 velocity 衰减
+	_is_being_blown = false
 	# 落地则回到 idle
 	if is_on_floor():
 		_enter_idle()
@@ -80,24 +82,44 @@ func _on_micro_burst(target: Node2D, direction: Vector2) -> void:
 	if target == self:
 		var force := direction * 200.0 * WIND_FORCE_MULTIPLIER
 		apply_wind_force(force)
+		_is_being_blown = false
 
 # ---------- 动画状态切换 ----------
 
-# 进入 idle 状态：播放 AnimationPlayer 的 "idle" + 启动呼吸粒子
+# 进入 idle 状态：播放 AnimationPlayer 的 "idle"
 func _enter_idle() -> void:
 	if current_anim == AnimState.IDLE:
 		return
 	current_anim = AnimState.IDLE
 	if anim_player and anim_player.has_animation("idle"):
+		anim_player.speed_scale = 1.0
 		anim_player.play("idle")
 
-# 进入 rolling 状态：播放 AnimationPlayer 的 "rolling" + 停止呼吸粒子
+# 进入 rolling 状态：播放 AnimationPlayer 的 "rolling"
 func _enter_rolling() -> void:
 	if current_anim == AnimState.ROLLING:
 		return
 	current_anim = AnimState.ROLLING
 	if anim_player and anim_player.has_animation("rolling"):
 		anim_player.play("rolling")
+
+# ---------- 每帧视觉更新 ----------
+
+# 根据当前速度实时调整 rolling 动画播放速度
+# 吹风时：跟随风力强度 → 风停后：跟随 velocity 自然衰减 (受 AIR_FRICTION+重力影响)
+func _process(_delta: float) -> void:
+	if current_anim != AnimState.ROLLING or anim_player == null:
+		return
+
+	var speed_factor: float
+	if _is_being_blown:
+		# 吹风中：风力强度直接映射
+		speed_factor = maxf(_last_wind_strength, 0.3)
+	else:
+		# 风停衰减：速度占比映射，随 friction 和重力自然降低
+		speed_factor = clampf(velocity.length() / MAX_SPEED, 0.15, 1.0)
+
+	anim_player.speed_scale = speed_factor
 
 # ---------- 物理 ----------
 
