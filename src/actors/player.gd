@@ -27,7 +27,7 @@ var current_anim: AnimState = AnimState.IDLE
 # MIN_BOUNCE_VELOCITY:    低于此竖直速度停止弹跳 (px/s)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数
-const GRAVITY_SCALE: float = 1.0
+const GRAVITY_SCALE: float = 0.6
 const MAX_SPEED: float = 600.0
 const AIR_DRAG_VERTICAL: float = 0.992
 const GROUND_FRICTION: float = 0.92
@@ -35,7 +35,7 @@ const GROUND_BOUNCE: float = 0.35
 const WALL_BOUNCE: float = 0.4
 const MIN_BOUNCE_VELOCITY: float = 30.0
 const COLLISION_RADIUS: float = 20.0
-const WIND_FORCE_MULTIPLIER: float = 0.3
+const WIND_FORCE_MULTIPLIER: float = 0.5
 
 # ---------- 子节点引用 ----------
 # anim_player:       主动画控制器 (idle / rolling)
@@ -140,10 +140,10 @@ var _was_on_floor: bool = false
 
 # 每物理帧：上抛/平抛运动 + 落地弹跳滚动
 func _physics_process(delta: float) -> void:
-	var gravity := ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE
+	var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE
 
 	if not is_on_floor():
-		# === 空中：抛物线运动 ===
+		# === 空中：抛物线运动 ===u
 		# 竖直：重力加速 + 轻微空气阻力 (终端速度感)
 		velocity.y += gravity * delta
 		velocity.y *= AIR_DRAG_VERTICAL
