@@ -35,11 +35,11 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var global := get_node("/root/Global")
-	var target: Node2D = global.selected_target
 	# 无目标或目标已销毁 → 隐藏所有元素
-	if target == null or not is_instance_valid(target):
+	if global.selected_target == null or not is_instance_valid(global.selected_target):
 		_hide_all()
 		return
+	var target: Node2D = global.selected_target
 
 	# 解析连接点：优先 WindAnchor → 回退 global_position
 	var anchor_pos := _get_target_anchor_pos(target)
@@ -83,9 +83,9 @@ func _hide_all() -> void:
 # 线宽 = 基础线宽 * (1 + 力度 * 3)，吹得越猛线越粗
 func _draw() -> void:
 	var global := get_node("/root/Global")
-	var target: Node2D = global.selected_target
-	if target == null or not is_instance_valid(target):
+	if global.selected_target == null or not is_instance_valid(global.selected_target):
 		return
+	var target: Node2D = global.selected_target
 	var anchor_pos := _get_target_anchor_pos(target)
 	var mouse_pos := get_viewport().get_mouse_position()
 	var width := line_width * (1.0 + current_strength * 3.0)
