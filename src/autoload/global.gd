@@ -13,7 +13,7 @@ extends Node
 var energy: float = 100.0
 const ENERGY_MAX: float = 100.0
 const ENERGY_DRAIN: float = 20.0
-const ENERGY_REGEN: float = 15.0
+const ENERGY_REGEN: float = 8.0
 
 # ---------- 目标选择状态 ----------
 # selected_target: 当前 R 键选中的操作目标 (主角或可交互物体)
