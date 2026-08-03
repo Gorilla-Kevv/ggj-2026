@@ -38,12 +38,14 @@ func _process(_delta: float) -> void:
 	# 仅鼠标按住时显示风向线
 	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		_hide_all()
+		queue_redraw()
 		return
 
 	var global := get_node("/root/Global")
 	# 无目标或目标已销毁 → 隐藏所有元素
 	if global.selected_target == null or not is_instance_valid(global.selected_target):
 		_hide_all()
+		queue_redraw()
 		return
 	var target: Node2D = global.selected_target
 
@@ -88,6 +90,8 @@ func _hide_all() -> void:
 # 绘制半透明虚线 (Godot 内置 draw_dashed_line)
 # 线宽 = 基础线宽 * (1 + 力度 * 3)，吹得越猛线越粗
 func _draw() -> void:
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		return
 	var global := get_node("/root/Global")
 	if global.selected_target == null or not is_instance_valid(global.selected_target):
 		return
