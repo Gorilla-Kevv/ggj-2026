@@ -12,9 +12,9 @@ extends Node2D
 # MICRO_BURST_FORCE:       短点微风力度
 # MICRO_BURST_THRESHOLD:   判定为"短点"的按住时间阈值 (秒)
 const MAX_WIND_FORCE: float = 800.0
-const RAMP_TIME: float = 3.0
-const MICRO_BURST_FORCE: float = 200.0
-const MICRO_BURST_THRESHOLD: float = 0.15
+const RAMP_TIME: float = 6.0
+const MICRO_BURST_FORCE: float = 400.0
+const MICRO_BURST_THRESHOLD: float = 0.5
 
 # ---------- 运行时状态 ----------
 # is_blowing:         当前是否正在吹风

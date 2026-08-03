@@ -12,7 +12,7 @@ extends Node
 # ENERGY_REGEN: 不吹风时每秒回复量 (约7秒从空到满)
 var energy: float = 100.0
 const ENERGY_MAX: float = 100.0
-const ENERGY_DRAIN: float = 10.0
+const ENERGY_DRAIN: float = 4.0
 const ENERGY_REGEN: float = 1.0
 
 # ---------- 目标选择状态 ----------

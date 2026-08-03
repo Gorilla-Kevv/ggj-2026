@@ -36,6 +36,10 @@ switch_target={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_2="player"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
