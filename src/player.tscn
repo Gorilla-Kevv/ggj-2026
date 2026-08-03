@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://ck2pnn6g1wik0" path="res://src/actors/player.gd" id="1_lowyb"]
 [ext_resource type="Texture2D" uid="uid://ddwvf73jcsrr7" path="res://assets/characters/tumbleweed_approved_spritesheet_12f.png" id="2_gmfve"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ehvfd"]
-radius = 25.019993
-
 [sub_resource type="Animation" id="Animation_bktlc"]
 length = 0.001
 tracks/0/type = "value"
@@ -135,15 +132,14 @@ _data = {
 &"rolling": SubResource("Animation_21lrq")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ehvfd"]
+radius = 25.019993
+
 [node name="Player" type="CharacterBody2D" unique_id=100373247]
 script = ExtResource("1_lowyb")
 
 [node name="WindAnchor" type="Marker2D" parent="." unique_id=1712369073]
 position = Vector2(0, -27)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1619334777]
-position = Vector2(0, -27)
-shape = SubResource("CircleShape2D_ehvfd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1348321025]
 position = Vector2(0, -27)
@@ -153,3 +149,7 @@ region_rect = Rect2(128, 0, 384, 64)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1385665740]
 libraries/ = SubResource("AnimationLibrary_rq7o7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1619334777]
+position = Vector2(0, -27)
+shape = SubResource("CircleShape2D_ehvfd")

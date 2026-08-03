@@ -21,7 +21,7 @@ var current_anim: AnimState = AnimState.IDLE
 # GROUND_FRICTION:        地面摩擦系数 (接地时水平速度 *= 0.7)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数 (调大 = 风更"猛")
-const GRAVITY_SCALE: float = 0.3
+const GRAVITY_SCALE: float = 0.4
 const MAX_SPEED: float = 600.0
 const AIR_FRICTION: float = 0.95
 const GROUND_FRICTION: float = 0.7

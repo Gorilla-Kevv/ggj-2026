@@ -21,12 +21,9 @@ func _ready() -> void:
 # 能量变化回调：更新进度条 + 低能量红色警告
 func _on_energy_changed(new_energy: float) -> void:
 	energy_bar.value = new_energy
-	if new_energy <= 0.0:
-		# 能量耗尽 → 能量条变红
+	if new_energy <= 30.0:
+		# 能量<30 → 能量条变红
 		energy_bar.modulate = Color(1.0, 0.3, 0.3, 1.0)
-	else:
-		# 恢复正常颜色
-		energy_bar.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 # 每帧更新目标名称显示
 func _process(_delta: float) -> void:
