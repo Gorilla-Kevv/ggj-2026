@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://c8j2mv2yucp00"]
+
+[ext_resource type="Script" uid="uid://dh7claylxm237" path="res://src/enemies/researcher.gd" id="1_b7bw7"]
+[ext_resource type="Texture2D" uid="uid://d3v8eynat77lb" path="res://icon.svg" id="2_tvn68"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvn68"]
+size = Vector2(115, 114)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ixdu"]
+size = Vector2(115, 110)
+
+[node name="researcher" type="CharacterBody2D" unique_id=511150063]
+script = ExtResource("1_b7bw7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1591041895]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_tvn68")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=443106615]
+
+[node name="ContactArea" type="Area2D" parent="." unique_id=1345983125]
+
+[node name="ContactShape" type="CollisionShape2D" parent="ContactArea" unique_id=36182982]
+position = Vector2(-1, 4)
+shape = SubResource("RectangleShape2D_8ixdu")
+
+[node name="StunTimer" type="Timer" parent="." unique_id=1538205609]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1793631066]
+position = Vector2(-2, 6)
+texture = ExtResource("2_tvn68")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1741051528]
