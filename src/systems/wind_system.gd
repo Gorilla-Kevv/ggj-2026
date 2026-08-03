@@ -41,6 +41,11 @@ func _ready() -> void:
 # 主循环：检测鼠标状态变化 → 发射对应信号
 func _process(delta: float) -> void:
 	var global := get_node("/root/Global")
+
+	# --- 不吹风时自动回复能量 ---
+	if not is_blowing:
+		global.regen_energy(delta)
+
 	var mouse_pressed := Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
 	var just_pressed := mouse_pressed and not mouse_was_pressed
 	var just_released := not mouse_pressed and mouse_was_pressed
