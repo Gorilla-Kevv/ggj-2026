@@ -21,12 +21,12 @@ var current_anim: AnimState = AnimState.IDLE
 # GROUND_FRICTION:        地面摩擦系数 (接地时水平速度 *= 0.7)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数 (调大 = 风更"猛")
-const GRAVITY_SCALE: float = 0.4
+const GRAVITY_SCALE: float = 0.6
 const MAX_SPEED: float = 600.0
 const AIR_FRICTION: float = 0.95
 const GROUND_FRICTION: float = 0.7
 const COLLISION_RADIUS: float = 20.0
-const WIND_FORCE_MULTIPLIER: float = 0.2
+const WIND_FORCE_MULTIPLIER: float = 0.3
 
 # CO碰撞回弹参数 (可在编辑器中调整) ----------
 # BOUNCE_FACTOR:           回弹系数 (0=不弹, 1=完全弹性，风滚草推荐 0.3~0.5)
@@ -38,7 +38,9 @@ const BOUNCE_WALL_ONLY: bool = true
 
 # ---------- 子节点引用 ----------
 # anim_player:       主动画控制器 (idle / rolling)
+# sprite:            主角精灵 (碰撞回弹变形目标)
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Node2D = $Sprite2D
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
@@ -173,8 +175,31 @@ func _handle_bounce() -> void:
 		# 沿法线反射速度 + 弹性系数
 		var reflected := velocity.bounce(normal) * BOUNCE_FACTOR
 		velocity = reflected
+		_play_bounce_squash(normal)
 		player_bounced.emit(collision.get_position())
 		break
+
+# 碰撞回弹视觉：沿碰撞法线方向压扁精灵，再弹回原形
+func _play_bounce_squash(normal: Vector2) -> void:
+	if sprite == null:
+		return
+	# 将法线转换到精灵局部坐标
+	var local_normal := normal.rotated(-global_rotation)
+	var squash_scale := Vector2(
+		1.0 - abs(local_normal.x) * 0.3,
+		1.0 - abs(local_normal.y) * 0.3
+	)
+	var stretch_scale := Vector2(
+		1.0 + abs(local_normal.y) * 0.2,
+		1.0 + abs(local_normal.x) * 0.2
+	)
+	var target_scale := squash_scale * stretch_scale
+
+	var tween := create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.tween_property(sprite, "scale", target_scale, 0.08)
+	tween.tween_property(sprite, "scale", Vector2.ONE, 0.12)
 
 # 施加风力冲量 (由 WindSystem 和 环境风带 调用)
 func apply_wind_force(force: Vector2) -> void:
