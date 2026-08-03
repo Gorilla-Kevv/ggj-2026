@@ -41,9 +41,11 @@ const WIND_FORCE_MULTIPLIER: float = 0.5
 # anim_player:             主动画控制器 (idle / rolling)
 # sprite:                  主角精灵 (碰撞回弹变形目标)
 # trail_particles:         风迹线粒子 (拖尾跟随运动方向)
+# trail_material:           粒子材质缓存 (避免每帧 cast)
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Node2D = $Sprite2D
-@onready var trail_particles: CPUParticles2D = $windline_particles_player
+@onready var trail_particles: GPUParticles2D = $windline_particles_player
+@onready var trail_material: ParticleProcessMaterial = null
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
@@ -56,6 +58,9 @@ func _ready() -> void:
 	# 设置碰撞层：layer 1 供 Area2D (kill_zone/spike/checkpoint) 检测
 	collision_layer = 1
 	collision_mask = 1
+	# 缓存粒子材质引用
+	if trail_particles and trail_particles.process_material is ParticleProcessMaterial:
+		trail_material = trail_particles.process_material as ParticleProcessMaterial
 	# 重生后定位到检查点
 	_restore_checkpoint()
 	_connect_wind_system()
@@ -163,13 +168,12 @@ func _update_trail() -> void:
 		return
 
 	trail_particles.emitting = true
-	# 粒子喷射方向 = 运动反方向 (拖在身后)
-	trail_particles.direction = -velocity.normalized()
-	# 发射量跟随速度
 	trail_particles.amount = clampi(int(speed / 30.0), 2, 16)
-	# 初始速度跟随运动速度
-	trail_particles.initial_velocity_min = speed * 0.2
-	trail_particles.initial_velocity_max = speed * 0.4
+
+	if trail_material:
+		trail_material.direction = -velocity.normalized()
+		trail_material.initial_velocity_min = speed * 0.2
+		trail_material.initial_velocity_max = speed * 0.4
 
 # ---------- 物理 ----------
 
