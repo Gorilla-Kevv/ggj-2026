@@ -7,6 +7,11 @@
 extends Area2D
 
 func _ready() -> void:
+	# 确保碰撞检测正常工作
+	monitoring = true
+	monitorable = false
+	collision_layer = 0
+	collision_mask = 1
 	body_entered.connect(_on_body_entered)
 
 # 碰撞回调：检测到玩家进入 → 调用 die()
