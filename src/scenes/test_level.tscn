@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cgdjcrtf1sxrs" path="res://src/environment/spike.gd" id="9_waduv"]
 [ext_resource type="Texture2D" uid="uid://ci18f3kcjjxfh" path="res://assets/temp/sprites/world_tileset.png" id="10_d1es4"]
 [ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="10_ewkv2"]
+[ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="10_ttxux"]
 [ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="11_eqw1l"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d1es4"]
@@ -201,7 +202,7 @@ position = Vector2(-39, -266)
 shape = SubResource("WorldBoundaryShape2D_d1es4")
 
 [node name="PushableBox" parent="." unique_id=1646842403 instance=ExtResource("6_kbjhy")]
-position = Vector2(749, 463)
+position = Vector2(740, 541)
 
 [node name="SpikeTrap" type="Area2D" parent="." unique_id=179373147]
 position = Vector2(200, 650)
@@ -215,6 +216,9 @@ script = ExtResource("11_eqw1l")
 visible = false
 tile_map_data = PackedByteArray("AAALABgAAAAAAAAAAAAMABgAAAAAAAAAAAANABgAAAAAAAAAAAAOABgAAAAAAAAAAAAPABgAAAAAAAAAAAAQABgAAAAAAAAAAAARABgAAAAAAAAAAAAsABcAAAAAAAAAAAAtABcAAAAAAAAAAAAuABcAAAAAAAAAAAAvABcAAAAAAAAAAAAwABcAAAAAAAAAAAAxABcAAAAAAAAAAAAyABcAAAAAAAAAAAAzABcAAAAAAAAAAAA0ABcAAAAAAAAAAAA1ABcAAAAAAAAAAAA2ABcAAAAAAAAAAAA3ABcAAAAAAAAAAAA4ABcAAAAAAAAAAAA5ABcAAAAAAAAAAAA6ABcAAAAAAAAAAAA7ABcAAAAAAAAAAAA8ABcAAAAAAAAAAAA9ABcAAAAAAAAAAAA+ABcAAAAAAAAAAAA/ABcAAAAAAAAAAABAABcAAAAAAAAAAABBABcAAAAAAAAAAABCABcAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_ttxux")
+
+[node name="windline_particles bg" parent="." unique_id=381050555 instance=ExtResource("10_ttxux")]
+position = Vector2(2, 6)
 
 [node name="KillZone" parent="." unique_id=112513769 instance=ExtResource("10_ewkv2")]
 position = Vector2(239, 516)

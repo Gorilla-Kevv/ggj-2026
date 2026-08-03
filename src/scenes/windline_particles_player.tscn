@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cahjmbq1f6wqf"]
+
+[sub_resource type="Gradient" id="Gradient_43gk1"]
+offsets = PackedFloat32Array(0, 0.5353805, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.5134542, 0.8434308, 0.32926047, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2ntti"]
+gradient = SubResource("Gradient_43gk1")
+width = 1
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_1n580"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_84c7i"]
+gradient = SubResource("Gradient_1n580")
+
+[sub_resource type="Gradient" id="Gradient_cl3c3"]
+offsets = PackedFloat32Array(0, 0.53001463, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_q38a6"]
+gradient = SubResource("Gradient_cl3c3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bu5ue"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(20, 20, 1)
+gravity = Vector3(0, 98, 0)
+scale_min = 0.5
+color_ramp = SubResource("GradientTexture1D_q38a6")
+color_initial_ramp = SubResource("GradientTexture1D_84c7i")
+
+[node name="windline_particles_player" type="GPUParticles2D" unique_id=1326748121]
+amount = 10
+texture = SubResource("GradientTexture2D_2ntti")
+preprocess = 1.99
+randomness = 0.46
+trail_enabled = true
+trail_lifetime = 0.62
+process_material = SubResource("ParticleProcessMaterial_bu5ue")

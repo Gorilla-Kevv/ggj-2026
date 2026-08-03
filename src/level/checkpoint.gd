@@ -12,7 +12,7 @@ extends Area2D
 # checkpoint_activated: 检查点被激活时触发 (供音效/VFX 监听)
 signal checkpoint_activated(checkpoint: Node2D)
 
-func _ready() -> void:
+func _ready() -> void: 
 	monitoring = true
 	monitorable = false
 	collision_layer = 0

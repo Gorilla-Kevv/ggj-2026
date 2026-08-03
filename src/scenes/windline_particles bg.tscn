@@ -45,7 +45,7 @@ scale_max = 1.8
 color_ramp = SubResource("GradientTexture1D_ukbbq")
 color_initial_ramp = SubResource("GradientTexture1D_3pjab")
 
-[node name="windline_particles" type="GPUParticles2D" unique_id=381050555]
+[node name="windline_particles bg" type="GPUParticles2D" unique_id=381050555]
 amount = 25
 texture = SubResource("GradientTexture2D_lpw38")
 lifetime = 5.0
