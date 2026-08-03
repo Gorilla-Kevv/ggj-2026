@@ -54,7 +54,17 @@ func _ready() -> void:
 	# 设置碰撞层：layer 1 供 Area2D (kill_zone/spike/checkpoint) 检测
 	collision_layer = 1
 	collision_mask = 1
+	# 重生后定位到检查点
+	_restore_checkpoint()
 	_connect_wind_system()
+
+# 从 Global 恢复检查点位置 (死亡重生/场景重载后调用)
+func _restore_checkpoint() -> void:
+	var global := get_node("/root/Global")
+	if global.current_checkpoint != Vector2.ZERO:
+		global_position = global.current_checkpoint
+		global.refill_energy()
+		_enter_idle()
 
 # 连接到场景中的 WindSystem 节点 (通过 "wind_system" 组查找)
 func _connect_wind_system() -> void:
@@ -237,14 +247,10 @@ func die() -> void:
 	player_died.emit()
 	call_deferred("_respawn")
 
-# 重生逻辑：重载检查点所在关卡，传送到检查点位置，能量回满
+# 重生逻辑：切换/重载关卡，新场景的 _ready 中读取检查点位置
 func _respawn() -> void:
 	var global := get_node("/root/Global")
-	if global.last_checkpoint_level != "":
+	if global.last_checkpoint_level != "" and global.last_checkpoint_level != get_tree().current_scene.scene_file_path:
 		get_tree().change_scene_to_file(global.last_checkpoint_level)
 	else:
 		get_tree().reload_current_scene()
-	await get_tree().process_frame
-	global_position = global.current_checkpoint
-	global.refill_energy()
-	_enter_idle()
