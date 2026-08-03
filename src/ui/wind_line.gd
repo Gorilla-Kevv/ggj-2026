@@ -1,7 +1,8 @@
 # ============================================================
 # WindLine — 风向连线可视化
 # 挂载于每个关卡场景的 Node2D 节点
-# 在鼠标与选中目标之间绘制半透明虚线 + 流动粒子
+# 按住鼠标时：在鼠标与选中目标之间绘制半透明虚线 + 流动粒子
+# 松开鼠标时：完全隐藏
 # 线宽随风力强度变化，给玩家直观的操作反馈
 #
 # 连接点规则：
@@ -34,6 +35,11 @@ func _ready() -> void:
 		particles.append(p)
 
 func _process(_delta: float) -> void:
+	# 仅鼠标按住时显示风向线
+	if not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		_hide_all()
+		return
+
 	var global := get_node("/root/Global")
 	# 无目标或目标已销毁 → 隐藏所有元素
 	if global.selected_target == null or not is_instance_valid(global.selected_target):
