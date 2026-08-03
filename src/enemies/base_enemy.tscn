@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://d1f5l0whl12la"]
+
+[ext_resource type="Script" uid="uid://clg5umkowdg3v" path="res://src/enemies/base_enemy.gd" id="1_5i7y0"]
+
+[node name="base_enemy" type="CharacterBody2D" unique_id=1671078927]
+script = ExtResource("1_5i7y0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=445443577]
+
+[node name="ContactArea" type="Area2D" parent="." unique_id=1617957938]
+
+[node name="ContactShape" type="CollisionShape2D" parent="ContactArea" unique_id=1133123369]
+
+[node name="StunTimer" type="Timer" parent="." unique_id=372758437]

@@ -101,9 +101,15 @@ func _handle_death() -> void:
 func _physics_process(delta: float) -> void:
 	if current_state in [State.DEAD, State.STUNNED]:
 		return
-	_update_ai(delta)
+	_detect_player()
+	_execute_ai(delta)
 	move_and_slide()
 
-# AI part
-func _update_ai(_delta: float) -> void:
+# 子类覆盖：侦测玩家 (RayCast2D / Area2D 由子类决定)
+# 在此处理发现/丢失玩家的逻辑
+func _detect_player() -> void:
+	pass
+
+# 子类覆盖：执行AI行为 (移动/攻击/巡逻)
+func _execute_ai(_delta: float) -> void:
 	pass
