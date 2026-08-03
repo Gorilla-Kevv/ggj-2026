@@ -171,7 +171,8 @@ func _update_trail() -> void:
 	trail_particles.amount = clampi(int(speed / 30.0), 2, 16)
 
 	if trail_material:
-		trail_material.direction = -velocity.normalized()
+		var dir_2d := -velocity.normalized()
+		trail_material.direction = Vector3(dir_2d.x, dir_2d.y, 0.0)
 		trail_material.initial_velocity_min = speed * 0.2
 		trail_material.initial_velocity_max = speed * 0.4
 
