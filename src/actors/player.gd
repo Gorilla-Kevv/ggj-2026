@@ -15,26 +15,27 @@ enum AnimState { IDLE, ROLLING }
 var current_anim: AnimState = AnimState.IDLE
 
 # ---------- 物理参数 (可在编辑器中调整) ----------
-# GRAVITY_SCALE:          重力缩放 (0.3 = 30% 正常重力，模拟轻盈飘浮)
+# 空中运动遵循上抛/平抛物理：水平速度惯性保持，仅垂直受重力+轻微空气阻力
+# 落地后弹跳并滚动，受摩擦力和重力逐渐减速直至停止
+#
+# GRAVITY_SCALE:          重力缩放 (1.0=标准重力，抛物线弧)
 # MAX_SPEED:              最大速度限制 (px/s)
-# AIR_FRICTION:           空中摩擦系数 (每帧速度 *= 0.95)
-# GROUND_FRICTION:        地面摩擦系数 (接地时水平速度 *= 0.7)
+# AIR_DRAG_VERTICAL:      空中竖直空气阻力 (每帧 *= 0.992，产生终端速度感)
+# GROUND_FRICTION:        地面滚动摩擦 (每帧水平速度 *= 0.92)
+# GROUND_BOUNCE:          落地竖直反弹系数 (0.35=弹起35%高度)
+# WALL_BOUNCE:            墙壁反弹系数
+# MIN_BOUNCE_VELOCITY:    低于此竖直速度停止弹跳 (px/s)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
-# WIND_FORCE_MULTIPLIER:  风力→速度的转换系数 (调大 = 风更"猛")
-const GRAVITY_SCALE: float = 0.6
+# WIND_FORCE_MULTIPLIER:  风力→速度的转换系数
+const GRAVITY_SCALE: float = 1.0
 const MAX_SPEED: float = 600.0
-const AIR_FRICTION: float = 0.95
-const GROUND_FRICTION: float = 0.7
+const AIR_DRAG_VERTICAL: float = 0.992
+const GROUND_FRICTION: float = 0.92
+const GROUND_BOUNCE: float = 0.35
+const WALL_BOUNCE: float = 0.4
+const MIN_BOUNCE_VELOCITY: float = 30.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.3
-
-# CO碰撞回弹参数 (可在编辑器中调整) ----------
-# BOUNCE_FACTOR:           回弹系数 (0=不弹, 1=完全弹性，风滚草推荐 0.3~0.5)
-# BOUNCE_MIN_SPEED:        触发回弹的最小速度 (px/s)，低于此值不弹
-# BOUNCE_WALL_ONLY:        仅墙壁反弹 (true=地面不弹, false=所有碰撞都弹)
-const BOUNCE_FACTOR: float = 0.35
-const BOUNCE_MIN_SPEED: float = 50.0
-const BOUNCE_WALL_ONLY: bool = true
 
 # ---------- 子节点引用 ----------
 # anim_player:       主动画控制器 (idle / rolling)
@@ -135,27 +136,49 @@ func _process(_delta: float) -> void:
 
 # ---------- 物理 ----------
 
-# 每物理帧：施加重力、摩擦、限速、碰撞检测 + 墙壁回弹
+var _was_on_floor: bool = false
+
+# 每物理帧：上抛/平抛运动 + 落地弹跳滚动
 func _physics_process(delta: float) -> void:
+	var gravity := ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE
+
 	if not is_on_floor():
-		# 空中：轻重力 + 空气阻力缓慢减速
-		velocity.y += ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE * delta
-		velocity *= AIR_FRICTION
+		# === 空中：抛物线运动 ===
+		# 竖直：重力加速 + 轻微空气阻力 (终端速度感)
+		velocity.y += gravity * delta
+		velocity.y *= AIR_DRAG_VERTICAL
+		# 水平：惯性保持 (无摩擦，保留风的冲量)
 	else:
-		# 地面：仅水平方向受地面摩擦 (可着陆不死亡)
+		# === 地面：滚动 + 弹跳 ===
+		if not _was_on_floor:
+			# 刚落地：竖直反弹
+			velocity.y = -abs(velocity.y) * GROUND_BOUNCE
+			_play_bounce_squash(Vector2.UP)
+		elif abs(velocity.y) > MIN_BOUNCE_VELOCITY:
+			# 持续弹跳中：每帧反弹 (模拟多次小弹跳)
+			velocity.y = -abs(velocity.y) * GROUND_BOUNCE
+		else:
+			# 弹跳结束：贴地
+			velocity.y = 0.0
+
+		# 水平：滚动摩擦减速
 		velocity.x *= GROUND_FRICTION
+
 	velocity = velocity.limit_length(MAX_SPEED)
 	move_and_slide()
-	_handle_bounce()
+	_handle_wall_bounce()
 
-	# 落地且未被吹 → 回到 idle
-	if is_on_floor() and current_anim == AnimState.ROLLING:
+	_was_on_floor = is_on_floor()
+
+	# 落地静止 → idle
+	if is_on_floor() and abs(velocity.x) < 10.0 and abs(velocity.y) < MIN_BOUNCE_VELOCITY:
 		var wind_system := get_tree().get_first_node_in_group("wind_system")
 		if wind_system == null or not wind_system.is_blowing:
-			_enter_idle()
+			if current_anim == AnimState.ROLLING:
+				_enter_idle()
 
-# 碰撞回弹：检测 move_and_slide 后的碰撞，速度足够时沿法线反弹
-func _handle_bounce() -> void:
+# 墙壁反弹：仅侧向碰撞 (normal.x 显著)，不影响地面弹跳
+func _handle_wall_bounce() -> void:
 	var collision_count := get_slide_collision_count()
 	if collision_count == 0:
 		return
@@ -164,17 +187,15 @@ func _handle_bounce() -> void:
 		var collision := get_slide_collision(i)
 		var normal := collision.get_normal()
 
-		# 仅墙壁反弹模式下跳过地面/天花板碰撞
-		if BOUNCE_WALL_ONLY and abs(normal.x) < 0.5:
+		# 仅处理墙壁碰撞 (法线接近水平)
+		if abs(normal.x) < 0.7:
 			continue
 
 		var speed := velocity.length()
-		if speed < BOUNCE_MIN_SPEED:
+		if speed < 30.0:
 			continue
 
-		# 沿法线反射速度 + 弹性系数
-		var reflected := velocity.bounce(normal) * BOUNCE_FACTOR
-		velocity = reflected
+		velocity = velocity.bounce(normal) * WALL_BOUNCE
 		_play_bounce_squash(normal)
 		player_bounced.emit(collision.get_position())
 		break
