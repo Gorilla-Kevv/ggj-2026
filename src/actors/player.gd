@@ -38,10 +38,12 @@ const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
 
 # ---------- 子节点引用 ----------
-# anim_player:       主动画控制器 (idle / rolling)
-# sprite:            主角精灵 (碰撞回弹变形目标)
+# anim_player:             主动画控制器 (idle / rolling)
+# sprite:                  主角精灵 (碰撞回弹变形目标)
+# trail_particles:         风迹线粒子 (拖尾跟随运动方向)
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Node2D = $Sprite2D
+@onready var trail_particles: CPUParticles2D = $windline_particles_player
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
@@ -132,8 +134,11 @@ func _enter_rolling() -> void:
 # ---------- 每帧视觉更新 ----------
 
 # 根据当前速度实时调整 rolling 动画播放速度
-# 吹风时：跟随风力强度 → 风停后：跟随 velocity 自然衰减 (受 AIR_FRICTION+重力影响)
+# 吹风时：跟随风力强度 → 风停后：跟随 velocity 自然衰减
+# 同时驱动风迹线粒子跟随运动方向
 func _process(_delta: float) -> void:
+	_update_trail()
+
 	if current_anim != AnimState.ROLLING or anim_player == null:
 		return
 
@@ -146,6 +151,25 @@ func _process(_delta: float) -> void:
 		speed_factor = clampf(velocity.length() / MAX_SPEED, 0.15, 1.0)
 
 	anim_player.speed_scale = speed_factor
+
+# 风迹线粒子：速度超过阈值时发射，方向与运动方向相反 (拖尾效果)
+func _update_trail() -> void:
+	if trail_particles == null:
+		return
+
+	var speed := velocity.length()
+	if speed < 20.0:
+		trail_particles.emitting = false
+		return
+
+	trail_particles.emitting = true
+	# 粒子喷射方向 = 运动反方向 (拖在身后)
+	trail_particles.direction = -velocity.normalized()
+	# 发射量跟随速度
+	trail_particles.amount = clampi(int(speed / 30.0), 2, 16)
+	# 初始速度跟随运动速度
+	trail_particles.initial_velocity_min = speed * 0.2
+	trail_particles.initial_velocity_max = speed * 0.4
 
 # ---------- 物理 ----------
 
