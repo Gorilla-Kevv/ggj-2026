@@ -6,13 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="4_g6pho"]
 
 [node name="playerComplete" type="Node2D" unique_id=1156486736]
-position = Vector2(392, 180)
 
 [node name="WindSystem" type="Node2D" parent="." unique_id=462569848]
 script = ExtResource("1_0vda1")
 
 [node name="WindLine" type="Node2D" parent="." unique_id=2083329148]
 script = ExtResource("2_e43us")
+line_color = Color(0.42352942, 1, 0.63529414, 0.21176471)
 
 [node name="TargetSelector" type="Node2D" parent="." unique_id=1260279241]
 position = Vector2(-0.17261505, 0.2803688)
