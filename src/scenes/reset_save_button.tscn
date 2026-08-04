@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/level/reset_save_button.gd" id="1_rst"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_press"]
+radius = 52.0
+
+[node name="ResetSaveButton" type="Area2D"]
+script = ExtResource("1_rst")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_press")
+
+[node name="NameLabel" type="Label" parent="."]
+position = Vector2(-100, -110)
+size = Vector2(200, 64)
+horizontal_alignment = 1
+vertical_alignment = 1

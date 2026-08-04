@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://5rlg4reaioiq"]
+
+[ext_resource type="Script" uid="uid://b13yfxxf8xtgr" path="res://src/systems/wind_system.gd" id="1_ewkv2"]
+[ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="2_ttxux"]
+[ext_resource type="Script" uid="uid://cj0dhvn07qmgj" path="res://src/ui/wind_line.gd" id="3_xugx2"]
+[ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="4_fexyi"]
+[ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="5_player"]
+[ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
+[ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
+[ext_resource type="PackedScene" path="res://src/scenes/chapter_gate.tscn" id="7_gate"]
+[ext_resource type="PackedScene" path="res://src/scenes/reset_save_button.tscn" id="8_rst"]
+[ext_resource type="PackedScene" path="res://src/scenes/updraft.tscn" id="9_upd"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hubground"]
+
+[node name="HubWorld" type="Node2D" unique_id=90007121]
+
+[node name="WindSystem" type="Node2D" parent="." unique_id=240022375]
+script = ExtResource("1_ewkv2")
+
+[node name="WindLine" type="Node2D" parent="." unique_id=728163279]
+script = ExtResource("3_xugx2")
+
+[node name="TargetSelector" type="Node2D" parent="." unique_id=674330382]
+script = ExtResource("2_ttxux")
+
+[node name="Player" parent="." unique_id=1123126612 instance=ExtResource("5_player")]
+position = Vector2(610, 496)
+
+[node name="HUD" parent="." unique_id=111301308 instance=ExtResource("4_fexyi")]
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=301397805]
+position = Vector2(411, 201)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1864674846]
+position = Vector2(231, 397)
+shape = SubResource("WorldBoundaryShape2D_hubground")
+
+[node name="windline_particles bg" parent="Ground" unique_id=381050555 instance=ExtResource("6_8uww5")]
+position = Vector2(215, 172)
+
+[node name="LevelDoor" parent="." unique_id=1133599150 instance=ExtResource("6_k5b87")]
+position = Vector2(806, 211)
+level_id = "test_level"
+chapter_id = "ch1"
+target_scene = "res://src/scenes/test_level.tscn"
+
+[node name="ChapterGate" parent="." unique_id=983210916 instance=ExtResource("7_gate")]
+position = Vector2(167, 168)
+chapter_id = "ch2"
+requires_chapter = "ch1"
+
+[node name="ResetSaveButton" parent="." unique_id=848599348 instance=ExtResource("8_rst")]
+position = Vector2(350, 478)
+
+[node name="Updraft" parent="." unique_id=258251307 instance=ExtResource("9_upd")]
+position = Vector2(1183, 396)
