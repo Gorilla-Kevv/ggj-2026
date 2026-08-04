@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bmhabfw5lgetm"]
+
+[ext_resource type="Script" uid="uid://b13yfxxf8xtgr" path="res://src/systems/wind_system.gd" id="1_0vda1"]
+[ext_resource type="Script" uid="uid://cj0dhvn07qmgj" path="res://src/ui/wind_line.gd" id="2_e43us"]
+[ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="3_q6t7n"]
+[ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="4_g6pho"]
+
+[node name="playerComplete" type="Node2D" unique_id=1156486736]
+
+[node name="WindSystem" type="Node2D" parent="." unique_id=462569848]
+script = ExtResource("1_0vda1")
+
+[node name="WindLine" type="Node2D" parent="." unique_id=2083329148]
+script = ExtResource("2_e43us")
+
+[node name="TargetSelector" type="Node2D" parent="." unique_id=1260279241]
+script = ExtResource("3_q6t7n")
+
+[node name="Player" parent="." unique_id=100373247 instance=ExtResource("4_g6pho")]
+position = Vector2(578, 323)

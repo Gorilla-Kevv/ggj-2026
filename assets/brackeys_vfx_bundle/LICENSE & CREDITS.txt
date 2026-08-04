@@ -1,0 +1,17 @@
+All assets in the pack have been repackaged and some have been modified by Brackeys.
+
+
+LICENSE for all assets:
+
+Creative Commons Zero (CC0)
+
+
+CREDIT:
+
+PARTICLE TEXTURES by:
+Picster (https://github.com/RPicster/Godot-particle-and-vfx-textures)
+Kenney (https://kenney.nl/assets/particle-pack)
+
+FLIPBOOKS by Thomas Iché (https://unity.com/blog/engine-platform/free-vfx-image-sequences-flipbooks)
+
+PRE-DRAWN SPRITESHEETS by CodeManu (https://codemanu.itch.io/vfx-free-pack)
