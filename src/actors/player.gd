@@ -35,6 +35,7 @@ const GROUND_BOUNCE: float = 0.35
 const WALL_BOUNCE: float = 0.4
 const MIN_BOUNCE_VELOCITY: float = 30.0
 const COLLISION_RADIUS: float = 20.0
+const WIND_FORCE_MULTIPLIER: float = 0.5
 # KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
 const KEY_MOVE_FORCE: float = 200.0
 
