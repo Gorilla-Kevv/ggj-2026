@@ -35,7 +35,7 @@ func _ready() -> void:
 	super._ready()
 	_enter_state(State.PATROL)
 
-# ---------- 侦测玩家: RayCast2D + 距离 ----------
+# ---------- 侦测玩家: RayCast2D + 朝向 + 距离 ----------
 func _detect_player() -> void:
 	if current_state in [State.DEAD, State.STUNNED]:
 		return
@@ -44,26 +44,27 @@ func _detect_player() -> void:
 	if player == null:
 		return
 
-	# 计算到玩家的距离和方向
 	var to_player: Vector2 = player.global_position - global_position
 	var dist: float = to_player.length()
 
-	# 更新 RayCast2D 朝向玩家
-	ray_cast.target_position = to_player.normalized() * minf(dist, detection_range)
+	# 确定当前朝向 (从巡逻方向或精灵翻转)
+	var facing_dir: int = _patrol_direction
 
 	if current_state == State.CHASE:
-		# 追击中：检查是否丢失目标
+		# 追击中：RayCast2D 追踪玩家
+		ray_cast.target_position = to_player.normalized() * minf(dist, detection_range)
 		if dist > detection_range * 1.5 or not _is_player_visible(player):
 			_chase_timer += get_physics_process_delta_time()
 			if _chase_timer > chase_duration:
-				# 丢失太久 → 回到巡逻
 				_enter_state(State.PATROL)
 		else:
 			_chase_timer = 0.0
 			_player_last_seen_dir = 1 if to_player.x > 0 else -1
 	else:
-		# 巡逻中：检测玩家是否进入视野
-		if dist <= detection_range and _is_player_visible(player):
+		# 巡逻中：只在面朝方向检测
+		ray_cast.target_position = Vector2(facing_dir * detection_range, 0)
+		var player_in_front: bool = (to_player.x * facing_dir) > 0   # 玩家在前方
+		if dist <= detection_range and player_in_front and _is_player_visible(player):
 			_enter_state(State.CHASE)
 
 # 射线检测：RayCast2D 是否碰到玩家
@@ -95,21 +96,23 @@ func _patrol(delta: float) -> void:
 		return
 
 	var target_pos: Vector2 = patrol_points[_patrol_index].global_position
-	var to_target := target_pos - global_position
-	var dist := to_target.length()
+	var dist: float = absf(target_pos.x - global_position.x)
 
 	if dist < 4.0:
-		# 到达端点
+		# 到达端点 → 立即翻转 + 停顿
 		_patrol_pause_timer = patrol_pause
 		_patrol_index += _patrol_direction
 		if _patrol_index >= patrol_points.size():
 			_patrol_direction = -1
 			_patrol_index = patrol_points.size() - 2
+			_flip_sprite(_patrol_direction)
 		elif _patrol_index < 0:
 			_patrol_direction = 1
 			_patrol_index = 1
+			_flip_sprite(_patrol_direction)
 	else:
-		velocity = to_target.normalized() * move_speed
+		velocity.x = (target_pos.x - global_position.x) / absf(target_pos.x - global_position.x) * move_speed
+		velocity.y = 0.0
 		_flip_sprite(velocity.x)
 
 # ---------- 追击 ----------
@@ -119,9 +122,27 @@ func _chase(_delta: float) -> void:
 		_enter_state(State.PATROL)
 		return
 
-	var to_player: Vector2 = player.global_position - global_position
-	velocity = to_player.normalized() * chase_speed
-	_flip_sprite(velocity.x)
+	var dir_x: float = 1.0 if player.global_position.x > global_position.x else -1.0
+	velocity.x = dir_x * chase_speed
+	velocity.y = 0.0
+
+	# 钳制：不超出巡逻点 X 范围
+	velocity.x *= _clamp_to_patrol_bounds()
+	_flip_sprite(dir_x)
+
+# 如果超出巡逻边界 → 减速为0，防止踏空
+func _clamp_to_patrol_bounds() -> float:
+	if patrol_points.is_empty():
+		return 1.0
+	var left: float = patrol_points[0].global_position.x
+	var right: float = patrol_points[-1].global_position.x
+	if left > right:
+		var t := left; left = right; right = t
+	if global_position.x <= left and velocity.x < 0:
+		return 0.0
+	if global_position.x >= right and velocity.x > 0:
+		return 0.0
+	return 1.0
 
 # ---------- 翻转精灵 ----------
 func _flip_sprite(dir_x: float) -> void:
@@ -133,6 +154,11 @@ func _on_state_entered(state: BaseEnemy.State) -> void:
 	match state:
 		State.CHASE:
 			_chase_timer = 0.0
+		State.PATROL:
+			# 追丢后掉头向最后看到的玩家方向
+			if _player_last_seen_dir != 0:
+				_flip_sprite(_player_last_seen_dir)
+				_patrol_direction = _player_last_seen_dir
 		State.STUNNED:
 			velocity = Vector2.ZERO
 		State.DEAD:
