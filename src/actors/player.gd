@@ -35,7 +35,8 @@ const GROUND_BOUNCE: float = 0.35
 const WALL_BOUNCE: float = 0.4
 const MIN_BOUNCE_VELOCITY: float = 30.0
 const COLLISION_RADIUS: float = 20.0
-const WIND_FORCE_MULTIPLIER: float = 0.5
+# KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
+const KEY_MOVE_FORCE: float = 200.0
 
 # ---------- 子节点引用 ----------
 # anim_player:             主动画控制器 (idle / rolling)
@@ -182,10 +183,15 @@ var _was_on_floor: bool = false
 
 # 每物理帧：上抛/平抛运动 + 落地弹跳滚动
 func _physics_process(delta: float) -> void:
+	# A/D 键左右移动
+	var input_dir := Input.get_axis("move_left", "move_right")
+	if input_dir != 0.0:
+		velocity.x += input_dir * KEY_MOVE_FORCE * delta
+
 	var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE
 
 	if not is_on_floor():
-		# === 空中：抛物线运动 ===u
+		# === 空中：抛物线运动 ===
 		# 竖直：重力加速 + 轻微空气阻力 (终端速度感)
 		velocity.y += gravity * delta
 		velocity.y *= AIR_DRAG_VERTICAL
