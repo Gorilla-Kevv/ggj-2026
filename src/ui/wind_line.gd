@@ -49,9 +49,9 @@ func _process(_delta: float) -> void:
 		return
 	var target: Node2D = global.selected_target
 
-	# 解析连接点：优先 WindAnchor → 回退 global_position
+	# 统一使用世界坐标 (get_global_mouse_position 随 Camera2D 移动)
 	var anchor_pos := _get_target_anchor_pos(target)
-	var mouse_pos := get_viewport().get_mouse_position()
+	var mouse_pos := get_global_mouse_position()
 	_update_particles(mouse_pos, anchor_pos)
 	queue_redraw()
 
@@ -69,8 +69,11 @@ func set_strength(s: float) -> void:
 	current_strength = s
 
 # 更新流动粒子位置：沿鼠标→连接点方向均匀分布
+# mouse_pos / target_pos 均为世界坐标，粒子位置需转本地
 func _update_particles(mouse_pos: Vector2, target_pos: Vector2) -> void:
-	var diff := target_pos - mouse_pos
+	var local_mouse := to_local(mouse_pos)
+	var local_target := to_local(target_pos)
+	var diff := local_target - local_mouse
 	var dist := diff.length()
 	if dist < 1.0:
 		_hide_all()
@@ -79,7 +82,7 @@ func _update_particles(mouse_pos: Vector2, target_pos: Vector2) -> void:
 	var norm := diff.normalized()
 	for i in range(particle_count):
 		var t := float(i) / float(maxf(particle_count - 1, 1))
-		var pos := mouse_pos + norm * dist * t
+		var pos := local_mouse + norm * dist * t
 		particles[i].position = pos
 		particles[i].visible = true
 
@@ -97,6 +100,7 @@ func _draw() -> void:
 		return
 	var target: Node2D = global.selected_target
 	var anchor_pos := _get_target_anchor_pos(target)
-	var mouse_pos := get_viewport().get_mouse_position()
+	var mouse_pos := get_global_mouse_position()
 	var width := line_width * (1.0 + current_strength * 3.0)
-	draw_dashed_line(mouse_pos, anchor_pos, line_color, width, 8.0, true)
+	# draw_dashed_line 使用节点本地坐标，world → local 转换
+	draw_dashed_line(to_local(mouse_pos), to_local(anchor_pos), line_color, width, 8.0, true)

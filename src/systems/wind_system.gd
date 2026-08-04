@@ -92,7 +92,7 @@ func _stop_wind() -> void:
 # 鼠标是风源，风从鼠标吹向目标
 func _get_wind_direction() -> Vector2:
 	var global := get_node("/root/Global")
-	var mouse_pos := get_viewport().get_mouse_position()
+	var mouse_pos := get_global_mouse_position()
 	if global.selected_target == null:
 		return Vector2.ZERO
 	var target_pos: Vector2 = global.selected_target.global_position
