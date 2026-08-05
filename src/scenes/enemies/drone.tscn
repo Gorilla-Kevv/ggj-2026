@@ -16,3 +16,5 @@ script = ExtResource("1_sn6yw")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=4822673]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1641916902]
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=530644212]

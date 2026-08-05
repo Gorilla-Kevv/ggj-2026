@@ -261,6 +261,7 @@ func _handle_wall_bounce() -> void:
 func _play_bounce_squash(normal: Vector2) -> void:
 	if sprite == null:
 		return
+	var base_scale: Vector2 = Vector2(2, 2)   # 与 player.tscn 中 Sprite2D.scale 保持一致
 	# 将法线转换到精灵局部坐标
 	var local_normal := normal.rotated(-global_rotation)
 	var squash_scale := Vector2(
@@ -271,13 +272,13 @@ func _play_bounce_squash(normal: Vector2) -> void:
 		1.0 + abs(local_normal.y) * 0.2,
 		1.0 + abs(local_normal.x) * 0.2
 	)
-	var target_scale := squash_scale * stretch_scale
+	var target_scale := squash_scale * stretch_scale * base_scale
 
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.tween_property(sprite, "scale", target_scale, 0.08)
-	tween.tween_property(sprite, "scale", Vector2.ONE, 0.12)
+	tween.tween_property(sprite, "scale", base_scale, 0.12)
 
 # 施加风力冲量 (由 WindSystem 和 环境风带 调用)
 func apply_wind_force(force: Vector2) -> void:
