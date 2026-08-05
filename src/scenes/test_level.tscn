@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="10_ewkv2"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="10_ttxux"]
 [ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="11_eqw1l"]
+[ext_resource type="PackedScene" uid="uid://b7qlat2rwnwv" path="res://src/scenes/exit_portal.tscn" id="12_ttxux"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d1es4"]
 
@@ -25,7 +26,7 @@ script = ExtResource("3_xugx2")
 line_color = Color(0.42187557, 0.99999994, 0.63380176, 0.21176471)
 
 [node name="Player" parent="." unique_id=100373247 instance=ExtResource("6_tooya")]
-position = Vector2(578, 323)
+position = Vector2(437, 419)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=75644989]
 
@@ -35,6 +36,7 @@ script = ExtResource("2_ttxux")
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("4_fexyi")]
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=83958086]
+visible = false
 position = Vector2(600, 700)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1934507906]
@@ -61,3 +63,6 @@ position = Vector2(239, 516)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1294017160]
 position = Vector2(-1, 0)
 shape = SubResource("WorldBoundaryShape2D_ttxux")
+
+[node name="ExitPortal" parent="." unique_id=1106327152 instance=ExtResource("12_ttxux")]
+position = Vector2(702, 255)

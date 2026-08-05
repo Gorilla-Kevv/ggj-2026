@@ -70,10 +70,16 @@ func _ready() -> void:
 	_connect_wind_system()
 
 # 从 Global 恢复检查点位置 (死亡重生/场景重载后调用)
+# 优先级：检查点 → 大厅返回点 (仅在大厅场景时生效，用于从关卡返回落在进门处)
 func _restore_checkpoint() -> void:
 	var global := get_node("/root/Global")
 	if global.current_checkpoint != Vector2.ZERO:
 		global_position = global.current_checkpoint
+		global.refill_energy()
+		_enter_idle()
+	elif global.hub_return != Vector2.ZERO and get_tree().current_scene.scene_file_path == global.HUB_SCENE:
+		global_position = global.hub_return
+		global.hub_return = Vector2.ZERO
 		global.refill_energy()
 		_enter_idle()
 

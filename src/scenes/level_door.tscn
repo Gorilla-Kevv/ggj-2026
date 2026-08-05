@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bwq3f1n2kxj4"]
+
+[ext_resource type="Script" path="res://src/level/level_door.gd" id="1_ldsc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_enter"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hint"]
+radius = 160.0
+
+[node name="LevelDoor" type="Node2D"]
+script = ExtResource("1_ldsc")
+
+[node name="EnterArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnterArea"]
+shape = SubResource("CircleShape2D_enter")
+
+[node name="HintArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HintArea"]
+shape = SubResource("CircleShape2D_hint")
+
+[node name="NameLabel" type="Label" parent="."]
+position = Vector2(-200, -150)
+size = Vector2(400, 32)
+horizontal_alignment = 1
+vertical_alignment = 1

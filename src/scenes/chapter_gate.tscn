@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://src/level/chapter_gate.gd" id="1_gate"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrier"]
+size = Vector2(50, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lock"]
+size = Vector2(180, 260)
+
+[node name="ChapterGate" type="Node2D"]
+script = ExtResource("1_gate")
+
+[node name="Barrier" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+shape = SubResource("RectangleShape2D_barrier")
+
+[node name="LockArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LockArea"]
+shape = SubResource("RectangleShape2D_lock")
+
+[node name="NameLabel" type="Label" parent="."]
+position = Vector2(-140, -150)
+size = Vector2(280, 32)
+horizontal_alignment = 1
+vertical_alignment = 1
