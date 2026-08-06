@@ -27,7 +27,7 @@ var current_anim: AnimState = AnimState.IDLE
 # MIN_BOUNCE_VELOCITY:    低于此竖直速度停止弹跳 (px/s)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数
-const GRAVITY_SCALE: float = 0.6
+const GRAVITY_SCALE: float = 0.1
 const MAX_SPEED: float = 600.0
 const AIR_DRAG_VERTICAL: float = 0.992
 const GROUND_FRICTION: float = 0.92
@@ -36,6 +36,10 @@ const WALL_BOUNCE: float = 0.4
 const MIN_BOUNCE_VELOCITY: float = 30.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
+# KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
+const KEY_MOVE_FORCE: float = 200.0
+# WIND_ACCEL:              吹风线性加速系数 (越大越快达到目标速度)
+const WIND_ACCEL: float = 8.0
 
 # ---------- 子节点引用 ----------
 # anim_player:             主动画控制器 (idle / rolling)
@@ -99,15 +103,21 @@ func _on_wind_started(_target: Node2D, _direction: Vector2) -> void:
 		_is_being_blown = true
 		_enter_rolling()
 
-# 持续吹风回调：按住左键期间每帧触发
+# 持续吹风回调：线性提升发射——按住越久速度越快，模拟风滚草被吹起
 # target:    风作用的目标 (仅当 target == self 时才对自己生效)
 # direction: 风向单位向量 (鼠标→目标)
 # strength:  风力强度 [0.0, 1.0] (随按住时间递增)
 func _on_wind_updated(target: Node2D, direction: Vector2, strength: float) -> void:
-	if target == self:
-		var force := direction * 800.0 * strength * WIND_FORCE_MULTIPLIER
-		apply_wind_force(force)
-		_last_wind_strength = strength
+	if target != self:
+		return
+	_last_wind_strength = strength
+
+	# 目标速度：沿风向线性提升
+	var target_velocity := direction * MAX_SPEED * strength
+	# 地面加速慢 (有摩擦感)，空中加速快 (轻盈)
+	var accel := WIND_ACCEL * (0.5 if is_on_floor() else 1.0)
+	# 线性趋近目标速度
+	velocity = velocity.move_toward(target_velocity, accel * MAX_SPEED * strength * get_physics_process_delta_time())
 
 func _on_wind_stopped() -> void:
 	# 风停后不再标记为吹风状态，动画速度交由 _process 根据 velocity 衰减
@@ -116,11 +126,11 @@ func _on_wind_stopped() -> void:
 	if is_on_floor():
 		_enter_idle()
 
-# 短点微风回调：松开左键时按住时间 < 阈值触发
+# 短点微风回调：给一个瞬时速度冲量
 func _on_micro_burst(target: Node2D, direction: Vector2) -> void:
 	if target == self:
-		var force := direction * 200.0 * WIND_FORCE_MULTIPLIER
-		apply_wind_force(force)
+		velocity += direction * 200.0
+		velocity = velocity.limit_length(MAX_SPEED)
 		_is_being_blown = false
 
 # ---------- 动画状态切换 ----------
@@ -188,10 +198,15 @@ var _was_on_floor: bool = false
 
 # 每物理帧：上抛/平抛运动 + 落地弹跳滚动
 func _physics_process(delta: float) -> void:
+	# A/D 键左右移动
+	var input_dir := Input.get_axis("move_left", "move_right")
+	if input_dir != 0.0:
+		velocity.x += input_dir * KEY_MOVE_FORCE * delta
+
 	var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE
 
 	if not is_on_floor():
-		# === 空中：抛物线运动 ===u
+		# === 空中：抛物线运动 ===
 		# 竖直：重力加速 + 轻微空气阻力 (终端速度感)
 		velocity.y += gravity * delta
 		velocity.y *= AIR_DRAG_VERTICAL
@@ -252,6 +267,7 @@ func _handle_wall_bounce() -> void:
 func _play_bounce_squash(normal: Vector2) -> void:
 	if sprite == null:
 		return
+	var base_scale: Vector2 = Vector2(2, 2)   # 与 player.tscn 中 Sprite2D.scale 保持一致
 	# 将法线转换到精灵局部坐标
 	var local_normal := normal.rotated(-global_rotation)
 	var squash_scale := Vector2(
@@ -262,13 +278,13 @@ func _play_bounce_squash(normal: Vector2) -> void:
 		1.0 + abs(local_normal.y) * 0.2,
 		1.0 + abs(local_normal.x) * 0.2
 	)
-	var target_scale := squash_scale * stretch_scale
+	var target_scale := squash_scale * stretch_scale * base_scale
 
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_BACK)
 	tween.tween_property(sprite, "scale", target_scale, 0.08)
-	tween.tween_property(sprite, "scale", Vector2.ONE, 0.12)
+	tween.tween_property(sprite, "scale", base_scale, 0.12)
 
 # 施加风力冲量 (由 WindSystem 和 环境风带 调用)
 func apply_wind_force(force: Vector2) -> void:

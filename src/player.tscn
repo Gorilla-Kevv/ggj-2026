@@ -57,7 +57,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(0, 0, 64, 64)]
+"values": [Rect2(128, 0, 384, 64)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -134,7 +134,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehvfd"]
-radius = 21.023796
+radius = 50.159744
 
 [node name="Player" type="CharacterBody2D" unique_id=100373247]
 script = ExtResource("1_lowyb")
@@ -144,6 +144,7 @@ position = Vector2(0, -27)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1348321025]
 position = Vector2(0, -27)
+scale = Vector2(2, 2)
 texture = ExtResource("2_gmfve")
 hframes = 13
 region_rect = Rect2(128, 0, 384, 64)
@@ -152,8 +153,12 @@ region_rect = Rect2(128, 0, 384, 64)
 libraries/ = SubResource("AnimationLibrary_rq7o7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1619334777]
-position = Vector2(0, -26)
+position = Vector2(0, -25)
 shape = SubResource("CircleShape2D_ehvfd")
 
 [node name="windline_particles_player" parent="." unique_id=1326748121 instance=ExtResource("3_ehvfd")]
 position = Vector2(0, -9)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=668878979]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true

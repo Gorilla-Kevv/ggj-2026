@@ -6,17 +6,23 @@
 # 使用：
 #   1. level_id 留空时自动使用 Global.current_level (由关卡门进入时写入)
 #   2. hub_scene 留空时使用 Global.HUB_SCENE
-#   3. 视觉为 _draw() 占位发光环，可自行替换
+#   3. 两种视觉状态，在 Inspector 中把图片拖入插孔：
+#      - inactive_texture  未通关时显示的图片
+#      - cleared_texture   已通关后显示的图片
+#   触碰出口通关后自动切换到 cleared_texture。
 # ============================================================
 extends Area2D
 
 # ---------- 导出变量 (编辑器配置) ----------
 @export var level_id: String = ""                        # 留空=自动读当前关卡
 @export var hub_scene: String = ""                       # 留空=Global.HUB_SCENE
-@export var portal_color: Color = Color(0.3, 0.9, 0.6)   # 传送门颜色
+@export var inactive_texture: Texture2D = null           # 未通关图片
+@export var cleared_texture: Texture2D = null            # 已通关图片
 
 # level_completed: 玩家触发出口时触发 (通关的关卡ID)，可挂音效/VFX/演出
 signal level_completed(completed_level_id: String)
+
+@onready var portal_sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
 	monitoring = true
@@ -24,8 +30,12 @@ func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 1
 	body_entered.connect(_on_body_entered)
+	# 初始状态：依据存档判断是否已通关
+	var global := get_node("/root/Global")
+	var id: String = level_id if not level_id.is_empty() else global.current_level
+	_set_state(not id.is_empty() and global.is_level_clear(id))
 
-# 玩家触碰 → 标记通关 → 回大厅
+# 玩家触碰 → 标记通关 → 切到已通关状态 → 回大厅
 func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
@@ -33,6 +43,7 @@ func _on_body_entered(body: Node2D) -> void:
 	var id: String = level_id if not level_id.is_empty() else global.current_level
 	if not id.is_empty():
 		global.mark_level_clear(id, global.current_chapter)
+		_set_state(true)
 		level_completed.emit(id)
 	# 关卡已结束，清除检查点，避免残留的关卡内坐标污染大厅出生点 (回大厅应落在门边)
 	global.current_checkpoint = Vector2.ZERO
@@ -41,11 +52,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if not scene.is_empty():
 		get_tree().call_deferred("change_scene_to_file", scene)
 
-# ---------- 占位视觉 (可替换) ----------
-
-func _draw() -> void:
-	# 发光环 (外圈到内圈)
-	for i in range(3):
-		draw_arc(Vector2.ZERO, 40.0 + i * 7.0, 0, TAU, 32, Color(portal_color, 0.35 - i * 0.1), 3.0)
-	# 主环
-	draw_arc(Vector2.ZERO, 40.0, 0, TAU, 32, portal_color, 4.0)
+# 切换状态贴图：cleared=true 显示已通关图，否则显示未通关图
+func _set_state(cleared: bool) -> void:
+	portal_sprite.texture = cleared_texture if cleared else inactive_texture
