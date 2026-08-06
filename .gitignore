@@ -2,3 +2,5 @@
 .godot/
 /android/
 /addons/godot_mcp
+/addons/godot_ai
+godot-ai-LICENSE.txt
