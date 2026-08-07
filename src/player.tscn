@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://ck2pnn6g1wik0" path="res://src/actors/player.gd" id="1_lowyb"]
 [ext_resource type="Texture2D" uid="uid://ddwvf73jcsrr7" path="res://assets/characters/tumbleweed_approved_spritesheet_12f.png" id="2_gmfve"]
-[ext_resource type="Texture2D" uid="uid://db17sxlbi42i0" path="res://assets/characters/tumbleweed_idle_glow_4f.png" id="3_bktlc"]
 [ext_resource type="PackedScene" uid="uid://cahjmbq1f6wqf" path="res://src/scenes/windline_particles_player.tscn" id="3_ehvfd"]
 
 [sub_resource type="Animation" id="Animation_bktlc"]
@@ -138,34 +137,25 @@ _data = {
 radius = 50.159744
 
 [node name="Player" type="CharacterBody2D" unique_id=100373247]
+collision_mask = 2
 script = ExtResource("1_lowyb")
 
 [node name="WindAnchor" type="Marker2D" parent="." unique_id=1712369073]
-position = Vector2(0, -27)
+position = Vector2(0, -48)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1348321025]
-position = Vector2(0, -27)
+position = Vector2(0, -48)
 scale = Vector2(2, 2)
 texture = ExtResource("2_gmfve")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 64)
 
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1381544778]
-visible = false
-texture = ExtResource("3_bktlc")
-region_enabled = true
-region_rect = Rect2(256, 256, 256, 256)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1385665740]
 libraries/ = SubResource("AnimationLibrary_rq7o7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1619334777]
-position = Vector2(0, -25)
+position = Vector2(0, -48)
 shape = SubResource("CircleShape2D_ehvfd")
 
 [node name="windline_particles_player" parent="." unique_id=1326748121 instance=ExtResource("3_ehvfd")]
 position = Vector2(0, -9)
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=668878979]
-zoom = Vector2(0.5, 0.5)
-position_smoothing_enabled = true

@@ -29,7 +29,7 @@ func apply_wind_force(force: Vector2) -> void:
 	apply_central_force(force)
 
 func on_selected() -> void:
-	modulate = Color.GOLD
+	modulate = Color.GREEN_YELLOW
 
 func on_deselected() -> void:
 	modulate = Color.WHITE

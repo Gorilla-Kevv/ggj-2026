@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dmi0ubl4i1ms7"]
+
+[ext_resource type="Texture2D" uid="uid://b2kh3o4rj8emd" path="res://assets/关卡一/场景道具图集.png" id="1_p8xp8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5er4e"]
+atlas = ExtResource("1_p8xp8")
+region = Rect2(1087, 0, 290, 859)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v2rxw"]
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 7
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bx16v"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[node name="Node2D" type="Node2D" unique_id=652839486]
+
+[node name="item1" type="Sprite2D" parent="." unique_id=2081737862]
+texture = SubResource("AtlasTexture_5er4e")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1341563418]
+material = SubResource("CanvasItemMaterial_v2rxw")
+position = Vector2(579, 57)
+process_material = SubResource("ParticleProcessMaterial_bx16v")

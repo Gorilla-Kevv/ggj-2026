@@ -57,9 +57,6 @@ signal player_bounced(collision_point: Vector2)
 func _ready() -> void:
 	# 注册到 "player" 组，供 TargetSelector / 敌人 / 检查点查找
 	add_to_group("player")
-	# 设置碰撞层：layer 1 供 Area2D (kill_zone/spike/checkpoint) 检测
-	collision_layer = 1
-	collision_mask = 1
 	# 缓存粒子材质引用
 	if trail_particles and trail_particles.process_material is ParticleProcessMaterial:
 		trail_material = trail_particles.process_material as ParticleProcessMaterial

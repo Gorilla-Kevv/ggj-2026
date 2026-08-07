@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GGJ2026"
-run/main_scene="uid://7c8u4v76johl"
+run/main_scene="uid://bf8so3h4fiuu1"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -62,7 +62,9 @@ delete={
 [layer_names]
 
 2d_physics/layer_1="player"
-2d_physics/layer_2="player"
+2d_physics/layer_2="wall"
+2d_physics/layer_3="collisionItems"
+2d_physics/layer_4="checkpoint"
 
 [physics]
 

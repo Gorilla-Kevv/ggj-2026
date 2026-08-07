@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="3_hffby"]
 [ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="4_4n1jn"]
 
-[node name="player" type="Node2D" unique_id=1191854658]
+[node name="player_pack" type="Node2D" unique_id=1191854658]
 
 [node name="WindSystem" type="Node2D" parent="." unique_id=1869246313]
 script = ExtResource("1_jpl66")
@@ -19,9 +19,3 @@ position = Vector2(-0.17261505, 0.2803688)
 script = ExtResource("3_hffby")
 
 [node name="Player" parent="." unique_id=100373247 instance=ExtResource("4_4n1jn")]
-
-[node name="Camera2D2" type="Camera2D" parent="Player" unique_id=505962337]
-position_smoothing_enabled = true
-rotation_smoothing_enabled = true
-drag_horizontal_enabled = true
-drag_vertical_enabled = true

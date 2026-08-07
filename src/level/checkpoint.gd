@@ -15,8 +15,6 @@ signal checkpoint_activated(checkpoint: Node2D)
 func _ready() -> void: 
 	monitoring = true
 	monitorable = false
-	collision_layer = 0
-	collision_mask = 1
 	body_entered.connect(_on_body_entered)
 	_update_visual()
 

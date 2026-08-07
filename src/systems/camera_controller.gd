@@ -17,7 +17,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var global := get_node("/root/Global")
-	var target := global.selected_target
+	var target : Node2D= global.selected_target
 	if target == null or not is_instance_valid(target):
 		return
 	global_position = target.global_position
