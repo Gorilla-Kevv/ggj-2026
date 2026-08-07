@@ -72,13 +72,13 @@ func _process(delta: float) -> void:
 		var strength := clampf(blow_hold_time / RAMP_TIME, 0.0, 1.0)
 		var direction := _get_wind_direction()
 		wind_updated.emit(global.selected_target, direction, strength)
-		# 交互物直接用 RigidBody2D 接口推 (跳过 class_name 检查)
+		# 交互物直接用冲量推 (瞬间速度变化，排除持续力被锁死的问题)
 		if global.selected_target.is_in_group("interactable"):
 			var body := global.selected_target as RigidBody2D
 			if body:
 				if body.sleeping:
 					body.sleeping = false
-				body.apply_central_force(direction * 600.0 * strength)
+				body.apply_central_impulse(direction * 300.0 * strength)
 		if not global.has_energy():
 			_stop_wind()
 
@@ -91,7 +91,7 @@ func _process(delta: float) -> void:
 				if body:
 					if body.sleeping:
 						body.sleeping = false
-					body.apply_central_force(_get_wind_direction() * 150.0)
+					body.apply_central_impulse(_get_wind_direction() * 100.0)
 		_stop_wind()
 
 # 内部：停止吹风，重置状态
