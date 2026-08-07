@@ -52,14 +52,15 @@ func _refresh_targets() -> void:
 	if player:
 		targets.append(player)
 	# 2. 所有可交互物体依次排列
+	var interactable_count := 0
 	for node in get_tree().get_nodes_in_group("interactable"):
 		if is_instance_valid(node):
 			targets.append(node)
+			interactable_count += 1
 	if targets.size() > 0:
 		select_target(0)
-		no_target_label.visible = false
-	else:
-		no_target_label.visible = true
+	# 除玩家外无可选物体 → 显示提示
+	no_target_label.visible = (interactable_count == 0)
 
 # 切换到下一个目标 (R键触发)
 func _cycle_target() -> void:
