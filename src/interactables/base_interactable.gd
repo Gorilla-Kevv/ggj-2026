@@ -15,9 +15,11 @@ func _ready() -> void:
 	if not has_meta("display_name"):
 		set_meta("display_name", "物体")
 
-# 被风力推动 (由 WindSystem → Player → 此处 或 直接调用)
-# force: 推力向量 (牛顿)
+# 被风力推动 (由 WindSystem 调用)
+# 唤醒刚体后用持续力推动
 func apply_wind_force(force: Vector2) -> void:
+	if sleeping:
+		sleeping = false
 	apply_central_force(force)
 
 # 被 R 键选中时的高亮效果 (金色)
