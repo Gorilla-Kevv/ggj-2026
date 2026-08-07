@@ -142,7 +142,7 @@ script = ExtResource("4_krhqc")
 [node name="Player" parent="world/player" unique_id=100373247 instance=ExtResource("2_nfetq")]
 position = Vector2(640, 433)
 
-[node name="Camera2D" type="Camera2D" parent="world/player/Player" unique_id=1088347649]
+[node name="Camera2D2" type="Camera2D" parent="world/player/Player" unique_id=1088347649]
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 drag_horizontal_enabled = true
