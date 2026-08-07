@@ -28,7 +28,7 @@ line_color = Color(0.42187557, 0.99999994, 0.63380176, 0.21176471)
 [node name="Player" parent="." unique_id=100373247 instance=ExtResource("6_tooya")]
 position = Vector2(437, 419)
 
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=75644989]
+[node name="Camera2D2" type="Camera2D" parent="Player" unique_id=75644989]
 
 [node name="TargetSelector" type="Node2D" parent="." unique_id=1847600204]
 script = ExtResource("2_ttxux")
