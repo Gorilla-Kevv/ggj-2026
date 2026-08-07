@@ -43,11 +43,9 @@ const WIND_ACCEL: float = 8.0
 
 # ---------- 子节点引用 ----------
 # anim_player:             主动画控制器 (idle / rolling)
-# sprite:                  主角精灵 (碰撞回弹变形目标)
 # trail_particles:         风迹线粒子 (拖尾跟随运动方向)
 # trail_material:           粒子材质缓存 (避免每帧 cast)
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var sprite: Node2D = $Sprite2D
 @onready var trail_particles: GPUParticles2D = $windline_particles_player
 @onready var trail_material: ParticleProcessMaterial = null
 
@@ -210,7 +208,6 @@ func _physics_process(delta: float) -> void:
 		if not _was_on_floor:
 			# 刚落地：竖直反弹
 			velocity.y = -abs(velocity.y) * GROUND_BOUNCE
-			_play_bounce_squash(Vector2.UP)
 		elif abs(velocity.y) > MIN_BOUNCE_VELOCITY:
 			# 持续弹跳中：每帧反弹 (模拟多次小弹跳)
 			velocity.y = -abs(velocity.y) * GROUND_BOUNCE
@@ -252,32 +249,9 @@ func _handle_wall_bounce() -> void:
 		if speed < 30.0:
 			continue
 
-		velocity = velocity.bounce(normal) * WALL_BOUNCE
-		_play_bounce_squash(normal)
-		player_bounced.emit(collision.get_position())
-		break
-
-# 碰撞回弹视觉：沿碰撞法线方向压扁精灵，再弹回原形
-func _play_bounce_squash(normal: Vector2) -> void:
-	if sprite == null:
-		return
-	# 将法线转换到精灵局部坐标
-	var local_normal := normal.rotated(-global_rotation)
-	var squash_scale := Vector2(
-		1.0 - abs(local_normal.x) * 0.3,
-		1.0 - abs(local_normal.y) * 0.3
-	)
-	var stretch_scale := Vector2(
-		1.0 + abs(local_normal.y) * 0.2,
-		1.0 + abs(local_normal.x) * 0.2
-	)
-	var target_scale := squash_scale * stretch_scale
-
-	var tween := create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_BACK)
-	tween.tween_property(sprite, "scale", target_scale, 0.08)
-	tween.tween_property(sprite, "scale", Vector2.ONE, 0.12)
+	velocity = velocity.bounce(normal) * WALL_BOUNCE
+	player_bounced.emit(collision.get_position())
+	break
 
 # 施加风力冲量 (由 WindSystem 和 环境风带 调用)
 func apply_wind_force(force: Vector2) -> void:
