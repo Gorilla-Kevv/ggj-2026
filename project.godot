@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*res://src/autoload/global.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+MCPRuntimeProbe="*uid://bsg12huaf1u5i"
 
 [display]
 
@@ -26,9 +27,13 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
+[dotnet]
+
+project/assembly_name="GGJ2026"
+
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
 
 [global_group]
 

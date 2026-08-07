@@ -1,34 +1,58 @@
 [gd_scene format=3 uid="uid://c8j2mv2yucp00"]
 
-[ext_resource type="Script" uid="uid://dh7claylxm237" path="res://src/enemies/researcher.gd" id="1_b7bw7"]
-[ext_resource type="Texture2D" uid="uid://byd2sv14v1c3p" path="res://assets/characters/download.png" id="2_tvn68"]
+[ext_resource type="Script" uid="uid://dh7claylxm237" path="res://src/actors/enemies/researcher.gd" id="1_b7bw7"]
+[ext_resource type="Texture2D" uid="uid://mciuaesogolw" path="res://assets/enemie/researcher_walk_4f_grid2x2_hollowlike.png" id="2_uwkql"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvrkk"]
+atlas = ExtResource("2_uwkql")
+region = Rect2(0, 0, 627, 627)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wkg6"]
+atlas = ExtResource("2_uwkql")
+region = Rect2(627, 0, 627, 627)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b75c4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvrkk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wkg6")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 2.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvn68"]
-size = Vector2(18.5, 140)
+size = Vector2(18.5, 129)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ixdu"]
-size = Vector2(43.5, 142)
+size = Vector2(29, 126)
 
 [node name="researcher" type="CharacterBody2D" unique_id=511150063]
 script = ExtResource("1_b7bw7")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=780533637]
+scale = Vector2(0.26, 0.26)
+sprite_frames = SubResource("SpriteFrames_b75c4")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.18737277
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1591041895]
-position = Vector2(-1, 5)
+position = Vector2(-1, -6)
 shape = SubResource("RectangleShape2D_tvn68")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=443106615]
+position = Vector2(15, -47)
+target_position = Vector2(142, 0)
 
 [node name="ContactArea" type="Area2D" parent="." unique_id=1345983125]
 
 [node name="ContactShape" type="CollisionShape2D" parent="ContactArea" unique_id=36182982]
-position = Vector2(-2, 4)
+position = Vector2(-1.5, -4)
 shape = SubResource("RectangleShape2D_8ixdu")
 
 [node name="StunTimer" type="Timer" parent="." unique_id=1538205609]
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1793631066]
-position = Vector2(-2.0000076, -9)
-scale = Vector2(0.021561466, 0.19208008)
-texture = ExtResource("2_tvn68")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1741051528]
