@@ -19,6 +19,8 @@ const ENERGY_REGEN: float = 1.0
 # selected_target: 当前 R 键选中的操作目标 (主角或可交互物体)
 # 由 TargetSelector 写入，WindSystem / WindLine / HUD 读取
 var selected_target: Node2D = null
+# target_label_hint: 按 R 时的提示文字 (如"无可选物体")，HUD 读取一次后清空
+var target_label_hint: String = ""
 
 # ---------- 大厅/关卡进度参数 ----------
 # HUB_SCENE:      大厅场景路径 (关卡出口返回大厅时使用；等你的大厅场景定名后修改此路径)
