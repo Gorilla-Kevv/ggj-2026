@@ -25,9 +25,10 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch_target"):
 		if not has_interactables:
-			# 除玩家外没有可交互物体 → 通知 HUD
+			# 除玩家外没有可交互物体 → 通知 HUD (持续3秒)
 			var global := get_node("/root/Global")
 			global.target_label_hint = "无可选物体"
+			global.target_label_hint_time = Time.get_ticks_msec()
 		else:
 			_cycle_target()
 

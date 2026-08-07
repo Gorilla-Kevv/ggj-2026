@@ -21,6 +21,8 @@ const ENERGY_REGEN: float = 1.0
 var selected_target: Node2D = null
 # target_label_hint: 按 R 时的提示文字 (如"无可选物体")，HUD 读取一次后清空
 var target_label_hint: String = ""
+# target_label_hint_time: 提示开始时间 (msec)，用于 3 秒后自动清除
+var target_label_hint_time: int = 0
 
 # ---------- 大厅/关卡进度参数 ----------
 # HUB_SCENE:      大厅场景路径 (关卡出口返回大厅时使用；等你的大厅场景定名后修改此路径)

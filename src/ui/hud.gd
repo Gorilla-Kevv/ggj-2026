@@ -31,11 +31,13 @@ func _on_energy_changed(new_energy: float) -> void:
 func _process(_delta: float) -> void:
 	var global := get_node("/root/Global")
 
-	# 优先显示 TargetSelector 发来的提示 (如"无可选物体")
+	# 优先显示 TargetSelector 发来的提示 (持续3秒)
 	if global.target_label_hint != "":
-		target_label.text = global.target_label_hint
-		global.target_label_hint = ""
-		return
+		if Time.get_ticks_msec() - global.target_label_hint_time < 3000:
+			target_label.text = global.target_label_hint
+			return
+		else:
+			global.target_label_hint = ""
 
 	var target: Node2D = global.selected_target
 	if target and is_instance_valid(target):
