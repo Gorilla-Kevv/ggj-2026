@@ -24,6 +24,8 @@ func _on_energy_changed(new_energy: float) -> void:
 	if new_energy <= 30.0:
 		# 能量<30 → 能量条变红
 		energy_bar.modulate = Color(1.0, 0.3, 0.3, 1.0)
+	else:
+		energy_bar.modulate = Color(1,1,1,1)
 
 # 每帧更新目标名称显示
 func _process(_delta: float) -> void:
