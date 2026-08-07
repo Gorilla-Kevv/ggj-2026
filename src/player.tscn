@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ck2pnn6g1wik0" path="res://src/actors/player.gd" id="1_lowyb"]
 [ext_resource type="Texture2D" uid="uid://ddwvf73jcsrr7" path="res://assets/characters/tumbleweed_approved_spritesheet_12f.png" id="2_gmfve"]
+[ext_resource type="Texture2D" uid="uid://db17sxlbi42i0" path="res://assets/characters/tumbleweed_idle_glow_4f.png" id="3_bktlc"]
 [ext_resource type="PackedScene" uid="uid://cahjmbq1f6wqf" path="res://src/scenes/windline_particles_player.tscn" id="3_ehvfd"]
 
 [sub_resource type="Animation" id="Animation_bktlc"]
@@ -16,7 +17,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(128, 0, 384, 64)]
+"values": [Rect2(0, 0, 64, 64)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -28,7 +29,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [13]
+"values": [1]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -69,7 +70,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [13]
+"values": [1]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -99,7 +100,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(128, 0, 384, 64)]
+"values": [Rect2(0, 0, 832, 64)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -146,8 +147,14 @@ position = Vector2(0, -27)
 position = Vector2(0, -27)
 scale = Vector2(2, 2)
 texture = ExtResource("2_gmfve")
-hframes = 13
-region_rect = Rect2(128, 0, 384, 64)
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 64)
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1381544778]
+visible = false
+texture = ExtResource("3_bktlc")
+region_enabled = true
+region_rect = Rect2(256, 256, 256, 256)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1385665740]
 libraries/ = SubResource("AnimationLibrary_rq7o7")
