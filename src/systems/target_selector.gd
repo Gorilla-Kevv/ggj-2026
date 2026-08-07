@@ -9,13 +9,32 @@ extends Node2D
 # ---------- 状态 ----------
 # targets:        当前场景中所有可操作目标 (主角 + 可交互物体)
 # current_index:  当前选中目标的索引
+# no_target_label: 无可选物体时的提示 Label
 var targets: Array[Node2D] = []
 var current_index: int = 0
+var no_target_label: Label = null
 
 # target_changed: 目标切换时触发 (new_target 为新选中目标)
 signal target_changed(new_target: Node2D)
 
 func _ready() -> void:
+	# 创建屏幕提示 (CanvasLayer 确保在屏幕上显示)
+	var canvas := CanvasLayer.new()
+	canvas.name = "NoTargetCanvas"
+	add_child(canvas)
+
+	no_target_label = Label.new()
+	no_target_label.name = "NoTargetLabel"
+	no_target_label.text = "无可选物体"
+	no_target_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	no_target_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	no_target_label.add_theme_color_override("font_color", Color(1.0, 0.5, 0.5, 0.8))
+	no_target_label.add_theme_font_size_override("font_size", 24)
+	no_target_label.anchor_right = 1.0
+	no_target_label.anchor_bottom = 1.0
+	no_target_label.visible = false
+	canvas.add_child(no_target_label)
+
 	# 延迟刷新，确保场景中所有节点完成 _ready() 后再收集目标
 	call_deferred("_refresh_targets")
 
@@ -38,6 +57,9 @@ func _refresh_targets() -> void:
 			targets.append(node)
 	if targets.size() > 0:
 		select_target(0)
+		no_target_label.visible = false
+	else:
+		no_target_label.visible = true
 
 # 切换到下一个目标 (R键触发)
 func _cycle_target() -> void:
@@ -78,4 +100,5 @@ func get_current_target() -> Node2D:
 func register_target(node: Node2D) -> void:
 	if node not in targets:
 		targets.append(node)
+		no_target_label.visible = false
 		_refresh_targets()
