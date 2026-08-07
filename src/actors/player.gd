@@ -249,9 +249,9 @@ func _handle_wall_bounce() -> void:
 		if speed < 30.0:
 			continue
 
-	velocity = velocity.bounce(normal) * WALL_BOUNCE
-	player_bounced.emit(collision.get_position())
-	break
+		velocity = velocity.bounce(normal) * WALL_BOUNCE
+		player_bounced.emit(collision.get_position())
+		break
 
 # 施加风力冲量 (由 WindSystem 和 环境风带 调用)
 func apply_wind_force(force: Vector2) -> void:
