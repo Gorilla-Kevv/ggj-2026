@@ -139,12 +139,14 @@ func _enter_rolling() -> void:
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("rolling"):
 		animated_sprite.play("rolling")
 
-# 播放一次 die 动画，结束后重生
+# 播放一次 die 动画，0.5 秒后必定重生
 func _play_die_animation() -> void:
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("die"):
 		animated_sprite.speed_scale = 1.0
 		animated_sprite.play("die")
-		await animated_sprite.animation_finished
+
+	# 计时器保底：不管动画是否播完，0.5 秒后强制重生
+	await get_tree().create_timer(0.5).timeout
 	call_deferred("_respawn")
 
 # 播放受击动画 (供敌人/机关调用)
@@ -272,6 +274,8 @@ func apply_wind_force(force: Vector2) -> void:
 # 死亡入口：由 kill_zone / spike / 敌人 调用
 func die() -> void:
 	player_died.emit()
+	# 冻结物理输入，防止死亡动画期间继续移动
+	set_physics_process(false)
 	_play_die_animation()
 
 # 重生逻辑：切换/重载关卡，新场景的 _ready 中读取检查点位置
