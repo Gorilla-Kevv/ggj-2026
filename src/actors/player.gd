@@ -58,6 +58,9 @@ func _ready() -> void:
 	# 缓存粒子材质引用
 	if trail_particles and trail_particles.process_material is ParticleProcessMaterial:
 		trail_material = trail_particles.process_material as ParticleProcessMaterial
+	# Area2D 检测用 (kill_zone / spike / checkpoint)
+	collision_layer = 1
+	collision_mask = 1
 	# 重生后定位到检查点
 	_restore_checkpoint()
 	_connect_wind_system()
@@ -68,7 +71,10 @@ func _restore_checkpoint() -> void:
 	if global.current_checkpoint != Vector2.ZERO:
 		global_position = global.current_checkpoint
 		global.refill_energy()
+		print("[Player] 重生到检查点 坐标=", global.current_checkpoint)
 		_enter_idle()
+	else:
+		print("[Player] 无检查点数据，留在默认出生位 坐标=", global_position)
 
 # 连接到场景中的 WindSystem 节点 (通过 "wind_system" 组查找)
 func _connect_wind_system() -> void:
@@ -278,15 +284,18 @@ func apply_wind_force(force: Vector2) -> void:
 
 # 死亡入口：由 kill_zone / spike / 敌人 调用
 func die() -> void:
+	print("[Player] 死亡触发")
 	player_died.emit()
-	# 冻结物理输入，防止死亡动画期间继续移动
 	set_physics_process(false)
 	_play_die_animation()
 
 # 重生逻辑：切换/重载关卡，新场景的 _ready 中读取检查点位置
 func _respawn() -> void:
 	var global := get_node("/root/Global")
+	print("[Player] _respawn 关卡=", global.last_checkpoint_level)
 	if global.last_checkpoint_level != "" and global.last_checkpoint_level != get_tree().current_scene.scene_file_path:
+		print("[Player] 切换场景到 ", global.last_checkpoint_level)
 		get_tree().change_scene_to_file(global.last_checkpoint_level)
 	else:
+		print("[Player] 重载当前场景")
 		get_tree().reload_current_scene()
