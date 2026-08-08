@@ -34,5 +34,5 @@ texture_region_size = Vector2i(64, 64)
 [resource]
 tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 2
-physics_layer_0/collision_mask = 31
+physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_nfetq")

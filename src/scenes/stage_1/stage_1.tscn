@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_do0c6"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="6_ol0ao"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="7_ndbc8"]
-[ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="10_24bcq"]
+[ext_resource type="PackedScene" uid="uid://dmi0ubl4i1ms7" path="res://src/scenes/stage_1/stage_1checkpoint.tscn" id="10_24bcq"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="11_ol0ao"]
 [ext_resource type="FontFile" uid="uid://c4wcgtkesy0v6" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="12_0e0d6"]
 
@@ -68,9 +68,6 @@ region = Rect2(1098, 1101, 271, 614)
 [sub_resource type="AtlasTexture" id="AtlasTexture_tyf17"]
 atlas = ExtResource("2_88t4y")
 region = Rect2(1959, 1378, 187, 339)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4bx1i"]
-size = Vector2(142, 426)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s4gg2"]
 atlas = ExtResource("2_88t4y")
@@ -262,28 +259,8 @@ position = Vector2(8729.34, 975.5958)
 scale = Vector2(1.3476552, 1.1201643)
 texture = SubResource("AtlasTexture_tyf17")
 
-[node name="check" type="Area2D" parent="bigitem" unique_id=1401292912]
-position = Vector2(9951.047, -3779.1125)
-script = ExtResource("10_24bcq")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bigitem/check" unique_id=1931936287]
-position = Vector2(-10, -3)
-shape = SubResource("RectangleShape2D_4bx1i")
-
-[node name="Sprite2D" type="Sprite2D" parent="bigitem/check" unique_id=1978922488]
-position = Vector2(-3, 4)
-texture = ExtResource("2_88t4y")
-region_enabled = true
-region_rect = Rect2(2800, 1273, 149, 446)
-
-[node name="Label" type="Label" parent="bigitem/check" unique_id=36369333]
-offset_left = -323.72107
-offset_top = -413.64365
-offset_right = 300.27893
-offset_bottom = -349.64365
-theme_override_fonts/font = ExtResource("12_0e0d6")
-theme_override_font_sizes/font_size = 64
-text = "CHECKPOINT"
+[node name="check2" parent="bigitem" unique_id=1601024764 instance=ExtResource("10_24bcq")]
+position = Vector2(9879.109, -3779.1123)
 
 [node name="items" type="Node2D" parent="." unique_id=1954034881]
 
