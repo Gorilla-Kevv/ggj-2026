@@ -139,15 +139,20 @@ func _enter_rolling() -> void:
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("rolling"):
 		animated_sprite.play("rolling")
 
-# 播放一次 die 动画，0.5 秒后必定重生
+# 播放一次 die 动画，播完后重生 (最多等 1.5 秒保底)
 func _play_die_animation() -> void:
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("die"):
 		animated_sprite.speed_scale = 1.0
 		animated_sprite.play("die")
+		# 等待动画自然播完，超时 1.5 秒强制重生
+		var timeout := get_tree().create_timer(1.5)
+		await _wait_for_animation_or_timeout(timeout)
+	_respawn()
 
-	# 计时器保底：不管动画是否播完，0.5 秒后强制重生
-	await get_tree().create_timer(0.5).timeout
-	call_deferred("_respawn")
+# 等待动画结束或超时
+func _wait_for_animation_or_timeout(timeout: SceneTreeTimer) -> void:
+	while animated_sprite.is_playing() and timeout.time_left > 0:
+		await get_tree().process_frame
 
 # 播放受击动画 (供敌人/机关调用)
 func play_underattack() -> void:
