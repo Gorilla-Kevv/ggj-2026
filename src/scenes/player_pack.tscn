@@ -19,3 +19,4 @@ position = Vector2(-0.17261505, 0.2803688)
 script = ExtResource("3_hffby")
 
 [node name="Player" parent="." unique_id=100373247 instance=ExtResource("4_4n1jn")]
+collision_mask = 30

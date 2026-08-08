@@ -58,9 +58,6 @@ func _ready() -> void:
 	# 缓存粒子材质引用
 	if trail_particles and trail_particles.process_material is ParticleProcessMaterial:
 		trail_material = trail_particles.process_material as ParticleProcessMaterial
-	## Area2D 检测用 (kill_zone / spike / checkpoint)
-	#collision_layer = 1
-	#collision_mask = 1
 	# 重生后定位到检查点
 	_restore_checkpoint()
 	_connect_wind_system()
@@ -145,14 +142,20 @@ func _enter_rolling() -> void:
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("rolling"):
 		animated_sprite.play("rolling")
 
-# 播放 die 动画，落下后重生
+# 播放一次 die 动画，播完后重生 (最多等 1.5 秒保底)
 func _play_die_animation() -> void:
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("die"):
 		animated_sprite.speed_scale = 1.0
 		animated_sprite.play("die")
-	# 等待坠落 + 动画时间
-	await get_tree().create_timer(1.2).timeout
+		# 等待动画自然播完，超时 1.5 秒强制重生
+		var timeout := get_tree().create_timer(1.5)
+		await _wait_for_animation_or_timeout(timeout)
 	_respawn()
+
+# 等待动画结束或超时
+func _wait_for_animation_or_timeout(timeout: SceneTreeTimer) -> void:
+	while animated_sprite.is_playing() and timeout.time_left > 0:
+		await get_tree().process_frame
 
 # 播放受击动画 (供敌人/机关调用)
 func play_underattack() -> void:
@@ -203,15 +206,9 @@ func _update_trail() -> void:
 # ---------- 物理 ----------
 
 var _was_on_floor: bool = false
-var _is_dead: bool = false
 
 # 每物理帧：上抛/平抛运动 + 落地弹跳滚动
 func _physics_process(delta: float) -> void:
-	# 死亡后只受重力下坠
-	if _is_dead:
-		velocity.y += ProjectSettings.get_setting("physics/2d/default_gravity") * delta
-		# 掉出屏幕下方一定距离后重生 (约 2 秒)
-		return
 	# A/D 键左右移动
 	var input_dir := Input.get_axis("move_left", "move_right")
 	if input_dir != 0.0:
@@ -285,13 +282,8 @@ func apply_wind_force(force: Vector2) -> void:
 # 死亡入口：由 kill_zone / spike / 敌人 调用
 func die() -> void:
 	print("[Player] 死亡触发")
-	_is_dead = true
 	player_died.emit()
-	# 移除碰撞体让玩家穿过地面坠落
-	var col := $CollisionShape2D
-	if col:
-		col.queue_free()
-	# 播放 die 动画，等 1.2 秒后重生
+	set_physics_process(false)
 	_play_die_animation()
 
 # 重生逻辑：切换/重载关卡，新场景的 _ready 中读取检查点位置
