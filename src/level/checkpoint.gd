@@ -34,9 +34,19 @@ func activate() -> void:
 	_update_visual()
 	checkpoint_activated.emit(self)
 
-# 视觉状态：已激活=亮绿 / 未激活=白
+# 视觉状态：已激活=亮绿 + "CHECKED!" / 未激活=白 + "CHECKPOINT"
 func _update_visual() -> void:
 	if is_active:
-		modulate = Color(0.2, 1.0, 0.4, 0.8)
+		modulate = Color(0.672, 0.9, 0.104, 0.361)
 	else:
 		modulate = Color(1, 1, 1, 1)
+	_update_label()
+
+func _update_label() -> void:
+	var label := get_node_or_null("Label") as Label
+	if label == null:
+		return
+	if is_active:
+		label.text = "CHECKED!"
+	else:
+		label.text = "CHECKPOINT"
