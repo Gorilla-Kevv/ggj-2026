@@ -58,9 +58,6 @@ func _ready() -> void:
 	# 缓存粒子材质引用
 	if trail_particles and trail_particles.process_material is ParticleProcessMaterial:
 		trail_material = trail_particles.process_material as ParticleProcessMaterial
-	# Area2D 检测用 (kill_zone / spike / checkpoint)
-	collision_layer = 1
-	collision_mask = 1
 	# 重生后定位到检查点
 	_restore_checkpoint()
 	_connect_wind_system()

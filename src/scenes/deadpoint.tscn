@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://co24t45xr3ig6"]
+
+[ext_resource type="Script" uid="uid://c5brne66srlk6" path="res://src/environment/kill_zone.gd" id="1_36rx5"]
+
+[node name="deadpoint" type="Area2D" unique_id=139261154]
+collision_layer = 0
+script = ExtResource("1_36rx5")
+
+[node name="Timer" type="Timer" parent="." unique_id=1671692968]
+wait_time = 0.628
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
