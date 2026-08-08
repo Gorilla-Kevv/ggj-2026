@@ -70,6 +70,11 @@ func _restore_checkpoint() -> void:
 		global.refill_energy()
 		print("[Player] 重生到检查点 坐标=", global.current_checkpoint)
 		_enter_idle()
+	elif global.hub_return != Vector2.ZERO and get_tree().current_scene.scene_file_path == global.HUB_SCENE:
+		global_position = global.hub_return
+		global.hub_return = Vector2.ZERO
+		global.refill_energy()
+		_enter_idle()
 	else:
 		print("[Player] 无检查点数据，留在默认出生位 坐标=", global_position)
 
