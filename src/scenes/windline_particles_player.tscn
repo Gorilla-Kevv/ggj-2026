@@ -2,11 +2,11 @@
 
 [sub_resource type="Gradient" id="Gradient_43gk1"]
 offsets = PackedFloat32Array(0, 0.5353805, 1)
-colors = PackedColorArray(1, 1, 1, 0, 0.30354902, 0.8011084, 0.70605934, 1, 1, 1, 1, 0)
+colors = PackedColorArray(1, 1, 1, 0, 0.05118592, 0.82652366, 0.39991134, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_2ntti"]
 gradient = SubResource("Gradient_43gk1")
-width = 1
+width = 4
 height = 32
 fill_to = Vector2(0, 1)
 
@@ -18,7 +18,7 @@ gradient = SubResource("Gradient_1n580")
 
 [sub_resource type="Gradient" id="Gradient_cl3c3"]
 offsets = PackedFloat32Array(0, 0.53001463, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+colors = PackedColorArray(0, 0.9764706, 0.9764706, 1, 1, 1, 1, 1, 0, 0.9764706, 0.9764706, 0.22745098)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_q38a6"]
 gradient = SubResource("Gradient_cl3c3")
@@ -26,17 +26,18 @@ gradient = SubResource("Gradient_cl3c3")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bu5ue"]
 particle_flag_disable_z = true
 emission_shape = 3
-emission_box_extents = Vector3(20, 20, 1)
+emission_box_extents = Vector3(70, 70, 1)
 gravity = Vector3(0, 98, 0)
 scale_min = 0.5
 color_ramp = SubResource("GradientTexture1D_q38a6")
 color_initial_ramp = SubResource("GradientTexture1D_84c7i")
 
 [node name="windline_particles_player" type="GPUParticles2D" unique_id=1326748121]
-amount = 10
+amount = 18
 texture = SubResource("GradientTexture2D_2ntti")
-preprocess = 1.99
-randomness = 0.46
+lifetime = 1.2
+preprocess = 1.94
+randomness = 0.44
 trail_enabled = true
 trail_lifetime = 0.62
 process_material = SubResource("ParticleProcessMaterial_bu5ue")

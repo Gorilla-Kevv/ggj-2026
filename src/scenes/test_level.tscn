@@ -12,7 +12,8 @@
 [ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="11_eqw1l"]
 [ext_resource type="PackedScene" uid="uid://b7qlat2rwnwv" path="res://src/scenes/exit_portal.tscn" id="12_ttxux"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d1es4"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewkv2"]
+size = Vector2(315, 123)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ttxux"]
 
@@ -28,7 +29,7 @@ line_color = Color(0.42187557, 0.99999994, 0.63380176, 0.21176471)
 [node name="Player" parent="." unique_id=100373247 instance=ExtResource("6_tooya")]
 position = Vector2(437, 419)
 
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=75644989]
+[node name="Camera2D2" type="Camera2D" parent="Player" unique_id=75644989]
 
 [node name="TargetSelector" type="Node2D" parent="." unique_id=1847600204]
 script = ExtResource("2_ttxux")
@@ -36,15 +37,14 @@ script = ExtResource("2_ttxux")
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("4_fexyi")]
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=83958086]
-visible = false
-position = Vector2(600, 700)
+position = Vector2(290, 618)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1934507906]
-position = Vector2(-39, -266)
-shape = SubResource("WorldBoundaryShape2D_d1es4")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=2074835324]
+position = Vector2(141, -91)
+shape = SubResource("RectangleShape2D_ewkv2")
 
 [node name="PushableBox" parent="." unique_id=1646842403 instance=ExtResource("6_kbjhy")]
-position = Vector2(740, 541)
+position = Vector2(504, 274)
 
 [node name="SpikeTrap" type="Area2D" parent="." unique_id=179373147]
 position = Vector2(200, 650)
@@ -52,13 +52,15 @@ script = ExtResource("9_waduv")
 
 [node name="Checkpoint" type="Area2D" parent="." unique_id=606422918]
 position = Vector2(835, 305)
+collision_layer = 8
+collision_mask = 0
 script = ExtResource("11_eqw1l")
 
 [node name="windline_particles bg" parent="." unique_id=381050555 instance=ExtResource("10_ttxux")]
 position = Vector2(2, 6)
 
 [node name="KillZone" parent="." unique_id=112513769 instance=ExtResource("10_ewkv2")]
-position = Vector2(239, 516)
+position = Vector2(109, 707)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1294017160]
 position = Vector2(-1, 0)

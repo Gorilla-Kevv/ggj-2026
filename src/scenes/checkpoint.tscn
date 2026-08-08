@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cbh1p11uub8c3"]
+
+[ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="1_rc6t7"]
+
+[node name="checkpoint" type="Area2D" unique_id=1499535068]
+script = ExtResource("1_rc6t7")

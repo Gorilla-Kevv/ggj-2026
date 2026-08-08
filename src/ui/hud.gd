@@ -24,14 +24,23 @@ func _on_energy_changed(new_energy: float) -> void:
 	if new_energy <= 30.0:
 		# 能量<30 → 能量条变红
 		energy_bar.modulate = Color(1.0, 0.3, 0.3, 1.0)
+	else:
+		energy_bar.modulate = Color(1,1,1,1)
 
 # 每帧更新目标名称显示
 func _process(_delta: float) -> void:
 	var global := get_node("/root/Global")
+
+	# 优先显示 TargetSelector 发来的提示 (持续3秒)
+	if global.target_label_hint != "":
+		if Time.get_ticks_msec() - global.target_label_hint_time < 3000:
+			target_label.text = global.target_label_hint
+			return
+		else:
+			global.target_label_hint = ""
+
 	var target: Node2D = global.selected_target
 	if target and is_instance_valid(target):
-		# 读取目标节点的 display_name 元数据
-		# 例如：箱子设置 "箱子"，风化岩柱设置 "风化岩柱"
 		var display_name: String = target.get_meta("display_name", target.name)
 		target_label.text = display_name
 	else:

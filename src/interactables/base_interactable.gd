@@ -2,28 +2,34 @@
 # BaseInteractable — 可交互物体基类
 # 所有可被风吹动/选中的物体继承此类
 # 自动加入 "interactable" 组供 TargetSelector 扫描
-# 程序C (交互/环境) 在此基础上扩展具体物体
+#
+# 编辑器用法：
+#   1. 场景中新建 RigidBody2D，挂载 pushable_box.gd
+#   2. 在属性面板设置 Display Name / Mass 即可创建不同物体
+#   3. 无需为每种物体单独写脚本
 # ============================================================
 extends RigidBody2D
 class_name BaseInteractable
 
-func _ready() -> void:
-	# 注册到 "interactable" 组
-	# TargetSelector 通过此组自动发现所有可交互物体
-	add_to_group("interactable")
-	# 设置默认显示名称 (子类可覆盖)
-	if not has_meta("display_name"):
-		set_meta("display_name", "物体")
+# 在编辑器中显示的名称 (HUD TargetLabel)
+@export var display_name: String = "物体"
+# 质量 (kg)，越大越难吹动
+@export var interact_mass: float = 5.0
 
-# 被风力推动 (由 WindSystem → Player → 此处 或 直接调用)
-# force: 推力向量 (牛顿)
+func _ready() -> void:
+	add_to_group("interactable")
+	set_meta("display_name", display_name)
+	mass = interact_mass
+	# 防止刚体自旋干扰操作
+	lock_rotation = true
+
 func apply_wind_force(force: Vector2) -> void:
+	if sleeping:
+		sleeping = false
 	apply_central_force(force)
 
-# 被 R 键选中时的高亮效果 (金色)
 func on_selected() -> void:
-	modulate = Color.GOLD
+	modulate = Color.GREEN_YELLOW
 
-# 取消选中时恢复原色
 func on_deselected() -> void:
 	modulate = Color.WHITE
