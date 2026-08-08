@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GGJ2026"
-run/main_scene="uid://bf8so3h4fiuu1"
+run/main_scene="uid://5rlg4reaioiq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 MCPRuntimeProbe="*uid://bsg12huaf1u5i"
 Global="*res://src/autoload/global.gd"
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 

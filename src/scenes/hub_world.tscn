@@ -7,8 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="5_player"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
-[ext_resource type="Texture2D" uid="uid://jblujkk4rstc" path="res://assets/关卡及大厅/call_ch1FgoYKXOWsurlABg9vHYmX.png" id="8_ost8a"]
-[ext_resource type="Texture2D" uid="uid://ddi3t5tf52emu" path="res://assets/关卡及大厅/door1_nopass.tres" id="10_hm4b0"]
+[ext_resource type="Texture2D" uid="uid://dnupxg4ycin8r" path="res://assets/关卡及大厅/call_ch1FgoYKXOWsurlABg9vHYmX.png" id="8_ost8a"]
+[ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="9_hm4b0"]
+[ext_resource type="Texture2D" uid="uid://c3yk54t0vb1xs" path="res://assets/关卡及大厅/download.png" id="10_ojrv2"]
+[ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="10_wo7qi"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ost8a"]
 
@@ -39,12 +41,6 @@ position = Vector2(1639, 475)
 
 [node name="windline_particles bg" parent="Ground" unique_id=381050555 instance=ExtResource("6_8uww5")]
 position = Vector2(-1645, -469)
-
-[node name="Back_board" type="Sprite2D" parent="." unique_id=860226949]
-z_index = -100
-position = Vector2(10.000002, -7.0000305)
-scale = Vector2(1.6041666, 1.6041666)
-texture = ExtResource("8_ost8a")
 
 [node name="Board" type="Node2D" parent="." unique_id=441515239]
 position = Vector2(9.536743e-07, -4.7683716e-07)
@@ -90,4 +86,24 @@ position = Vector2(-6, 1100)
 level_id = "1"
 chapter_id = "1"
 target_scene = "res://src/scenes/stage_1.tscn"
-inactive_texture = ExtResource("10_hm4b0")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1355164747]
+zoom = Vector2(0.7, 0.7)
+script = ExtResource("9_hm4b0")
+
+[node name="world_camera" type="Node2D" parent="." unique_id=898401663]
+script = ExtResource("10_wo7qi")
+target_camera = NodePath("../Camera2D")
+use_manual_limits = true
+manual_limit_left = -1350.0
+manual_limit_top = -2600.0
+manual_limit_right = 1350.0
+manual_limit_bottom = 2600.0
+
+[node name="Download" type="Sprite2D" parent="." unique_id=1544347626]
+position = Vector2(-463, 842)
+texture = ExtResource("10_ojrv2")
+
+[node name="CallCh1FgoYkxoWsurlABg9vHYmX" type="Sprite2D" parent="." unique_id=1604695454]
+position = Vector2(890, 763)
+texture = ExtResource("8_ost8a")
