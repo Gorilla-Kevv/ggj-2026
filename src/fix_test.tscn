@@ -35,7 +35,7 @@ script = ExtResource("2_cp48i")
 tile_map_layer = NodePath("../mid")
 target_camera = NodePath("../Camera2D")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=86675626]
+[node name="interactBody" type="RigidBody2D" parent="." unique_id=86675626]
 position = Vector2(719, 419)
 collision_layer = 4
 collision_mask = 3
@@ -43,13 +43,13 @@ can_sleep = false
 script = ExtResource("4_hfmhr")
 display_name = "测试物体"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=423984897]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactBody" unique_id=423984897]
 shape = SubResource("RectangleShape2D_ckoie")
 
-[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D" unique_id=307081003]
+[node name="Sprite2D" type="Sprite2D" parent="interactBody" unique_id=307081003]
 texture = ExtResource("5_hfmhr")
 
-[node name="Windanchor" type="Marker2D" parent="RigidBody2D" unique_id=264990798]
+[node name="Windanchor" type="Marker2D" parent="interactBody" unique_id=264990798]
 
 [node name="player_pack" parent="." unique_id=1191854658 instance=ExtResource("2_qa11g")]
 position = Vector2(379, 398)
