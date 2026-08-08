@@ -4,9 +4,7 @@
 # 通过 WindSystem 信号接收风力推动
 # 死亡条件：尖刺 / 敌人触碰 / 深渊
 #
-# 动画驱动：
-#   AnimationPlayer  — 主动画 (idle / rolling 精灵帧)
-#   BreatheParticles — 辅助粒子 (仅 idle 时发射呼吸粒子)
+# 动画驱动：AnimatedSprite2D (idle / rolling / die / underattack)
 # ============================================================
 extends CharacterBody2D
 
@@ -42,10 +40,10 @@ const KEY_MOVE_FORCE: float = 200.0
 const WIND_ACCEL: float = 8.0
 
 # ---------- 子节点引用 ----------
-# anim_player:             主动画控制器 (idle / rolling)
+# animated_sprite:         AnimatedSprite2D 动画 (idle / rolling / die / underattack)
 # trail_particles:         风迹线粒子 (拖尾跟随运动方向)
 # trail_material:           粒子材质缓存 (避免每帧 cast)
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var trail_particles: GPUParticles2D = $windline_particles_player
 @onready var trail_material: ParticleProcessMaterial = null
 
@@ -124,22 +122,36 @@ func _on_micro_burst(target: Node2D, direction: Vector2) -> void:
 
 # ---------- 动画状态切换 ----------
 
-# 进入 idle 状态：播放 AnimationPlayer 的 "idle"
+# 进入 idle 状态
 func _enter_idle() -> void:
 	if current_anim == AnimState.IDLE:
 		return
 	current_anim = AnimState.IDLE
-	if anim_player and anim_player.has_animation("idle"):
-		anim_player.speed_scale = 1.0
-		anim_player.play("idle")
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("idle"):
+		animated_sprite.speed_scale = 1.0
+		animated_sprite.play("idle")
 
-# 进入 rolling 状态：播放 AnimationPlayer 的 "rolling"
+# 进入 rolling 状态
 func _enter_rolling() -> void:
 	if current_anim == AnimState.ROLLING:
 		return
 	current_anim = AnimState.ROLLING
-	if anim_player and anim_player.has_animation("rolling"):
-		anim_player.play("rolling")
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("rolling"):
+		animated_sprite.play("rolling")
+
+# 播放一次 die 动画，结束后重生
+func _play_die_animation() -> void:
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("die"):
+		animated_sprite.speed_scale = 1.0
+		animated_sprite.play("die")
+		await animated_sprite.animation_finished
+	call_deferred("_respawn")
+
+# 播放受击动画 (供敌人/机关调用)
+func play_underattack() -> void:
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("underattack"):
+		animated_sprite.speed_scale = 1.0
+		animated_sprite.play("underattack")
 
 # ---------- 每帧视觉更新 ----------
 
@@ -149,7 +161,7 @@ func _enter_rolling() -> void:
 func _process(_delta: float) -> void:
 	_update_trail()
 
-	if current_anim != AnimState.ROLLING or anim_player == null:
+	if current_anim != AnimState.ROLLING or animated_sprite == null:
 		return
 
 	var speed_factor: float
@@ -160,7 +172,7 @@ func _process(_delta: float) -> void:
 		# 风停衰减：速度占比映射，随 friction 和重力自然降低
 		speed_factor = clampf(velocity.length() / MAX_SPEED, 0.15, 1.0)
 
-	anim_player.speed_scale = speed_factor
+	animated_sprite.speed_scale = speed_factor
 
 # 风迹线粒子：速度超过阈值时发射，方向与运动方向相反 (拖尾效果)
 func _update_trail() -> void:
@@ -260,7 +272,7 @@ func apply_wind_force(force: Vector2) -> void:
 # 死亡入口：由 kill_zone / spike / 敌人 调用
 func die() -> void:
 	player_died.emit()
-	call_deferred("_respawn")
+	_play_die_animation()
 
 # 重生逻辑：切换/重载关卡，新场景的 _ready 中读取检查点位置
 func _respawn() -> void:
