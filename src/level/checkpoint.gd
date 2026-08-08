@@ -15,7 +15,8 @@ signal checkpoint_activated(checkpoint: Node2D)
 func _ready() -> void:
 	monitoring = true
 	monitorable = false
-	body_entered.connect(_on_body_entered)
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
 	_update_visual()
 
 # 碰撞回调：玩家首次触碰 → 激活
