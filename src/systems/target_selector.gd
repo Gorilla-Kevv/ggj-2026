@@ -60,20 +60,27 @@ func _cycle_target() -> void:
 
 # 选中指定索引的目标
 func select_target(index: int) -> void:
-	if current_index < targets.size():
-		var old_target := targets[current_index]
-		if old_target.has_method("on_deselected"):
-			old_target.on_deselected()
+	# 取消旧目标高亮
+	if current_index < targets.size() and targets[current_index].is_in_group("interactable"):
+		_set_modulate_recursive(targets[current_index], Color.WHITE)
 
 	current_index = clampi(index, 0, targets.size() - 1)
 
 	var global := get_node("/root/Global")
 	global.selected_target = targets[current_index]
 
-	if global.selected_target.has_method("on_selected"):
-		global.selected_target.on_selected()
+	# 新目标高亮
+	if global.selected_target.is_in_group("interactable"):
+		_set_modulate_recursive(global.selected_target, Color.AQUA)
 
 	target_changed.emit(global.selected_target)
+
+# 递归设色：自身 + 所有子节点的 modulate
+func _set_modulate_recursive(node: Node, color: Color) -> void:
+	if node is CanvasItem:
+		node.modulate = color
+	for child in node.get_children():
+		_set_modulate_recursive(child, color)
 
 # 获取当前选中目标 (供外部查询)
 func get_current_target() -> Node2D:
