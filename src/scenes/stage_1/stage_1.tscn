@@ -7,16 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://ckb16tbpcck75" path="res://assets/关卡一/中景3.png" id="2_ndbc8"]
 [ext_resource type="Texture2D" uid="uid://b4qppjqit4yfe" path="res://assets/关卡一/中景4.png" id="3_do0c6"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_do0c6"]
-[ext_resource type="Script" uid="uid://1bnedirt5pjp" path="res://script/vfx_thunder.gd" id="6_jvrvq"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="6_ol0ao"]
-[ext_resource type="PackedScene" uid="uid://baux3cgfuij5j" path="res://src/scenes/vfx/vfx_thunder.tscn" id="6_t8eqi"]
 [ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="7_cq86n"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="7_ndbc8"]
+[ext_resource type="PackedScene" uid="uid://car8wrj1b2cin" path="res://src/scenes/stage_1/thunder.tscn" id="7_t8eqi"]
 [ext_resource type="PackedScene" uid="uid://b7f2renisonyb" path="res://src/scenes/vfx/vfx_thunder_orbit.tscn" id="8_gfom6"]
 [ext_resource type="Script" uid="uid://jt13i75roure" path="res://script/glass.gd" id="10_4bx1i"]
 [ext_resource type="PackedScene" uid="uid://dmi0ubl4i1ms7" path="res://src/scenes/stage_1/stage_1checkpoint.tscn" id="10_24bcq"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="11_ol0ao"]
 [ext_resource type="FontFile" uid="uid://bugkl5nl4pw3e" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="12_0e0d6"]
+[ext_resource type="PackedScene" uid="uid://bcbss0dlws54n" path="res://src/scenes/可交互物体/interact_body.tscn" id="17_jvrvq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0e0d6"]
 atlas = ExtResource("2_88t4y")
@@ -26,22 +26,8 @@ region = Rect2(3406, 132, 569, 727)
 atlas = ExtResource("2_88t4y")
 region = Rect2(1850, 33, 409, 821)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4non"]
-size = Vector2(64, 1647.5)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bnet0"]
-size = Vector2(316, 327.5)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x8quu"]
-atlas = ExtResource("2_88t4y")
-region = Rect2(1087, 0, 290, 859)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m3ope"]
-atlas = ExtResource("2_88t4y")
-region = Rect2(3406, 132, 569, 727)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jnn5y"]
-size = Vector2(448.0451, 522.5065)
+size = Vector2(208, 327.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8nj0n"]
 atlas = ExtResource("2_88t4y")
@@ -103,6 +89,19 @@ region = Rect2(3288, 1396, 804, 320)
 atlas = ExtResource("2_88t4y")
 region = Rect2(1788, 2404, 522, 173)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3ope"]
+atlas = ExtResource("2_88t4y")
+region = Rect2(3406, 132, 569, 727)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jnn5y"]
+size = Vector2(448.0451, 522.5065)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4non"]
+size = Vector2(64, 1647.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cq86n"]
+size = Vector2(164, 352)
+
 [node name="stage-1" type="Node2D" unique_id=1265220519]
 metadata/_edit_horizontal_guides_ = [-636.0]
 
@@ -149,53 +148,88 @@ position = Vector2(1401, 648.00006)
 scale = Vector2(0.7592573, 0.6310909)
 texture = SubResource("AtlasTexture_pinah")
 
-[node name="thunder" type="Node2D" parent="." unique_id=50572396]
+[node name="thunder" parent="." unique_id=30767940 instance=ExtResource("7_t8eqi")]
 
-[node name="vfx_thunder" parent="thunder" unique_id=1210320534 instance=ExtResource("6_t8eqi")]
-position = Vector2(3314.1255, -4584)
-rotation = -3.1415925
-script = ExtResource("6_jvrvq")
+[node name="thunder" parent="thunder/vfx_thunder" parent_id_path=PackedInt32Array(30767940, 1210320534) index="1" unique_id=2024225593]
+position = Vector2(2.125496, -504)
+points = PackedVector2Array(-17, -1126, -8, 528)
 
-[node name="KillZone" parent="thunder/vfx_thunder" unique_id=1192454430 instance=ExtResource("7_cq86n")]
-position = Vector2(159.36938, -261.01074)
-rotation = 3.1415925
+[node name="CollisionShape2D" parent="thunder/vfx_thunder/KillZone" parent_id_path=PackedInt32Array(30767940, 1192454430) index="0" unique_id=1427227327]
+position = Vector2(157.2439, 538.86426)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="thunder/vfx_thunder/KillZone" unique_id=1556624281]
-position = Vector2(173.2439, 538.73926)
-shape = SubResource("RectangleShape2D_n4non")
-disabled = true
-
-[node name="vfx_thunder_orbit-1" parent="thunder" unique_id=391009860 instance=ExtResource("8_gfom6")]
-position = Vector2(3346.1255, -2879.9998)
-
-[node name="KillZone2" parent="thunder/vfx_thunder_orbit-1" unique_id=461141327 instance=ExtResource("7_cq86n")]
-position = Vector2(-191.36938, -1442.9895)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="thunder/vfx_thunder_orbit-1/KillZone2" unique_id=1302560235]
-position = Vector2(173.2439, 1530.9893)
-shape = SubResource("RectangleShape2D_bnet0")
+[node name="item20" parent="thunder" index="1" unique_id=1231308016]
+position = Vector2(3328.0002, -2784)
 
 [node name="vfx_thunder_orbit-2" parent="thunder" unique_id=1197043188 instance=ExtResource("8_gfom6")]
 position = Vector2(3298.1255, -2816)
 rotation = 2.4888396
 scale = Vector2(1.0000001, 0.99999994)
 
-[node name="item20" type="Sprite2D" parent="thunder" unique_id=326497860]
-position = Vector2(3320, -2792)
-scale = Vector2(0.384, 0.384)
-texture = SubResource("AtlasTexture_x8quu")
+[node name="KillZone2" parent="thunder" unique_id=461141327 instance=ExtResource("7_cq86n")]
+position = Vector2(3154.756, -4322.9893)
 
-[node name="glass" type="Area2D" parent="." unique_id=882569906]
-position = Vector2(-240, 448)
-scale = Vector2(1.0743828, 1.0743828)
-script = ExtResource("10_4bx1i")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="thunder/KillZone2" unique_id=1302560235]
+position = Vector2(173.2439, 1530.9893)
+shape = SubResource("RectangleShape2D_bnet0")
 
-[node name="item19" type="Sprite2D" parent="glass" unique_id=56161680]
-texture = SubResource("AtlasTexture_m3ope")
+[node name="vfx_thunder_orbit-1" parent="thunder" unique_id=391009860 instance=ExtResource("8_gfom6")]
+position = Vector2(3346.1255, -2879.9998)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="glass" unique_id=390236470]
-position = Vector2(-0.63845825, -22.976898)
-shape = SubResource("RectangleShape2D_jnn5y")
+[node name="thunder2" parent="." unique_id=1326201166 instance=ExtResource("7_t8eqi")]
+position = Vector2(-2672, -8)
+
+[node name="thunder" parent="thunder2/vfx_thunder" parent_id_path=PackedInt32Array(1326201166, 1210320534) index="1" unique_id=2024225593]
+position = Vector2(2.125496, -504)
+points = PackedVector2Array(-17, -1126, -8, 528)
+
+[node name="CollisionShape2D" parent="thunder2/vfx_thunder/KillZone" parent_id_path=PackedInt32Array(1326201166, 1192454430) index="0" unique_id=1427227327]
+position = Vector2(157.2439, 538.86426)
+
+[node name="item20" parent="thunder2" index="1" unique_id=1231308016]
+position = Vector2(3328.0002, -2784)
+
+[node name="vfx_thunder_orbit-2" parent="thunder2" unique_id=1210320534 instance=ExtResource("8_gfom6")]
+position = Vector2(3298.1255, -2816)
+rotation = 2.4888396
+scale = Vector2(1.0000001, 0.99999994)
+
+[node name="KillZone2" parent="thunder2" unique_id=1192454430 instance=ExtResource("7_cq86n")]
+position = Vector2(3154.756, -4322.9893)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="thunder2/KillZone2" unique_id=1643717495]
+position = Vector2(173.2439, 1530.9893)
+shape = SubResource("RectangleShape2D_bnet0")
+
+[node name="vfx_thunder_orbit-1" parent="thunder2" unique_id=280570131 instance=ExtResource("8_gfom6")]
+position = Vector2(3346.1255, -2879.9998)
+
+[node name="thunder3" parent="." unique_id=250297614 instance=ExtResource("7_t8eqi")]
+position = Vector2(2600, -8)
+
+[node name="thunder" parent="thunder3/vfx_thunder" parent_id_path=PackedInt32Array(250297614, 1210320534) index="1" unique_id=2024225593]
+position = Vector2(2.125496, -504)
+points = PackedVector2Array(-17, -1126, -8, 528)
+
+[node name="CollisionShape2D" parent="thunder3/vfx_thunder/KillZone" parent_id_path=PackedInt32Array(250297614, 1192454430) index="0" unique_id=1427227327]
+position = Vector2(157.2439, 538.86426)
+
+[node name="item20" parent="thunder3" index="1" unique_id=1231308016]
+position = Vector2(3328.0002, -2784)
+
+[node name="vfx_thunder_orbit-2" parent="thunder3" unique_id=446441781 instance=ExtResource("8_gfom6")]
+position = Vector2(3298.1255, -2816)
+rotation = 2.4888396
+scale = Vector2(1.0000001, 0.99999994)
+
+[node name="KillZone2" parent="thunder3" unique_id=308608454 instance=ExtResource("7_cq86n")]
+position = Vector2(3154.756, -4322.9893)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="thunder3/KillZone2" unique_id=1252375384]
+position = Vector2(173.2439, 1530.9893)
+shape = SubResource("RectangleShape2D_bnet0")
+
+[node name="vfx_thunder_orbit-1" parent="thunder3" unique_id=1925250515 instance=ExtResource("8_gfom6")]
+position = Vector2(3346.1255, -2879.9998)
 
 [node name="world" type="Node2D" parent="." unique_id=1238890104]
 script = ExtResource("1_krhqc")
@@ -222,7 +256,7 @@ tile_map_data = PackedByteArray("AAAAABMAAAABAAEAAAABABMAAAABAAEAAAACABMAAAABAAE
 tile_set = ExtResource("2_krhqc")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("7_ndbc8")]
-position = Vector2(4234.779, -3505.372)
+position = Vector2(4628.7695, -2201.8218)
 
 [node name="windline_particles bg" parent="world" unique_id=381050555 instance=ExtResource("6_do0c6")]
 position = Vector2(-248, 384)
@@ -275,115 +309,127 @@ texture = SubResource("AtlasTexture_tyf17")
 [node name="check2" parent="bigitem" unique_id=1601024764 instance=ExtResource("10_24bcq")]
 position = Vector2(9879.108, -3797.0967)
 
-[node name="items" type="Node2D" parent="." unique_id=1954034881]
+[node name="装饰" type="Node2D" parent="." unique_id=1954034881]
 
-[node name="item2" type="Sprite2D" parent="items" unique_id=670593029]
+[node name="item2" type="Sprite2D" parent="装饰" unique_id=670593029]
 position = Vector2(5655, 157)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_s4gg2")
 
-[node name="item3" type="Sprite2D" parent="items" unique_id=1230108829]
+[node name="item3" type="Sprite2D" parent="装饰" unique_id=1230108829]
 position = Vector2(5910, 28)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_s4gg2")
 
-[node name="item4" type="Sprite2D" parent="items" unique_id=569464082]
+[node name="item4" type="Sprite2D" parent="装饰" unique_id=569464082]
 position = Vector2(6378, -4)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_ndbc8")
 flip_h = true
 
-[node name="item5" type="Sprite2D" parent="items" unique_id=867296870]
+[node name="item5" type="Sprite2D" parent="装饰" unique_id=867296870]
 position = Vector2(5552, -804)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_do0c6")
 flip_h = true
 
-[node name="item6" type="Sprite2D" parent="items" unique_id=631984838]
+[node name="item6" type="Sprite2D" parent="装饰" unique_id=631984838]
 position = Vector2(5908, -1245)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_do0c6")
 flip_h = true
 
-[node name="item7" type="Sprite2D" parent="items" unique_id=1458652628]
+[node name="item7" type="Sprite2D" parent="装饰" unique_id=1458652628]
 position = Vector2(3786, -1950)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_do0c6")
 flip_h = true
 
-[node name="item8" type="Sprite2D" parent="items" unique_id=677997067]
+[node name="item8" type="Sprite2D" parent="装饰" unique_id=677997067]
 position = Vector2(1583, -797.00006)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_do0c6")
 flip_h = true
 
-[node name="item9" type="Sprite2D" parent="items" unique_id=25504343]
+[node name="item9" type="Sprite2D" parent="装饰" unique_id=25504343]
 position = Vector2(3254, -1738.0001)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_vkbux")
 flip_h = true
 
-[node name="item10" type="Sprite2D" parent="items" unique_id=1764251708]
+[node name="item10" type="Sprite2D" parent="装饰" unique_id=1764251708]
 position = Vector2(2511, -1965.0001)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_vkbux")
 flip_h = true
 
-[node name="item11" type="Sprite2D" parent="items" unique_id=138077153]
+[node name="item11" type="Sprite2D" parent="装饰" unique_id=138077153]
 position = Vector2(2184, -2384)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_vkbux")
 flip_h = true
 
-[node name="item12" type="Sprite2D" parent="items" unique_id=2120974602]
+[node name="item12" type="Sprite2D" parent="装饰" unique_id=2120974602]
 position = Vector2(3113, -2378)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_vkbux")
 flip_h = true
 
-[node name="item13" type="Sprite2D" parent="items" unique_id=790725335]
+[node name="item13" type="Sprite2D" parent="装饰" unique_id=790725335]
 position = Vector2(2670, -3035.0002)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_vkgpk")
 flip_h = true
 
-[node name="item14" type="Sprite2D" parent="items" unique_id=1472052973]
+[node name="item14" type="Sprite2D" parent="装饰" unique_id=1472052973]
 position = Vector2(8682.016, -12674.572)
 rotation = 3.1415927
 texture = SubResource("AtlasTexture_krhqc")
 
-[node name="item15" type="Sprite2D" parent="items" unique_id=888549666]
+[node name="item15" type="Sprite2D" parent="装饰" unique_id=888549666]
 position = Vector2(11811.318, -9554.264)
 texture = SubResource("AtlasTexture_krhqc")
 
-[node name="item16" type="Sprite2D" parent="items" unique_id=2088673271]
+[node name="item16" type="Sprite2D" parent="装饰" unique_id=2088673271]
 position = Vector2(16287.21, -8077.2866)
 texture = SubResource("AtlasTexture_krhqc")
 
-[node name="item17" type="Sprite2D" parent="items" unique_id=1791157807]
+[node name="item17" type="Sprite2D" parent="装饰" unique_id=1791157807]
 position = Vector2(10826.666, -9549.768)
 texture = SubResource("AtlasTexture_krhqc")
 
-[node name="item18" type="Sprite2D" parent="items" unique_id=1432028412]
+[node name="item18" type="Sprite2D" parent="装饰" unique_id=1432028412]
 position = Vector2(12580.155, -9572.248)
 texture = SubResource("AtlasTexture_vleee")
 
-[node name="item19" type="Sprite2D" parent="items" unique_id=1708408819]
+[node name="item19" type="Sprite2D" parent="装饰" unique_id=1708408819]
 position = Vector2(8158.217, -8034.5737)
 texture = SubResource("AtlasTexture_fgl26")
 
-[node name="item20" type="Sprite2D" parent="items" unique_id=495584434]
+[node name="item20" type="Sprite2D" parent="装饰" unique_id=495584434]
 position = Vector2(9208.062, -9545.271)
 texture = SubResource("AtlasTexture_qwajx")
 
-[node name="item21" type="Sprite2D" parent="items" unique_id=888495284]
+[node name="item21" type="Sprite2D" parent="装饰" unique_id=888495284]
 position = Vector2(10873.875, -4075.7366)
 texture = SubResource("AtlasTexture_krhqc")
 
-[node name="item22" type="Sprite2D" parent="items" unique_id=679795779]
+[node name="item22" type="Sprite2D" parent="装饰" unique_id=679795779]
 position = Vector2(3271.0002, -1950)
 scale = Vector2(0.4448276, 0.4448276)
 texture = SubResource("AtlasTexture_krhqc")
+
+[node name="glass" type="Area2D" parent="." unique_id=882569906]
+position = Vector2(-240, 448)
+scale = Vector2(1.0743828, 1.0743828)
+script = ExtResource("10_4bx1i")
+
+[node name="item19" type="Sprite2D" parent="glass" unique_id=56161680]
+texture = SubResource("AtlasTexture_m3ope")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="glass" unique_id=390236470]
+position = Vector2(-0.63845825, -22.976898)
+shape = SubResource("RectangleShape2D_jnn5y")
 
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("11_ol0ao")]
 
@@ -398,6 +444,45 @@ text = "Final
 "
 horizontal_alignment = 1
 
+[node name="KillZone" parent="." unique_id=1633494024 instance=ExtResource("7_cq86n")]
+position = Vector2(1119, 674)
+
+[node name="Sprite2D" type="Sprite2D" parent="KillZone" unique_id=382830695]
+texture = ExtResource("2_88t4y")
+region_enabled = true
+region_rect = Rect2(1087, 0, 290, 859)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1645717717]
+position = Vector2(-7, -7.5)
+shape = SubResource("RectangleShape2D_n4non")
+
+[node name="interactBody" parent="." unique_id=125772546 instance=ExtResource("17_jvrvq")]
+position = Vector2(6144, -2176)
+display_name = "水箱"
+interact_mass = 2.0
+
+[node name="CollisionShape2D" parent="interactBody" index="0" unique_id=181797811]
+shape = SubResource("RectangleShape2D_cq86n")
+
+[node name="Sprite2D" parent="interactBody" index="1" unique_id=1226100119]
+position = Vector2(0.00012207031, -5.1498413e-05)
+scale = Vector2(0.4672987, 0.4672987)
+texture = ExtResource("2_88t4y")
+region_enabled = true
+region_rect = Rect2(1850, 33, 409, 821)
+
 [connection signal="body_entered" from="glass" to="glass" method="_on_body_entered"]
 
+[editable path="thunder"]
 [editable path="thunder/vfx_thunder"]
+[editable path="thunder/vfx_thunder_orbit-2"]
+[editable path="thunder/vfx_thunder_orbit-1"]
+[editable path="thunder2"]
+[editable path="thunder2/vfx_thunder"]
+[editable path="thunder2/vfx_thunder_orbit-2"]
+[editable path="thunder2/vfx_thunder_orbit-1"]
+[editable path="thunder3"]
+[editable path="thunder3/vfx_thunder"]
+[editable path="thunder3/vfx_thunder_orbit-2"]
+[editable path="thunder3/vfx_thunder_orbit-1"]
+[editable path="interactBody"]

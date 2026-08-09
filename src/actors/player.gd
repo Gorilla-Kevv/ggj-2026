@@ -28,10 +28,10 @@ var current_anim: AnimState = AnimState.IDLE
 const GRAVITY_SCALE: float = 0.1
 const MAX_SPEED: float = 600.0
 const AIR_DRAG_VERTICAL: float = 0.992
-const GROUND_FRICTION: float = 0.92
-const GROUND_BOUNCE: float = 0.35
-const WALL_BOUNCE: float = 0.4
-const MIN_BOUNCE_VELOCITY: float = 30.0
+const GROUND_FRICTION: float = 0.4
+const GROUND_BOUNCE: float = 0.55
+const WALL_BOUNCE: float = 0.6
+const MIN_BOUNCE_VELOCITY: float = 1.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
 # KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
