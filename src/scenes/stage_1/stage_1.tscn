@@ -6,11 +6,13 @@
 [ext_resource type="TileSet" uid="uid://bchqcsu2iay36" path="res://assets/关卡一/lab瓦片.tres" id="2_krhqc"]
 [ext_resource type="Texture2D" uid="uid://ckb16tbpcck75" path="res://assets/关卡一/中景3.png" id="2_ndbc8"]
 [ext_resource type="Texture2D" uid="uid://b4qppjqit4yfe" path="res://assets/关卡一/中景4.png" id="3_do0c6"]
-[ext_resource type="PackedScene" uid="uid://mli1gw7yhwrq" path="res://src/scenes/stage_1/deadlight.tscn" id="5_0ogiu"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_do0c6"]
+[ext_resource type="Script" uid="uid://1bnedirt5pjp" path="res://script/vfx_thunder.gd" id="6_jvrvq"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="6_ol0ao"]
 [ext_resource type="PackedScene" uid="uid://baux3cgfuij5j" path="res://src/scenes/vfx/vfx_thunder.tscn" id="6_t8eqi"]
+[ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="7_cq86n"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="7_ndbc8"]
+[ext_resource type="PackedScene" uid="uid://b7f2renisonyb" path="res://src/scenes/vfx/vfx_thunder_orbit.tscn" id="8_gfom6"]
 [ext_resource type="Script" uid="uid://jt13i75roure" path="res://script/glass.gd" id="10_4bx1i"]
 [ext_resource type="PackedScene" uid="uid://dmi0ubl4i1ms7" path="res://src/scenes/stage_1/stage_1checkpoint.tscn" id="10_24bcq"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="11_ol0ao"]
@@ -23,6 +25,16 @@ region = Rect2(3406, 132, 569, 727)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pinah"]
 atlas = ExtResource("2_88t4y")
 region = Rect2(1850, 33, 409, 821)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4non"]
+size = Vector2(64, 1647.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bnet0"]
+size = Vector2(316, 327.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8quu"]
+atlas = ExtResource("2_88t4y")
+region = Rect2(1087, 0, 290, 859)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m3ope"]
 atlas = ExtResource("2_88t4y")
@@ -137,12 +149,41 @@ position = Vector2(1401, 648.00006)
 scale = Vector2(0.7592573, 0.6310909)
 texture = SubResource("AtlasTexture_pinah")
 
-[node name="deadlight" parent="." unique_id=14921987 instance=ExtResource("5_0ogiu")]
-position = Vector2(3296.0002, -4439.9995)
-rotation = -3.1415925
+[node name="thunder" type="Node2D" parent="." unique_id=50572396]
 
-[node name="vfx_thunder" parent="." unique_id=1210320534 instance=ExtResource("6_t8eqi")]
-position = Vector2(3304, -2616)
+[node name="vfx_thunder" parent="thunder" unique_id=1210320534 instance=ExtResource("6_t8eqi")]
+position = Vector2(3314.1255, -4584)
+rotation = -3.1415925
+script = ExtResource("6_jvrvq")
+
+[node name="KillZone" parent="thunder/vfx_thunder" unique_id=1192454430 instance=ExtResource("7_cq86n")]
+position = Vector2(159.36938, -261.01074)
+rotation = 3.1415925
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="thunder/vfx_thunder/KillZone" unique_id=1556624281]
+position = Vector2(173.2439, 538.73926)
+shape = SubResource("RectangleShape2D_n4non")
+disabled = true
+
+[node name="vfx_thunder_orbit-1" parent="thunder" unique_id=391009860 instance=ExtResource("8_gfom6")]
+position = Vector2(3346.1255, -2879.9998)
+
+[node name="KillZone2" parent="thunder/vfx_thunder_orbit-1" unique_id=461141327 instance=ExtResource("7_cq86n")]
+position = Vector2(-191.36938, -1442.9895)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="thunder/vfx_thunder_orbit-1/KillZone2" unique_id=1302560235]
+position = Vector2(173.2439, 1530.9893)
+shape = SubResource("RectangleShape2D_bnet0")
+
+[node name="vfx_thunder_orbit-2" parent="thunder" unique_id=1197043188 instance=ExtResource("8_gfom6")]
+position = Vector2(3298.1255, -2816)
+rotation = 2.4888396
+scale = Vector2(1.0000001, 0.99999994)
+
+[node name="item20" type="Sprite2D" parent="thunder" unique_id=326497860]
+position = Vector2(3320, -2792)
+scale = Vector2(0.384, 0.384)
+texture = SubResource("AtlasTexture_x8quu")
 
 [node name="glass" type="Area2D" parent="." unique_id=882569906]
 position = Vector2(-240, 448)
@@ -181,7 +222,7 @@ tile_map_data = PackedByteArray("AAAAABMAAAABAAEAAAABABMAAAABAAEAAAACABMAAAABAAE
 tile_set = ExtResource("2_krhqc")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("7_ndbc8")]
-position = Vector2(-350, 393)
+position = Vector2(4234.779, -3505.372)
 
 [node name="windline_particles bg" parent="world" unique_id=381050555 instance=ExtResource("6_do0c6")]
 position = Vector2(-248, 384)
@@ -358,3 +399,5 @@ text = "Final
 horizontal_alignment = 1
 
 [connection signal="body_entered" from="glass" to="glass" method="_on_body_entered"]
+
+[editable path="thunder/vfx_thunder"]

@@ -12,6 +12,10 @@ shader_parameter/vanishing_value = 0.0
 shader_parameter/speed = Vector2(-2, 0)
 shader_parameter/basic = ExtResource("3_lt2yt")
 
+[sub_resource type="Gradient" id="Gradient_gisr2"]
+offsets = PackedFloat32Array(0, 0.007194245)
+colors = PackedColorArray(1, 1, 1, 0, 0.50980395, 1, 0.7372549, 1)
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7v542"]
 blend_mode = 1
 light_mode = 1
@@ -317,6 +321,7 @@ position = Vector2(16, -552)
 points = PackedVector2Array(-17, -1126, -9, 576)
 width = 150.0
 default_color = Color(0.510273, 0.99999994, 0.73905885, 1)
+gradient = SubResource("Gradient_gisr2")
 texture_mode = 2
 
 [node name="sparkles" type="GPUParticles2D" parent="." unique_id=1222566371]
