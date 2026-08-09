@@ -459,7 +459,7 @@ shape = SubResource("RectangleShape2D_n4non")
 [node name="interactBody" parent="." unique_id=125772546 instance=ExtResource("17_jvrvq")]
 position = Vector2(6144, -2176)
 display_name = "水箱"
-interact_mass = 2.0
+interact_mass = 10.0
 
 [node name="CollisionShape2D" parent="interactBody" index="0" unique_id=181797811]
 shape = SubResource("RectangleShape2D_cq86n")
