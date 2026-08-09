@@ -62,16 +62,16 @@ func _cycle_target() -> void:
 func select_target(index: int) -> void:
 	if current_index < targets.size():
 		var old_target := targets[current_index]
-		if old_target.is_in_group("interactable"):
-			old_target.modulate = Color.WHITE
+		if old_target.has_method("on_deselected"):
+			old_target.on_deselected()
 
 	current_index = clampi(index, 0, targets.size() - 1)
 
 	var global := get_node("/root/Global")
 	global.selected_target = targets[current_index]
 
-	if global.selected_target.is_in_group("interactable"):
-		global.selected_target.modulate = Color.GOLD
+	if global.selected_target.has_method("on_selected"):
+		global.selected_target.on_selected()
 
 	target_changed.emit(global.selected_target)
 
