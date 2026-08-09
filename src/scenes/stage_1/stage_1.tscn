@@ -1,18 +1,20 @@
 [gd_scene format=4 uid="uid://c4n1sxje4rbxe"]
 
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="1_krhqc"]
-[ext_resource type="Texture2D" uid="uid://dpjv22yg0wn1q" path="res://assets/关卡一/背景(无水印.png" id="1_s4gg2"]
-[ext_resource type="Texture2D" uid="uid://b2kh3o4rj8emd" path="res://assets/关卡一/场景道具图集.png" id="2_88t4y"]
+[ext_resource type="Texture2D" uid="uid://d31h5kan5ne16" path="res://assets/关卡一/背景(无水印.png" id="1_s4gg2"]
+[ext_resource type="Texture2D" uid="uid://bauwhyi7jm8ex" path="res://assets/关卡一/场景道具图集.png" id="2_88t4y"]
 [ext_resource type="TileSet" uid="uid://bchqcsu2iay36" path="res://assets/关卡一/lab瓦片.tres" id="2_krhqc"]
-[ext_resource type="Texture2D" uid="uid://dk4wp0g2cqwnh" path="res://assets/关卡一/中景3.png" id="2_ndbc8"]
-[ext_resource type="Texture2D" uid="uid://bnvp5c4yw0wo7" path="res://assets/关卡一/中景4.png" id="3_do0c6"]
+[ext_resource type="Texture2D" uid="uid://ckb16tbpcck75" path="res://assets/关卡一/中景3.png" id="2_ndbc8"]
+[ext_resource type="Texture2D" uid="uid://b4qppjqit4yfe" path="res://assets/关卡一/中景4.png" id="3_do0c6"]
+[ext_resource type="PackedScene" uid="uid://mli1gw7yhwrq" path="res://src/scenes/stage_1/deadlight.tscn" id="5_0ogiu"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_do0c6"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="6_ol0ao"]
+[ext_resource type="PackedScene" uid="uid://baux3cgfuij5j" path="res://src/scenes/vfx/vfx_thunder.tscn" id="6_t8eqi"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="7_ndbc8"]
 [ext_resource type="Script" uid="uid://jt13i75roure" path="res://script/glass.gd" id="10_4bx1i"]
 [ext_resource type="PackedScene" uid="uid://dmi0ubl4i1ms7" path="res://src/scenes/stage_1/stage_1checkpoint.tscn" id="10_24bcq"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="11_ol0ao"]
-[ext_resource type="FontFile" uid="uid://c4wcgtkesy0v6" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="12_0e0d6"]
+[ext_resource type="FontFile" uid="uid://bugkl5nl4pw3e" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="12_0e0d6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0e0d6"]
 atlas = ExtResource("2_88t4y")
@@ -28,26 +30,6 @@ region = Rect2(3406, 132, 569, 727)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jnn5y"]
 size = Vector2(448.0451, 522.5065)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5er4e"]
-atlas = ExtResource("2_88t4y")
-region = Rect2(1087, 0, 290, 859)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_krhqc"]
-atlas = ExtResource("2_88t4y")
-region = Rect2(1788, 2404, 522, 173)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vleee"]
-atlas = ExtResource("2_88t4y")
-region = Rect2(2812, 2521, 116, 58)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fgl26"]
-atlas = ExtResource("2_88t4y")
-region = Rect2(3288, 1396, 804, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qwajx"]
-atlas = ExtResource("2_88t4y")
-region = Rect2(1788, 2404, 522, 173)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8nj0n"]
 atlas = ExtResource("2_88t4y")
@@ -92,6 +74,22 @@ region = Rect2(949, 2412, 560, 165)
 [sub_resource type="AtlasTexture" id="AtlasTexture_vkgpk"]
 atlas = ExtResource("2_88t4y")
 region = Rect2(202, 2414, 415, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krhqc"]
+atlas = ExtResource("2_88t4y")
+region = Rect2(1788, 2404, 522, 173)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vleee"]
+atlas = ExtResource("2_88t4y")
+region = Rect2(2812, 2521, 116, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgl26"]
+atlas = ExtResource("2_88t4y")
+region = Rect2(3288, 1396, 804, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwajx"]
+atlas = ExtResource("2_88t4y")
+region = Rect2(1788, 2404, 522, 173)
 
 [node name="stage-1" type="Node2D" unique_id=1265220519]
 metadata/_edit_horizontal_guides_ = [-636.0]
@@ -139,6 +137,13 @@ position = Vector2(1401, 648.00006)
 scale = Vector2(0.7592573, 0.6310909)
 texture = SubResource("AtlasTexture_pinah")
 
+[node name="deadlight" parent="." unique_id=14921987 instance=ExtResource("5_0ogiu")]
+position = Vector2(3296.0002, -4439.9995)
+rotation = -3.1415925
+
+[node name="vfx_thunder" parent="." unique_id=1210320534 instance=ExtResource("6_t8eqi")]
+position = Vector2(3304, -2616)
+
 [node name="glass" type="Area2D" parent="." unique_id=882569906]
 position = Vector2(-240, 448)
 scale = Vector2(1.0743828, 1.0743828)
@@ -181,12 +186,6 @@ position = Vector2(-350, 393)
 [node name="windline_particles bg" parent="world" unique_id=381050555 instance=ExtResource("6_do0c6")]
 position = Vector2(-248, 384)
 
-[node name="item1" type="Sprite2D" parent="." unique_id=1722169474]
-position = Vector2(2920, -3512)
-rotation = 1.5707964
-scale = Vector2(0.38792992, 0.38792995)
-texture = SubResource("AtlasTexture_5er4e")
-
 [node name="bigitem" type="Node2D" parent="." unique_id=262547703]
 position = Vector2(2765.5, -1030.9465)
 scale = Vector2(0.4448276, 0.4448276)
@@ -194,39 +193,6 @@ scale = Vector2(0.4448276, 0.4448276)
 [node name="Parallax2D" type="Parallax2D" parent="bigitem" unique_id=1291402135]
 scroll_scale = Vector2(1.1, 1)
 scroll_offset = Vector2(-6223.76, 4588.1743)
-
-[node name="item2" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=617186558]
-position = Vector2(8682.016, -12674.572)
-rotation = 3.1415927
-texture = SubResource("AtlasTexture_krhqc")
-
-[node name="item13" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=721576361]
-position = Vector2(11811.318, -9554.264)
-texture = SubResource("AtlasTexture_krhqc")
-
-[node name="item14" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=1472817733]
-position = Vector2(16287.21, -8077.2866)
-texture = SubResource("AtlasTexture_krhqc")
-
-[node name="item15" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=1784793881]
-position = Vector2(10826.666, -9549.768)
-texture = SubResource("AtlasTexture_krhqc")
-
-[node name="item16" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=314591814]
-position = Vector2(12580.155, -9572.248)
-texture = SubResource("AtlasTexture_vleee")
-
-[node name="item17" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=2147260823]
-position = Vector2(8158.217, -8034.5737)
-texture = SubResource("AtlasTexture_fgl26")
-
-[node name="item18" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=720509817]
-position = Vector2(9208.062, -9545.271)
-texture = SubResource("AtlasTexture_qwajx")
-
-[node name="item4" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=67578628]
-position = Vector2(10873.875, -4075.7366)
-texture = SubResource("AtlasTexture_krhqc")
 
 [node name="item5" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=2095555331]
 position = Vector2(7018.449, -4381.473)
@@ -239,10 +205,6 @@ texture = SubResource("AtlasTexture_pmp4l")
 [node name="item12" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=2128748188]
 position = Vector2(224.8062, -10705.271)
 texture = SubResource("AtlasTexture_tukse")
-
-[node name="item3" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=679795779]
-position = Vector2(7360.156, -6654.2637)
-texture = SubResource("AtlasTexture_krhqc")
 
 [node name="item6" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=634984924]
 position = Vector2(1115.0388, 49.45729)
@@ -343,6 +305,44 @@ position = Vector2(2670, -3035.0002)
 scale = Vector2(0.20991422, 0.20991421)
 texture = SubResource("AtlasTexture_vkgpk")
 flip_h = true
+
+[node name="item14" type="Sprite2D" parent="items" unique_id=1472052973]
+position = Vector2(8682.016, -12674.572)
+rotation = 3.1415927
+texture = SubResource("AtlasTexture_krhqc")
+
+[node name="item15" type="Sprite2D" parent="items" unique_id=888549666]
+position = Vector2(11811.318, -9554.264)
+texture = SubResource("AtlasTexture_krhqc")
+
+[node name="item16" type="Sprite2D" parent="items" unique_id=2088673271]
+position = Vector2(16287.21, -8077.2866)
+texture = SubResource("AtlasTexture_krhqc")
+
+[node name="item17" type="Sprite2D" parent="items" unique_id=1791157807]
+position = Vector2(10826.666, -9549.768)
+texture = SubResource("AtlasTexture_krhqc")
+
+[node name="item18" type="Sprite2D" parent="items" unique_id=1432028412]
+position = Vector2(12580.155, -9572.248)
+texture = SubResource("AtlasTexture_vleee")
+
+[node name="item19" type="Sprite2D" parent="items" unique_id=1708408819]
+position = Vector2(8158.217, -8034.5737)
+texture = SubResource("AtlasTexture_fgl26")
+
+[node name="item20" type="Sprite2D" parent="items" unique_id=495584434]
+position = Vector2(9208.062, -9545.271)
+texture = SubResource("AtlasTexture_qwajx")
+
+[node name="item21" type="Sprite2D" parent="items" unique_id=888495284]
+position = Vector2(10873.875, -4075.7366)
+texture = SubResource("AtlasTexture_krhqc")
+
+[node name="item22" type="Sprite2D" parent="items" unique_id=679795779]
+position = Vector2(3271.0002, -1950)
+scale = Vector2(0.4448276, 0.4448276)
+texture = SubResource("AtlasTexture_krhqc")
 
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("11_ol0ao")]
 

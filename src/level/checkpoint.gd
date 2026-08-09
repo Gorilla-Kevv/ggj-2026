@@ -37,7 +37,7 @@ func activate() -> void:
 # 视觉状态：已激活=亮绿 + "CHECKED!" / 未激活=白 + "CHECKPOINT"
 func _update_visual() -> void:
 	if is_active:
-		modulate = Color(0.672, 0.9, 0.104, 0.361)
+		modulate = Color(1.0, 0.844, 0.835, 0.361)
 	else:
 		modulate = Color(1, 1, 1, 1)
 	_update_label()
