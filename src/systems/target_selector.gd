@@ -57,17 +57,17 @@ func _cycle_target() -> void:
 	if targets.size() <= 1:
 		print("[TargetSelector] _cycle_target 跳过 targets.size=", targets.size())
 		return
-	current_index = (current_index + 1) % targets.size()
-	print("[TargetSelector] _cycle_target 切换到 index=", current_index)
-	select_target(current_index)
+	var next_index := (current_index + 1) % targets.size()
+	print("[TargetSelector] _cycle_target 切换到 index=", next_index)
+	select_target(next_index)
 
-# 选中指定索引的目标
 func select_target(index: int) -> void:
-	print("[TargetSelector] select_target 旧index=", current_index, " 新index=", index, " 目标列表=", targets)
+	var old_index := current_index
+	print("[TargetSelector] select_target 旧index=", old_index, " 新index=", index, " 目标列表=", targets)
 	# 取消旧目标高亮
-	if current_index < targets.size() and targets[current_index].is_in_group("interactable"):
-		_set_modulate_recursive(targets[current_index], Color.WHITE)
-		print("[TargetSelector] 取消高亮: ", targets[current_index].name)
+	if old_index < targets.size() and targets[old_index].is_in_group("interactable"):
+		_set_modulate_recursive(targets[old_index], Color.WHITE)
+		print("[TargetSelector] 取消高亮: ", targets[old_index].name)
 
 	current_index = clampi(index, 0, targets.size() - 1)
 
