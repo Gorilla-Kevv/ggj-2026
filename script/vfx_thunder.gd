@@ -8,8 +8,8 @@ func _ready() -> void:
 
 func _start_cycle() -> void:
 	while true:
-		# 1. 播放 start — 安全期，碰撞关闭
-		collision_shape_2d.disabled = true
+		# 1. 播放 start — 危险期，碰撞开启
+		collision_shape_2d.disabled = false
 		animation_player.play("start")
 		await animation_player.animation_finished
 
@@ -17,8 +17,8 @@ func _start_cycle() -> void:
 		animation_player.play("reset")
 		await get_tree().create_timer(2.0).timeout
 
-		# 3. 播放 end_animation — 危险期，碰撞开启
-		collision_shape_2d.disabled = false
+		# 3. 播放 end_animation — 安全期，碰撞关闭
+		collision_shape_2d.disabled = true
 		animation_player.play("end_animation")
 		await animation_player.animation_finished
 
