@@ -24,6 +24,7 @@ func _ready() -> void:
 # 输入处理：R键 → 循环切换
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch_target"):
+		print("[TargetSelector] R键按下 has_interactables=", has_interactables)
 		if not has_interactables:
 			# 除玩家外没有可交互物体 → 通知 HUD (持续3秒)
 			var global := get_node("/root/Global")
@@ -54,15 +55,19 @@ func _refresh_targets() -> void:
 # 切换到下一个目标 (R键触发)
 func _cycle_target() -> void:
 	if targets.size() <= 1:
+		print("[TargetSelector] _cycle_target 跳过 targets.size=", targets.size())
 		return
 	current_index = (current_index + 1) % targets.size()
+	print("[TargetSelector] _cycle_target 切换到 index=", current_index)
 	select_target(current_index)
 
 # 选中指定索引的目标
 func select_target(index: int) -> void:
+	print("[TargetSelector] select_target 旧index=", current_index, " 新index=", index, " 目标列表=", targets)
 	# 取消旧目标高亮
 	if current_index < targets.size() and targets[current_index].is_in_group("interactable"):
 		_set_modulate_recursive(targets[current_index], Color.WHITE)
+		print("[TargetSelector] 取消高亮: ", targets[current_index].name)
 
 	current_index = clampi(index, 0, targets.size() - 1)
 
@@ -72,6 +77,9 @@ func select_target(index: int) -> void:
 	# 新目标高亮
 	if global.selected_target.is_in_group("interactable"):
 		_set_modulate_recursive(global.selected_target, Color.AQUA)
+		print("[TargetSelector] 设置高亮: ", global.selected_target.name, " modulate=", global.selected_target.modulate)
+	else:
+		print("[TargetSelector] 目标不在interactable组: ", global.selected_target.name)
 
 	target_changed.emit(global.selected_target)
 
