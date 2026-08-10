@@ -2,7 +2,7 @@
 # Checkpoint — 检查点/重生点
 # 玩家触碰后激活，死亡后从最后激活的检查点重生
 # 激活状态写入 Global (跨场景保留)
-# 视觉反馈：未激活=灰色半透明 / 已激活=绿色半透明
+# 视觉反馈：未激活=白色 / 已激活=绿色半透明
 # ============================================================
 extends Area2D
 
@@ -12,12 +12,11 @@ extends Area2D
 # checkpoint_activated: 检查点被激活时触发 (供音效/VFX 监听)
 signal checkpoint_activated(checkpoint: Node2D)
 
-func _ready() -> void: 
+func _ready() -> void:
 	monitoring = true
 	monitorable = false
-	collision_layer = 0
-	collision_mask = 1
-	body_entered.connect(_on_body_entered)
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
 	_update_visual()
 
 # 碰撞回调：玩家首次触碰 → 激活
@@ -29,15 +28,25 @@ func _on_body_entered(body: Node2D) -> void:
 func activate() -> void:
 	is_active = true
 	var global := get_node("/root/Global")
-	# 保存重生位置和关卡路径 (跨场景保留)
 	global.current_checkpoint = global_position
 	global.last_checkpoint_level = get_tree().current_scene.scene_file_path
+	print("[Checkpoint] 激活 坐标=", global.current_checkpoint, " 关卡=", global.last_checkpoint_level)
 	_update_visual()
 	checkpoint_activated.emit(self)
 
-# 视觉状态：已激活=亮绿 / 未激活=暗灰
+# 视觉状态：已激活=亮绿 + "CHECKED!" / 未激活=白 + "CHECKPOINT"
 func _update_visual() -> void:
 	if is_active:
-		modulate = Color(0.2, 1.0, 0.4, 0.8)
+		modulate = Color(1.0, 0.843, 0.875, 0.682)
 	else:
-		modulate = Color(0.3, 0.3, 0.3, 0.5)
+		modulate = Color(1, 1, 1, 1)
+	_update_label()
+
+func _update_label() -> void:
+	var label := get_node_or_null("Label") as Label
+	if label == null:
+		return
+	if is_active:
+		label.text = "CHECKED!"
+	else:
+		label.text = "CHECKPOINT"

@@ -3,69 +3,92 @@
 # 挂载于每个关卡场景的 Node2D 节点
 # 管理可操作目标列表，R键循环切换，更新 Global.selected_target
 # 自动扫描 "player" 组 和 "interactable" 组
+# 按下 R 键时如果除了玩家外没有可交互物体，通知 HUD 显示提示
 # ============================================================
 extends Node2D
 
 # ---------- 状态 ----------
-# targets:        当前场景中所有可操作目标 (主角 + 可交互物体)
-# current_index:  当前选中目标的索引
+# targets:            当前场景中所有可操作目标 (主角 + 可交互物体)
+# current_index:      当前选中目标的索引
+# has_interactables:  是否存在除玩家外的可交互物体
 var targets: Array[Node2D] = []
 var current_index: int = 0
+var has_interactables: bool = false
 
 # target_changed: 目标切换时触发 (new_target 为新选中目标)
 signal target_changed(new_target: Node2D)
 
 func _ready() -> void:
-	# 延迟刷新，确保场景中所有节点完成 _ready() 后再收集目标
 	call_deferred("_refresh_targets")
 
 # 输入处理：R键 → 循环切换
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("switch_target"):
-		_cycle_target()
+		print("[TargetSelector] R键按下 has_interactables=", has_interactables)
+		if not has_interactables:
+			# 除玩家外没有可交互物体 → 通知 HUD (持续3秒)
+			var global := get_node("/root/Global")
+			global.target_label_hint = "无可选物体"
+			global.target_label_hint_time = Time.get_ticks_msec()
+		else:
+			_cycle_target()
 
 # 重新扫描场景中的目标列表
-# 调用时机：场景加载 / 新交互物动态注册后
 func _refresh_targets() -> void:
 	targets.clear()
+	has_interactables = false
+
 	# 1. 主角始终在列表第一位
 	var player := get_tree().get_first_node_in_group("player")
 	if player:
 		targets.append(player)
+
 	# 2. 所有可交互物体依次排列
 	for node in get_tree().get_nodes_in_group("interactable"):
 		if is_instance_valid(node):
 			targets.append(node)
+			has_interactables = true
+
 	if targets.size() > 0:
 		select_target(0)
 
 # 切换到下一个目标 (R键触发)
 func _cycle_target() -> void:
-	if targets.size() == 0:
+	if targets.size() <= 1:
+		print("[TargetSelector] _cycle_target 跳过 targets.size=", targets.size())
 		return
-	current_index = (current_index + 1) % targets.size()
-	select_target(current_index)
+	var next_index := (current_index + 1) % targets.size()
+	print("[TargetSelector] _cycle_target 切换到 index=", next_index)
+	select_target(next_index)
 
-# 选中指定索引的目标
-# 会自动取消旧目标的选中高亮，并为新目标添加高亮
 func select_target(index: int) -> void:
+	var old_index := current_index
+	print("[TargetSelector] select_target 旧index=", old_index, " 新index=", index, " 目标列表=", targets)
 	# 取消旧目标高亮
-	if current_index < targets.size():
-		var old_target := targets[current_index]
-		if old_target is BaseInteractable:
-			old_target.on_deselected()
+	if old_index < targets.size() and targets[old_index].is_in_group("interactable"):
+		_set_modulate_recursive(targets[old_index], Color.WHITE)
+		print("[TargetSelector] 取消高亮: ", targets[old_index].name)
 
 	current_index = clampi(index, 0, targets.size() - 1)
 
-	# 更新全局状态
 	var global := get_node("/root/Global")
 	global.selected_target = targets[current_index]
 
-	# 为新目标添加高亮
-	if global.selected_target is BaseInteractable:
-		global.selected_target.on_selected()
+	# 新目标高亮
+	if global.selected_target.is_in_group("interactable"):
+		_set_modulate_recursive(global.selected_target, Color.AQUA)
+		print("[TargetSelector] 设置高亮: ", global.selected_target.name, " modulate=", global.selected_target.modulate)
+	else:
+		print("[TargetSelector] 目标不在interactable组: ", global.selected_target.name)
 
 	target_changed.emit(global.selected_target)
+
+# 递归设色：自身 + 所有子节点的 modulate
+func _set_modulate_recursive(node: Node, color: Color) -> void:
+	if node is CanvasItem:
+		node.modulate = color
+	for child in node.get_children():
+		_set_modulate_recursive(child, color)
 
 # 获取当前选中目标 (供外部查询)
 func get_current_target() -> Node2D:
@@ -74,8 +97,8 @@ func get_current_target() -> Node2D:
 	return targets[current_index]
 
 # 动态注册新目标 (供场景中动态生成的交互物调用)
-# 例如：Boss 战中生成的碎石、关卡中触发的机关
 func register_target(node: Node2D) -> void:
 	if node not in targets:
 		targets.append(node)
+		has_interactables = true
 		_refresh_targets()

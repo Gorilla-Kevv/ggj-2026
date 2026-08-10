@@ -4,9 +4,7 @@
 # 通过 WindSystem 信号接收风力推动
 # 死亡条件：尖刺 / 敌人触碰 / 深渊
 #
-# 动画驱动：
-#   AnimationPlayer  — 主动画 (idle / rolling 精灵帧)
-#   BreatheParticles — 辅助粒子 (仅 idle 时发射呼吸粒子)
+# 动画驱动：AnimatedSprite2D (idle / rolling / die / underattack)
 # ============================================================
 extends CharacterBody2D
 
@@ -30,10 +28,10 @@ var current_anim: AnimState = AnimState.IDLE
 const GRAVITY_SCALE: float = 0.1
 const MAX_SPEED: float = 600.0
 const AIR_DRAG_VERTICAL: float = 0.992
-const GROUND_FRICTION: float = 0.92
-const GROUND_BOUNCE: float = 0.35
-const WALL_BOUNCE: float = 0.4
-const MIN_BOUNCE_VELOCITY: float = 30.0
+const GROUND_FRICTION: float = 0.97
+const GROUND_BOUNCE: float = 0.7
+const WALL_BOUNCE: float = 1.2
+const MIN_BOUNCE_VELOCITY: float = 1.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
 # KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
@@ -42,12 +40,10 @@ const KEY_MOVE_FORCE: float = 200.0
 const WIND_ACCEL: float = 8.0
 
 # ---------- 子节点引用 ----------
-# anim_player:             主动画控制器 (idle / rolling)
-# sprite:                  主角精灵 (碰撞回弹变形目标)
+# animated_sprite:         AnimatedSprite2D 动画 (idle / rolling / die / underattack)
 # trail_particles:         风迹线粒子 (拖尾跟随运动方向)
 # trail_material:           粒子材质缓存 (避免每帧 cast)
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var sprite: Node2D = $Sprite2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var trail_particles: GPUParticles2D = $windline_particles_player
 @onready var trail_material: ParticleProcessMaterial = null
 
@@ -59,9 +55,6 @@ signal player_bounced(collision_point: Vector2)
 func _ready() -> void:
 	# 注册到 "player" 组，供 TargetSelector / 敌人 / 检查点查找
 	add_to_group("player")
-	# 设置碰撞层：layer 1 供 Area2D (kill_zone/spike/checkpoint) 检测
-	collision_layer = 1
-	collision_mask = 1
 	# 缓存粒子材质引用
 	if trail_particles and trail_particles.process_material is ParticleProcessMaterial:
 		trail_material = trail_particles.process_material as ParticleProcessMaterial
@@ -70,18 +63,20 @@ func _ready() -> void:
 	_connect_wind_system()
 
 # 从 Global 恢复检查点位置 (死亡重生/场景重载后调用)
-# 优先级：检查点 → 大厅返回点 (仅在大厅场景时生效，用于从关卡返回落在进门处)
 func _restore_checkpoint() -> void:
 	var global := get_node("/root/Global")
 	if global.current_checkpoint != Vector2.ZERO:
 		global_position = global.current_checkpoint
 		global.refill_energy()
+		print("[Player] 重生到检查点 坐标=", global.current_checkpoint)
 		_enter_idle()
 	elif global.hub_return != Vector2.ZERO and get_tree().current_scene.scene_file_path == global.HUB_SCENE:
 		global_position = global.hub_return
 		global.hub_return = Vector2.ZERO
 		global.refill_energy()
 		_enter_idle()
+	else:
+		print("[Player] 无检查点数据，留在默认出生位 坐标=", global_position)
 
 # 连接到场景中的 WindSystem 节点 (通过 "wind_system" 组查找)
 func _connect_wind_system() -> void:
@@ -135,22 +130,43 @@ func _on_micro_burst(target: Node2D, direction: Vector2) -> void:
 
 # ---------- 动画状态切换 ----------
 
-# 进入 idle 状态：播放 AnimationPlayer 的 "idle"
+# 进入 idle 状态
 func _enter_idle() -> void:
 	if current_anim == AnimState.IDLE:
 		return
 	current_anim = AnimState.IDLE
-	if anim_player and anim_player.has_animation("idle"):
-		anim_player.speed_scale = 1.0
-		anim_player.play("idle")
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("idle"):
+		animated_sprite.speed_scale = 1.0
+		animated_sprite.play("idle")
 
-# 进入 rolling 状态：播放 AnimationPlayer 的 "rolling"
+# 进入 rolling 状态
 func _enter_rolling() -> void:
 	if current_anim == AnimState.ROLLING:
 		return
 	current_anim = AnimState.ROLLING
-	if anim_player and anim_player.has_animation("rolling"):
-		anim_player.play("rolling")
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("rolling"):
+		animated_sprite.play("rolling")
+
+# 播放一次 die 动画，播完后重生 (最多等 1.5 秒保底)
+func _play_die_animation() -> void:
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("die"):
+		animated_sprite.speed_scale = 1.0
+		animated_sprite.play("die")
+		# 等待动画自然播完，超时 1.5 秒强制重生
+		var timeout := get_tree().create_timer(1.5)
+		await _wait_for_animation_or_timeout(timeout)
+	_respawn()
+
+# 等待动画结束或超时
+func _wait_for_animation_or_timeout(timeout: SceneTreeTimer) -> void:
+	while animated_sprite.is_playing() and timeout.time_left > 0:
+		await get_tree().process_frame
+
+# 播放受击动画 (供敌人/机关调用)
+func play_underattack() -> void:
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("underattack"):
+		animated_sprite.speed_scale = 1.0
+		animated_sprite.play("underattack")
 
 # ---------- 每帧视觉更新 ----------
 
@@ -160,7 +176,7 @@ func _enter_rolling() -> void:
 func _process(_delta: float) -> void:
 	_update_trail()
 
-	if current_anim != AnimState.ROLLING or anim_player == null:
+	if current_anim != AnimState.ROLLING or animated_sprite == null:
 		return
 
 	var speed_factor: float
@@ -171,7 +187,7 @@ func _process(_delta: float) -> void:
 		# 风停衰减：速度占比映射，随 friction 和重力自然降低
 		speed_factor = clampf(velocity.length() / MAX_SPEED, 0.15, 1.0)
 
-	anim_player.speed_scale = speed_factor
+	animated_sprite.speed_scale = speed_factor
 
 # 风迹线粒子：速度超过阈值时发射，方向与运动方向相反 (拖尾效果)
 func _update_trail() -> void:
@@ -179,18 +195,18 @@ func _update_trail() -> void:
 		return
 
 	var speed := velocity.length()
-	if speed < 20.0:
+	if speed < 10.0:
 		trail_particles.emitting = false
 		return
 
 	trail_particles.emitting = true
-	trail_particles.amount = clampi(int(speed / 30.0), 2, 16)
+	trail_particles.amount = clampi(int(speed / 15.0), 4, 32)
 
 	if trail_material:
 		var dir_2d := -velocity.normalized()
 		trail_material.direction = Vector3(dir_2d.x, dir_2d.y, 0.0)
-		trail_material.initial_velocity_min = speed * 0.2
-		trail_material.initial_velocity_max = speed * 0.4
+		trail_material.initial_velocity_min = speed * 0.35
+		trail_material.initial_velocity_max = speed * 0.7
 
 # ---------- 物理 ----------
 
@@ -216,7 +232,6 @@ func _physics_process(delta: float) -> void:
 		if not _was_on_floor:
 			# 刚落地：竖直反弹
 			velocity.y = -abs(velocity.y) * GROUND_BOUNCE
-			_play_bounce_squash(Vector2.UP)
 		elif abs(velocity.y) > MIN_BOUNCE_VELOCITY:
 			# 持续弹跳中：每帧反弹 (模拟多次小弹跳)
 			velocity.y = -abs(velocity.y) * GROUND_BOUNCE
@@ -259,32 +274,8 @@ func _handle_wall_bounce() -> void:
 			continue
 
 		velocity = velocity.bounce(normal) * WALL_BOUNCE
-		_play_bounce_squash(normal)
 		player_bounced.emit(collision.get_position())
 		break
-
-# 碰撞回弹视觉：沿碰撞法线方向压扁精灵，再弹回原形
-func _play_bounce_squash(normal: Vector2) -> void:
-	if sprite == null:
-		return
-	var base_scale: Vector2 = Vector2(2, 2)   # 与 player.tscn 中 Sprite2D.scale 保持一致
-	# 将法线转换到精灵局部坐标
-	var local_normal := normal.rotated(-global_rotation)
-	var squash_scale := Vector2(
-		1.0 - abs(local_normal.x) * 0.3,
-		1.0 - abs(local_normal.y) * 0.3
-	)
-	var stretch_scale := Vector2(
-		1.0 + abs(local_normal.y) * 0.2,
-		1.0 + abs(local_normal.x) * 0.2
-	)
-	var target_scale := squash_scale * stretch_scale * base_scale
-
-	var tween := create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_BACK)
-	tween.tween_property(sprite, "scale", target_scale, 0.08)
-	tween.tween_property(sprite, "scale", base_scale, 0.12)
 
 # 施加风力冲量 (由 WindSystem 和 环境风带 调用)
 func apply_wind_force(force: Vector2) -> void:
@@ -295,13 +286,18 @@ func apply_wind_force(force: Vector2) -> void:
 
 # 死亡入口：由 kill_zone / spike / 敌人 调用
 func die() -> void:
+	print("[Player] 死亡触发")
 	player_died.emit()
-	call_deferred("_respawn")
+	set_physics_process(false)
+	_play_die_animation()
 
 # 重生逻辑：切换/重载关卡，新场景的 _ready 中读取检查点位置
 func _respawn() -> void:
 	var global := get_node("/root/Global")
+	print("[Player] _respawn 关卡=", global.last_checkpoint_level)
 	if global.last_checkpoint_level != "" and global.last_checkpoint_level != get_tree().current_scene.scene_file_path:
+		print("[Player] 切换场景到 ", global.last_checkpoint_level)
 		get_tree().change_scene_to_file(global.last_checkpoint_level)
 	else:
+		print("[Player] 重载当前场景")
 		get_tree().reload_current_scene()

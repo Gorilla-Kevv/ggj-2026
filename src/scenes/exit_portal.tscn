@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://b7qlat2rwnwv"]
 
-[ext_resource type="Script" path="res://src/level/exit_portal.gd" id="1_exit"]
+[ext_resource type="Script" uid="uid://bl6tco16egnqw" path="res://src/level/exit_portal.gd" id="1_exit"]
+[ext_resource type="Texture2D" uid="uid://dwyhd37v28osj" path="res://assets/关卡及大厅/door3out.tres" id="2_wc06x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_exit"]
 radius = 42.0
 
-[node name="ExitPortal" type="Area2D"]
+[node name="ExitPortal" type="Area2D" unique_id=545690666]
 script = ExtResource("1_exit")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=838802416]
+texture = ExtResource("2_wc06x")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1583017073]
 shape = SubResource("CircleShape2D_exit")

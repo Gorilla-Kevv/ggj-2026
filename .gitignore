@@ -4,4 +4,7 @@
 /addons/godot_mcp
 /addons/godot_ai
 godot-ai-LICENSE.txt
-project.godot
+
+# Godot 导入缓存 (重新导入会自动生成，无需上传)
+*.import
+*.import.bak

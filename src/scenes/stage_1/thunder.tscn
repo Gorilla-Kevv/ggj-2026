@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://car8wrj1b2cin"]
+
+[ext_resource type="PackedScene" uid="uid://baux3cgfuij5j" path="res://src/scenes/vfx/vfx_thunder.tscn" id="1_phwts"]
+[ext_resource type="Script" uid="uid://1bnedirt5pjp" path="res://script/vfx_thunder.gd" id="2_1qcxu"]
+[ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="3_7m7a0"]
+[ext_resource type="Texture2D" uid="uid://bauwhyi7jm8ex" path="res://assets/关卡一/场景道具图集.png" id="4_1q6gh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4non"]
+size = Vector2(64, 1647.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8quu"]
+atlas = ExtResource("4_1q6gh")
+region = Rect2(1087, 0, 290, 859)
+
+[node name="thunder" type="Node2D" unique_id=30767940]
+
+[node name="vfx_thunder" parent="." unique_id=1210320534 instance=ExtResource("1_phwts")]
+unique_name_in_owner = true
+position = Vector2(3314.1255, -4584)
+rotation = -3.1415925
+script = ExtResource("2_1qcxu")
+
+[node name="thunder" parent="vfx_thunder" index="1" unique_id=2024225593]
+gradient = null
+
+[node name="KillZone" parent="vfx_thunder" unique_id=1192454430 instance=ExtResource("3_7m7a0")]
+position = Vector2(159.36938, -261.01074)
+rotation = 3.1415925
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="vfx_thunder/KillZone" unique_id=1427227327]
+position = Vector2(173.2439, 538.73926)
+shape = SubResource("RectangleShape2D_n4non")
+
+[node name="item20" type="Sprite2D" parent="." unique_id=1231308016]
+position = Vector2(3320, -2792)
+scale = Vector2(0.384, 0.384)
+texture = SubResource("AtlasTexture_x8quu")
+
+[editable path="vfx_thunder"]

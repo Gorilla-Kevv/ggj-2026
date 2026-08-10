@@ -6,8 +6,10 @@
 # 使用：
 #   1. 配置 level_id / display_name / chapter_id / target_scene
 #   2. level_id 必须与 Global.CHAPTER_LEVELS 中的关卡ID一致 (区分大小写)
-#   3. 玩家进入 HintArea 范围显示关卡名；通关后显示 "✓已通关" 并变绿
-#   4. 视觉为 _draw() 占位门框，可自行替换为贴图/精灵
+#   3. 两种视觉状态，在 Inspector 中把图片拖入插孔：
+#      - inactive_texture  未通关时显示的图片
+#      - cleared_texture   已通关后显示的图片
+#   4. 通关后的门：显示 cleared_texture，且不允许再次进入
 #
 # 防死循环机制：
 #   从关卡返回时玩家出生在门上 (hub_return = 门位置)，若不处理会立刻再次进关。
@@ -21,12 +23,14 @@ extends Node2D
 @export var display_name: String = "关卡"          # 显示名
 @export var chapter_id: String = ""               # 所属章节ID
 @export var target_scene: String = ""             # 目标关卡场景路径
-@export var door_color: Color = Color(0.4, 0.7, 1.0)  # 门框颜色 (可按章节配色)
+@export var inactive_texture: Texture2D = null    # 未通关图片
+@export var cleared_texture: Texture2D = null     # 已通关图片
 
 # ---------- 子节点引用 ----------
 @onready var enter_area: Area2D = $EnterArea
 @onready var hint_area: Area2D = $HintArea
 @onready var name_label: Label = $NameLabel
+@onready var door_sprite: Sprite2D = $Sprite2D
 
 const CLEARED_COLOR: Color = Color(0.3, 1.0, 0.5)
 
@@ -44,6 +48,8 @@ func _ready() -> void:
 	hint_area.body_entered.connect(_on_hint_area_body_entered)
 	hint_area.body_exited.connect(_on_hint_area_body_exited)
 	name_label.hide()
+	# 依据存档设置初始外貌
+	_apply_texture()
 
 func _process(delta: float) -> void:
 	var player := get_tree().get_first_node_in_group("player")
@@ -63,7 +69,7 @@ func _process(delta: float) -> void:
 # ---------- 进入关卡 ----------
 
 # 玩家触碰门 → 记录返回点与关卡信息 → 切换场景
-# 仅在冷却结束且上膛状态下响应；否则视为出生重叠，等待玩家离开接触区后再上膛。
+# 仅在冷却结束、上膛、且未通关的状态下响应；否则视为出生重叠或已通关。
 func _on_enter_area_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
@@ -73,8 +79,11 @@ func _on_enter_area_body_entered(body: Node2D) -> void:
 		return
 	if target_scene.is_empty():
 		return
-	_armed = false
 	var global := get_node("/root/Global")
+	# 已通关的关卡不允许再次进入
+	if not level_id.is_empty() and global.is_level_clear(level_id):
+		return
+	_armed = false
 	global.current_level = level_id
 	global.current_chapter = chapter_id
 	global.hub_return = global_position
@@ -86,6 +95,12 @@ func _on_enter_area_body_entered(body: Node2D) -> void:
 func _on_enter_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_armed = true
+
+# 依据通关状态切换贴图：已通关显示 cleared_texture，否则显示 inactive_texture
+func _apply_texture() -> void:
+	var global := get_node("/root/Global")
+	var cleared: bool = not level_id.is_empty() and global.is_level_clear(level_id)
+	door_sprite.texture = cleared_texture if cleared else inactive_texture
 
 # ---------- 提示标签 ----------
 
@@ -108,25 +123,3 @@ func _update_label() -> void:
 		name_label.modulate = Color.WHITE
 	name_label.text = text
 	name_label.show()
-
-# ---------- 占位视觉 (可替换) ----------
-
-func _draw() -> void:
-	var cleared := false
-	if not level_id.is_empty():
-		var global := get_node("/root/Global")
-		cleared = global.is_level_clear(level_id)
-	var col := CLEARED_COLOR if cleared else door_color
-	var rect := Rect2(-40.0, -70.0, 80.0, 120.0)
-	# 光晕 (外圈到内圈)
-	for i in range(3):
-		var glow_rect := Rect2(
-			rect.position - Vector2.ONE * (i + 1) * 6.0,
-			rect.size + Vector2.ONE * (i + 1) * 12.0
-		)
-		draw_rect(glow_rect, Color(col, 0.22 - i * 0.06), false, 4.0 - i)
-	# 门框
-	draw_rect(rect, Color(col, 0.15), true)
-	draw_rect(rect, col, false, 5.0)
-	# 顶部指示灯
-	draw_circle(Vector2(0, -55), 6.0, col)

@@ -7,11 +7,21 @@
 [ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="5_player"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
-[ext_resource type="PackedScene" path="res://src/scenes/chapter_gate.tscn" id="7_gate"]
-[ext_resource type="PackedScene" path="res://src/scenes/reset_save_button.tscn" id="8_rst"]
-[ext_resource type="PackedScene" path="res://src/scenes/updraft.tscn" id="9_upd"]
+[ext_resource type="Texture2D" uid="uid://dklvlmoymcqg1" path="res://assets/关卡及大厅/door1in.tres" id="8_wo7qi"]
+[ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="9_hm4b0"]
+[ext_resource type="Texture2D" uid="uid://bc1xamc7680ge" path="res://assets/关卡及大厅/door1out.tres" id="9_ojrv2"]
+[ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="10_wo7qi"]
+[ext_resource type="PackedScene" path="res://src/scenes/reset_save_button.tscn" id="12_ojrv2"]
+[ext_resource type="Texture2D" uid="uid://ci52c5mbyt8ei" path="res://assets/关卡及大厅/lobby_parallax_far_1024x1536.png" id="13_vjnyx"]
+[ext_resource type="Texture2D" uid="uid://cvow6t8opx2tq" path="res://assets/关卡及大厅/lobby_parallax_mid_1024x1536.png" id="14_3dqv0"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hubground"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ost8a"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dcih4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hm4b0"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wo7qi"]
 
 [node name="HubWorld" type="Node2D" unique_id=90007121]
 
@@ -25,33 +35,96 @@ script = ExtResource("3_xugx2")
 script = ExtResource("2_ttxux")
 
 [node name="Player" parent="." unique_id=1123126612 instance=ExtResource("5_player")]
-position = Vector2(610, 496)
+position = Vector2(-6, 449)
 
 [node name="HUD" parent="." unique_id=111301308 instance=ExtResource("4_fexyi")]
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=301397805]
-position = Vector2(411, 201)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1864674846]
-position = Vector2(231, 397)
-shape = SubResource("WorldBoundaryShape2D_hubground")
+position = Vector2(554, 463)
 
 [node name="windline_particles bg" parent="Ground" unique_id=381050555 instance=ExtResource("6_8uww5")]
-position = Vector2(215, 172)
+position = Vector2(-1645, -469)
 
-[node name="LevelDoor" parent="." unique_id=1133599150 instance=ExtResource("6_k5b87")]
-position = Vector2(806, 211)
-level_id = "test_level"
-chapter_id = "ch1"
-target_scene = "res://src/scenes/test_level.tscn"
+[node name="Board" type="Node2D" parent="." unique_id=441515239]
+position = Vector2(9.536743e-07, -4.7683716e-07)
+scale = Vector2(0.99999994, 0.99999994)
 
-[node name="ChapterGate" parent="." unique_id=983210916 instance=ExtResource("7_gate")]
-position = Vector2(167, 168)
-chapter_id = "ch2"
-requires_chapter = "ch1"
+[node name="Bottom" type="StaticBody2D" parent="Board" unique_id=1174428645]
+position = Vector2(-4.7683716e-07, 1214.0001)
+scale = Vector2(0.6233766, 0.6233766)
 
-[node name="ResetSaveButton" parent="." unique_id=848599348 instance=ExtResource("8_rst")]
-position = Vector2(350, 478)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Bottom" unique_id=1152983965]
+position = Vector2(0.37499923, 844.8126)
+shape = SubResource("WorldBoundaryShape2D_ost8a")
 
-[node name="Updraft" parent="." unique_id=258251307 instance=ExtResource("9_upd")]
-position = Vector2(1183, 396)
+[node name="Left" type="StaticBody2D" parent="Board" unique_id=1782226624]
+position = Vector2(102.000015, 67.00001)
+scale = Vector2(0.6233766, 0.6233766)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Left" unique_id=1571248324]
+position = Vector2(-935.2293, 717.0626)
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_dcih4")
+
+[node name="Right" type="StaticBody2D" parent="Board" unique_id=138143901]
+position = Vector2(-6.233767, 4.363655)
+scale = Vector2(0.6233766, 0.6233766)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Right" unique_id=484523052]
+position = Vector2(1137.7292, -7.0000296)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_hm4b0")
+
+[node name="Top" type="StaticBody2D" parent="Board" unique_id=1817554873]
+position = Vector2(-6.0000014, -2761.0002)
+scale = Vector2(0.6233766, 0.6233766)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Top" unique_id=523011947]
+position = Vector2(10, -834.7501)
+rotation = -3.1415927
+shape = SubResource("WorldBoundaryShape2D_wo7qi")
+
+[node name="LevelDoor_1" parent="." unique_id=1719544716 instance=ExtResource("6_k5b87")]
+z_index = -1
+position = Vector2(0, -6)
+level_id = "1"
+chapter_id = "1"
+target_scene = "res://src/scenes/stage_1/stage_1.tscn"
+inactive_texture = ExtResource("8_wo7qi")
+cleared_texture = ExtResource("9_ojrv2")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1355164747]
+zoom = Vector2(0.7, 0.7)
+script = ExtResource("9_hm4b0")
+
+[node name="world_camera" type="Node2D" parent="." unique_id=898401663]
+script = ExtResource("10_wo7qi")
+target_camera = NodePath("../Camera2D")
+use_manual_limits = true
+manual_limit_left = -1350.0
+manual_limit_top = -2600.0
+manual_limit_right = 1350.0
+manual_limit_bottom = 2600.0
+
+[node name="ResetSaveButton" parent="." unique_id=500532727 instance=ExtResource("12_ojrv2")]
+position = Vector2(-368, 463)
+
+[node name="BGParallax" type="Parallax2D" parent="." unique_id=31548028]
+z_index = -10
+scroll_scale = Vector2(0, 0.35)
+repeat_size = Vector2(1024, 1536)
+autoscroll = Vector2(0, 40)
+repeat_times = 8
+
+[node name="Background" type="Sprite2D" parent="BGParallax" unique_id=523936827]
+texture = ExtResource("13_vjnyx")
+
+[node name="MidParallax" type="Parallax2D" parent="." unique_id=1461585417]
+z_index = -5
+scroll_scale = Vector2(0, 0.7)
+repeat_size = Vector2(1024, 1536)
+autoscroll = Vector2(0, 90)
+repeat_times = 8
+
+[node name="midground" type="Sprite2D" parent="MidParallax" unique_id=1795409664]
+texture = ExtResource("14_3dqv0")

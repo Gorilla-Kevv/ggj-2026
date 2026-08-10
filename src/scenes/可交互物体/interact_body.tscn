@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bcbss0dlws54n"]
+
+[ext_resource type="Script" uid="uid://js6ugvwt1txj" path="res://src/interactables/pushable_box.gd" id="1_2jk1p"]
+[ext_resource type="Texture2D" uid="uid://bn7twg1gcjv7n" path="res://assets/player_placeholder.png" id="2_yasog"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ckoie"]
+size = Vector2(164, 352)
+
+[node name="interactBody" type="RigidBody2D" unique_id=125772546]
+collision_layer = 4
+collision_mask = 3
+can_sleep = false
+script = ExtResource("1_2jk1p")
+display_name = "测试物体"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=181797811]
+shape = SubResource("RectangleShape2D_ckoie")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1226100119]
+texture = ExtResource("2_yasog")
+
+[node name="Windanchor" type="Marker2D" parent="." unique_id=1411915617]
