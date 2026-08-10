@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GGJ2026"
-run/main_scene="uid://c4n1sxje4rbxe"
+run/main_scene="uid://5rlg4reaioiq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -29,7 +29,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
 
 [global_group]
 

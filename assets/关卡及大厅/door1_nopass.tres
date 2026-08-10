@@ -1,7 +1,0 @@
-[gd_resource type="AtlasTexture" format=3 uid="uid://ddi3t5tf52emu"]
-
-[ext_resource type="Texture2D" uid="uid://ebckg3d1v04k" path="res://assets/关卡及大厅/download.png" id="1_cncfe"]
-
-[resource]
-atlas = ExtResource("1_cncfe")
-region = Rect2(24, 38, 341, 335)

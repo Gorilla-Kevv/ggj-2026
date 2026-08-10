@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="2_ttxux"]
 [ext_resource type="Script" uid="uid://cj0dhvn07qmgj" path="res://src/ui/wind_line.gd" id="3_xugx2"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="4_fexyi"]
-[ext_resource type="PackedScene" uid="uid://ca0ak74bdf06l" path="res://src/scenes/可交互物体/pushable_box.tscn" id="6_kbjhy"]
 [ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="6_tooya"]
 [ext_resource type="Script" uid="uid://cgdjcrtf1sxrs" path="res://src/environment/spike.gd" id="9_waduv"]
 [ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="10_ewkv2"]
@@ -42,9 +41,6 @@ position = Vector2(290, 618)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=2074835324]
 position = Vector2(141, -91)
 shape = SubResource("RectangleShape2D_ewkv2")
-
-[node name="PushableBox" parent="." unique_id=1646842403 instance=ExtResource("6_kbjhy")]
-position = Vector2(504, 274)
 
 [node name="SpikeTrap" type="Area2D" parent="." unique_id=179373147]
 position = Vector2(200, 650)

@@ -7,10 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="5_player"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
-[ext_resource type="Texture2D" uid="uid://dnupxg4ycin8r" path="res://assets/关卡及大厅/call_ch1FgoYKXOWsurlABg9vHYmX.png" id="8_ost8a"]
+[ext_resource type="Texture2D" uid="uid://dklvlmoymcqg1" path="res://assets/关卡及大厅/door1in.tres" id="8_wo7qi"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="9_hm4b0"]
-[ext_resource type="Texture2D" uid="uid://c3yk54t0vb1xs" path="res://assets/关卡及大厅/download.png" id="10_ojrv2"]
+[ext_resource type="Texture2D" uid="uid://bc1xamc7680ge" path="res://assets/关卡及大厅/door1out.tres" id="9_ojrv2"]
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="10_wo7qi"]
+[ext_resource type="PackedScene" path="res://src/scenes/reset_save_button.tscn" id="12_ojrv2"]
+[ext_resource type="Texture2D" uid="uid://ci52c5mbyt8ei" path="res://assets/关卡及大厅/lobby_parallax_far_1024x1536.png" id="13_vjnyx"]
+[ext_resource type="Texture2D" uid="uid://cvow6t8opx2tq" path="res://assets/关卡及大厅/lobby_parallax_mid_1024x1536.png" id="14_3dqv0"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ost8a"]
 
@@ -37,7 +40,7 @@ position = Vector2(-6, 449)
 [node name="HUD" parent="." unique_id=111301308 instance=ExtResource("4_fexyi")]
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=301397805]
-position = Vector2(1639, 475)
+position = Vector2(554, 463)
 
 [node name="windline_particles bg" parent="Ground" unique_id=381050555 instance=ExtResource("6_8uww5")]
 position = Vector2(-1645, -469)
@@ -47,11 +50,11 @@ position = Vector2(9.536743e-07, -4.7683716e-07)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Bottom" type="StaticBody2D" parent="Board" unique_id=1174428645]
-position = Vector2(-6.233767, 4.363655)
+position = Vector2(-4.7683716e-07, 1214.0001)
 scale = Vector2(0.6233766, 0.6233766)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Bottom" unique_id=1152983965]
-position = Vector2(0.375, 2325.4585)
+position = Vector2(0.37499923, 844.8126)
 shape = SubResource("WorldBoundaryShape2D_ost8a")
 
 [node name="Left" type="StaticBody2D" parent="Board" unique_id=1782226624]
@@ -59,7 +62,7 @@ position = Vector2(102.000015, 67.00001)
 scale = Vector2(0.6233766, 0.6233766)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Left" unique_id=1571248324]
-position = Vector2(-1259.271, -107.47918)
+position = Vector2(-935.2293, 717.0626)
 rotation = 1.5707964
 shape = SubResource("WorldBoundaryShape2D_dcih4")
 
@@ -73,19 +76,22 @@ rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_hm4b0")
 
 [node name="Top" type="StaticBody2D" parent="Board" unique_id=1817554873]
-position = Vector2(-6.233767, 4.363655)
+position = Vector2(-6.0000014, -2761.0002)
 scale = Vector2(0.6233766, 0.6233766)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Top" unique_id=523011947]
-position = Vector2(10, -2361.917)
+position = Vector2(10, -834.7501)
 rotation = -3.1415927
 shape = SubResource("WorldBoundaryShape2D_wo7qi")
 
 [node name="LevelDoor_1" parent="." unique_id=1719544716 instance=ExtResource("6_k5b87")]
-position = Vector2(-6, 1100)
+z_index = -1
+position = Vector2(0, -6)
 level_id = "1"
 chapter_id = "1"
-target_scene = "res://src/scenes/stage_1.tscn"
+target_scene = "res://src/scenes/stage_1/stage_1.tscn"
+inactive_texture = ExtResource("8_wo7qi")
+cleared_texture = ExtResource("9_ojrv2")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1355164747]
 zoom = Vector2(0.7, 0.7)
@@ -100,10 +106,25 @@ manual_limit_top = -2600.0
 manual_limit_right = 1350.0
 manual_limit_bottom = 2600.0
 
-[node name="Download" type="Sprite2D" parent="." unique_id=1544347626]
-position = Vector2(-463, 842)
-texture = ExtResource("10_ojrv2")
+[node name="ResetSaveButton" parent="." unique_id=500532727 instance=ExtResource("12_ojrv2")]
+position = Vector2(-368, 463)
 
-[node name="CallCh1FgoYkxoWsurlABg9vHYmX" type="Sprite2D" parent="." unique_id=1604695454]
-position = Vector2(890, 763)
-texture = ExtResource("8_ost8a")
+[node name="BGParallax" type="Parallax2D" parent="." unique_id=31548028]
+z_index = -10
+scroll_scale = Vector2(0, 0.35)
+repeat_size = Vector2(1024, 1536)
+autoscroll = Vector2(0, 40)
+repeat_times = 8
+
+[node name="Background" type="Sprite2D" parent="BGParallax" unique_id=523936827]
+texture = ExtResource("13_vjnyx")
+
+[node name="MidParallax" type="Parallax2D" parent="." unique_id=1461585417]
+z_index = -5
+scroll_scale = Vector2(0, 0.7)
+repeat_size = Vector2(1024, 1536)
+autoscroll = Vector2(0, 90)
+repeat_times = 8
+
+[node name="midground" type="Sprite2D" parent="MidParallax" unique_id=1795409664]
+texture = ExtResource("14_3dqv0")

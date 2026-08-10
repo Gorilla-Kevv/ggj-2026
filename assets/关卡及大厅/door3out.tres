@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://dwyhd37v28osj"]
+
+[ext_resource type="Texture2D" uid="uid://d1341buy7wgct" path="res://assets/关卡及大厅/level_entrances_5x2_states.png" id="1_bksdx"]
+
+[resource]
+atlas = ExtResource("1_bksdx")
+region = Rect2(418, 843, 343, 340)
