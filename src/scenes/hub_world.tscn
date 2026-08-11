@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://bpynwtnptsido" path="res://assets/关卡及大厅/door2in.tres" id="14_dq2pn"]
 [ext_resource type="Texture2D" uid="uid://e4mkck3nt7ey" path="res://assets/关卡及大厅/door2out.tres" id="15_kt4f8"]
 [ext_resource type="PackedScene" uid="uid://cets2xmh26q0m" path="res://src/scenes/vfx/heavy_fog.tscn" id="16_dq2pn"]
+[ext_resource type="Texture2D" uid="uid://c4n80kycmmho4" path="res://assets/关卡及大厅/door3in.tres" id="21_h0si0"]
+[ext_resource type="Texture2D" uid="uid://dwyhd37v28osj" path="res://assets/关卡及大厅/door3out.tres" id="22_h1hsm"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ost8a"]
 
@@ -252,9 +254,29 @@ z_index = 2
 position = Vector2(-1.1329346, -0.6203613)
 level_id = "2"
 display_name = "通风管道"
-chapter_id = "2"
+chapter_id = "1"
 target_scene = "res://src/scenes/stage_1/stage_1.tscn"
 inactive_texture = ExtResource("14_dq2pn")
 cleared_texture = ExtResource("15_kt4f8")
+
+[node name="d3" type="Node2D" parent="doors" unique_id=206380167]
+position = Vector2(-525, -1126)
+script = ExtResource("13_04vn8")
+amplitude = 15.0
+frequency = 3.0
+
+[node name="LevelDoor_3" parent="doors/d3" unique_id=1475599128 instance=ExtResource("6_k5b87")]
+z_index = 2
+position = Vector2(-10.963623, 1.5509033)
+level_id = "3"
+display_name = "实验室"
+chapter_id = "1"
+target_scene = "res://src/scenes/stage_3/stage_3.tscn"
+inactive_texture = ExtResource("21_h0si0")
+cleared_texture = ExtResource("22_h1hsm")
+
+[node name="圣光bgParticles2" parent="doors/d3" unique_id=958572500 instance=ExtResource("10_3dqv0")]
+z_index = 1
+position = Vector2(-10.963623, 1.5509033)
 
 [editable path="BGParallax/heavyFog"]
