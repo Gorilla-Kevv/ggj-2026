@@ -26,12 +26,12 @@ var current_anim: AnimState = AnimState.IDLE
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数
 const GRAVITY_SCALE: float = 0.1
-const MAX_SPEED: float = 600.0
+const MAX_SPEED: float = 1000.0
 const AIR_DRAG_VERTICAL: float = 0.992
-const GROUND_FRICTION: float = 0.97
+const GROUND_FRICTION: float = 0.2
 const GROUND_BOUNCE: float = 0.7
 const WALL_BOUNCE: float = 1.2
-const MIN_BOUNCE_VELOCITY: float = 1.0
+const MIN_BOUNCE_VELOCITY: float = 5.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
 # KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
