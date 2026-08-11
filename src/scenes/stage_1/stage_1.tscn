@@ -18,6 +18,7 @@
 [ext_resource type="FontFile" uid="uid://bugkl5nl4pw3e" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="12_0e0d6"]
 [ext_resource type="PackedScene" uid="uid://bcbss0dlws54n" path="res://src/scenes/可交互物体/interact_body.tscn" id="17_jvrvq"]
 [ext_resource type="PackedScene" uid="uid://b7qlat2rwnwv" path="res://src/scenes/exit_portal.tscn" id="18_cq86n"]
+[ext_resource type="Texture2D" uid="uid://bc1xamc7680ge" path="res://assets/关卡及大厅/door1out.tres" id="18_gfom6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0e0d6"]
 atlas = ExtResource("2_88t4y")
@@ -235,10 +236,6 @@ shape = SubResource("RectangleShape2D_bnet0")
 [node name="vfx_thunder_orbit-1" parent="thunder3" unique_id=1925250515 instance=ExtResource("8_gfom6")]
 position = Vector2(3346.1255, -2879.9998)
 
-[node name="ExitPortal" parent="." unique_id=578122377 instance=ExtResource("18_cq86n")]
-position = Vector2(7.9999995, -4063.9998)
-scale = Vector2(0.625, 0.625)
-
 [node name="world" type="Node2D" parent="." unique_id=1238890104]
 
 [node name="Camera2D" type="Camera2D" parent="world" unique_id=804929480]
@@ -263,7 +260,7 @@ tile_map_data = PackedByteArray("AAAAABMAAAABAAEAAAABABMAAAABAAEAAAACABMAAAABAAE
 tile_set = ExtResource("2_krhqc")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("7_ndbc8")]
-position = Vector2(-240, 384)
+position = Vector2(267.71338, -3200.5376)
 
 [node name="windline_particles bg" parent="world" unique_id=381050555 instance=ExtResource("6_do0c6")]
 position = Vector2(-248, 384)
@@ -451,7 +448,7 @@ text = "Entrance"
 horizontal_alignment = 1
 
 [node name="KillZone" parent="." unique_id=1633494024 instance=ExtResource("7_cq86n")]
-position = Vector2(1119, 674)
+position = Vector2(1120, 672)
 
 [node name="Sprite2D" type="Sprite2D" parent="KillZone" unique_id=382830695]
 texture = ExtResource("2_88t4y")
@@ -470,6 +467,11 @@ scale = Vector2(1.0000001, 0.99999994)
 
 [node name="vfx_thunder_orbit-1" parent="KillZone" unique_id=1830669292 instance=ExtResource("8_gfom6")]
 position = Vector2(1, -314)
+
+[node name="ExitPortal" parent="." unique_id=578122377 instance=ExtResource("18_cq86n")]
+position = Vector2(7.9999995, -4063.9998)
+scale = Vector2(0.625, 0.625)
+portal_texture = ExtResource("18_gfom6")
 
 [node name="interactBody" parent="." unique_id=125772546 instance=ExtResource("17_jvrvq")]
 position = Vector2(6144, -2176)
@@ -502,4 +504,5 @@ region_rect = Rect2(1850, 33, 409, 821)
 [editable path="thunder3/vfx_thunder_orbit-1"]
 [editable path="KillZone/vfx_thunder_orbit-2"]
 [editable path="KillZone/vfx_thunder_orbit-1"]
+[editable path="ExitPortal"]
 [editable path="interactBody"]

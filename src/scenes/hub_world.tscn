@@ -1,16 +1,25 @@
-[gd_scene format=3 uid="uid://5rlg4reaioiq"]
+[gd_scene format=4 uid="uid://5rlg4reaioiq"]
 
+[ext_resource type="Shader" uid="uid://o75swr3ddmo1" path="res://shaders/weather_fog.gdshader" id="3_kt4f8"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="3_wo7qi"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="4_fexyi"]
+[ext_resource type="Shader" uid="uid://vmvypt2pf4ss" path="res://shaders/weather_fog2.gdshader" id="4_llfit"]
+[ext_resource type="Texture2D" uid="uid://c5kkwn6h5d6x2" path="res://assets/关卡及大厅/lobby_parallax_near_1024x1536.png" id="5_ojrv2"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
 [ext_resource type="Texture2D" uid="uid://dklvlmoymcqg1" path="res://assets/关卡及大厅/door1in.tres" id="8_wo7qi"]
+[ext_resource type="TileSet" uid="uid://bchqcsu2iay36" path="res://assets/关卡一/lab瓦片.tres" id="8_xm6xs"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="9_hm4b0"]
 [ext_resource type="Texture2D" uid="uid://bc1xamc7680ge" path="res://assets/关卡及大厅/door1out.tres" id="9_ojrv2"]
+[ext_resource type="PackedScene" uid="uid://cv7n6kehynb4u" path="res://src/scenes/vfx/圣光bg_particles.tscn" id="10_3dqv0"]
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="10_wo7qi"]
 [ext_resource type="PackedScene" path="res://src/scenes/reset_save_button.tscn" id="12_ojrv2"]
+[ext_resource type="Script" uid="uid://btb3s734vlc36" path="res://script/floating.gd" id="13_04vn8"]
 [ext_resource type="Texture2D" uid="uid://ci52c5mbyt8ei" path="res://assets/关卡及大厅/lobby_parallax_far_1024x1536.png" id="13_vjnyx"]
 [ext_resource type="Texture2D" uid="uid://cvow6t8opx2tq" path="res://assets/关卡及大厅/lobby_parallax_mid_1024x1536.png" id="14_3dqv0"]
+[ext_resource type="Texture2D" uid="uid://bpynwtnptsido" path="res://assets/关卡及大厅/door2in.tres" id="14_dq2pn"]
+[ext_resource type="Texture2D" uid="uid://e4mkck3nt7ey" path="res://assets/关卡及大厅/door2out.tres" id="15_kt4f8"]
+[ext_resource type="PackedScene" uid="uid://cets2xmh26q0m" path="res://src/scenes/vfx/heavy_fog.tscn" id="16_dq2pn"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ost8a"]
 
@@ -20,99 +29,232 @@
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wo7qi"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_syfrf"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tpsr5"]
+noise = SubResource("FastNoiseLite_syfrf")
+seamless = true
+seamless_blend_skirt = 0.32
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_llfit"]
+shader = ExtResource("3_kt4f8")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_tpsr5")
+shader_parameter/density = 0.026000001235
+shader_parameter/speed = Vector2(0, -0.1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_04vn8"]
+shader = ExtResource("4_llfit")
+shader_parameter/strength = 9.27
+shader_parameter/alpha_p = 15.0
+
+[sub_resource type="Gradient" id="Gradient_251hh"]
+offsets = PackedFloat32Array(0, 0.518024, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.25882354, 0.43529412, 0.60784316, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3dqv0"]
+gradient = SubResource("Gradient_251hh")
+width = 1
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_o1ryi"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3pjab"]
+gradient = SubResource("Gradient_o1ryi")
+
+[sub_resource type="Gradient" id="Gradient_hrpim"]
+offsets = PackedFloat32Array(0, 0.4714495, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ukbbq"]
+gradient = SubResource("Gradient_hrpim")
+
+[sub_resource type="Curve" id="Curve_thfqr"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.085991666, 75.21341), 0.0, 0.0, 0, 0, Vector2(0.24271843, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.36061025, 80.23837), 0.0, 0.0, 0, 0, Vector2(0.5048543, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.62552005, 82.750854), 0.0, 0.0, 0, 0, Vector2(0.7475728, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.85575587, 84.42584), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="CurveTexture" id="CurveTexture_22kpp"]
+curve = SubResource("Curve_thfqr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dq2pn"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(200, 200, 1)
+gravity = Vector3(0, 100, 0)
+tangential_accel_min = -2.2351742e-06
+tangential_accel_max = 5.9999976
+tangential_accel_curve = SubResource("CurveTexture_22kpp")
+damping_max = 100.00001
+scale_min = 1.5
+scale_max = 1.8
+color_ramp = SubResource("GradientTexture1D_ukbbq")
+color_initial_ramp = SubResource("GradientTexture1D_3pjab")
+
 [node name="HubWorld" type="Node2D" unique_id=90007121]
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1355164747]
-zoom = Vector2(0.7, 0.7)
-script = ExtResource("9_hm4b0")
-
-[node name="world_camera" type="Node2D" parent="." unique_id=898401663]
-script = ExtResource("10_wo7qi")
-target_camera = NodePath("../Camera2D")
-use_manual_limits = true
-manual_limit_left = -1350.0
-manual_limit_top = -2600.0
-manual_limit_right = 1350.0
-manual_limit_bottom = 2600.0
-
-[node name="player" parent="." unique_id=1191854658 instance=ExtResource("3_wo7qi")]
-position = Vector2(-240, 384)
-
-[node name="HUD" parent="." unique_id=111301308 instance=ExtResource("4_fexyi")]
-
-[node name="Ground" type="StaticBody2D" parent="." unique_id=301397805]
-position = Vector2(554, 463)
-
-[node name="windline_particles bg" parent="Ground" unique_id=381050555 instance=ExtResource("6_8uww5")]
-position = Vector2(-1645, -469)
 
 [node name="Board" type="Node2D" parent="." unique_id=441515239]
 position = Vector2(9.536743e-07, -4.7683716e-07)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Bottom" type="StaticBody2D" parent="Board" unique_id=1174428645]
-position = Vector2(-4.7683716e-07, 1214.0001)
-scale = Vector2(0.6233766, 0.6233766)
+position = Vector2(0, 2250)
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Bottom" unique_id=1152983965]
-position = Vector2(0.37499923, 844.8126)
+scale = Vector2(19, 19)
 shape = SubResource("WorldBoundaryShape2D_ost8a")
+debug_color = Color(0.95974344, 2.117753e-06, 0.517217, 1)
 
 [node name="Left" type="StaticBody2D" parent="Board" unique_id=1782226624]
-position = Vector2(102.000015, 67.00001)
-scale = Vector2(0.6233766, 0.6233766)
+position = Vector2(-2250, 0)
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Left" unique_id=1571248324]
-position = Vector2(-935.2293, 717.0626)
 rotation = 1.5707964
+scale = Vector2(19, 19)
 shape = SubResource("WorldBoundaryShape2D_dcih4")
+debug_color = Color(0.95974344, 2.117753e-06, 0.517217, 1)
 
 [node name="Right" type="StaticBody2D" parent="Board" unique_id=138143901]
-position = Vector2(-6.233767, 4.363655)
-scale = Vector2(0.6233766, 0.6233766)
+position = Vector2(2250, 0)
+scale = Vector2(19, 19)
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Right" unique_id=484523052]
-position = Vector2(1137.7292, -7.0000296)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_hm4b0")
+debug_color = Color(0.95974344, 2.117753e-06, 0.517217, 1)
 
 [node name="Top" type="StaticBody2D" parent="Board" unique_id=1817554873]
-position = Vector2(-6.0000014, -2761.0002)
-scale = Vector2(0.6233766, 0.6233766)
+position = Vector2(-9.536743e-07, -2256.0002)
+scale = Vector2(19, 19)
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Board/Top" unique_id=523011947]
-position = Vector2(10, -834.7501)
 rotation = -3.1415927
 shape = SubResource("WorldBoundaryShape2D_wo7qi")
+debug_color = Color(0.95974344, 2.117753e-06, 0.517217, 1)
 
-[node name="LevelDoor_1" parent="." unique_id=1719544716 instance=ExtResource("6_k5b87")]
-z_index = -1
-position = Vector2(0, -6)
+[node name="ResetSaveButton" parent="." unique_id=500532727 instance=ExtResource("12_ojrv2")]
+position = Vector2(-832, 448)
+
+[node name="BGParallax" type="Parallax2D" parent="." unique_id=31548028]
+z_index = -10
+scroll_scale = Vector2(0.3, 0.7)
+repeat_size = Vector2(2669.18, 2844.29)
+
+[node name="heavyFog" parent="BGParallax" unique_id=868191585 instance=ExtResource("16_dq2pn")]
+layer = 0
+
+[node name="heavyFog" parent="BGParallax/heavyFog" index="0" unique_id=1757280018]
+material = SubResource("ShaderMaterial_llfit")
+
+[node name="lightFog" parent="BGParallax/heavyFog" index="1" unique_id=1059308993]
+visible = false
+material = SubResource("ShaderMaterial_04vn8")
+
+[node name="Background" type="Sprite2D" parent="BGParallax" unique_id=523936827]
+position = Vector2(400, 0)
+scale = Vector2(2.6074977, 1.8533319)
+texture = ExtResource("13_vjnyx")
+
+[node name="windline_particles bg" parent="BGParallax" unique_id=381050555 instance=ExtResource("6_8uww5")]
+position = Vector2(400, -1152)
+amount = 100
+texture = SubResource("GradientTexture2D_3dqv0")
+process_material = SubResource("ParticleProcessMaterial_dq2pn")
+
+[node name="MidParallax" type="Parallax2D" parent="." unique_id=1461585417]
+z_index = -5
+scroll_scale = Vector2(0.5, 0.5)
+scroll_offset = Vector2(-2416, -8)
+repeat_size = Vector2(2669.18, 2844.29)
+
+[node name="midground" type="Sprite2D" parent="MidParallax" unique_id=1795409664]
+scale = Vector2(2.6074977, 1.8533319)
+texture = ExtResource("14_3dqv0")
+
+[node name="地图" type="TileMapLayer" parent="." unique_id=246292459]
+tile_map_data = PackedByteArray("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")
+tile_set = ExtResource("8_xm6xs")
+script = ExtResource("13_04vn8")
+amplitude = 20.0
+frequency = 3.0
+
+[node name="world" type="Node2D" parent="." unique_id=1847202807]
+
+[node name="Camera2D" type="Camera2D" parent="world" unique_id=1355164747]
+zoom = Vector2(0.7, 0.7)
+script = ExtResource("9_hm4b0")
+
+[node name="world_camera" type="Node2D" parent="world" unique_id=898401663]
+script = ExtResource("10_wo7qi")
+target_camera = NodePath("../Camera2D")
+use_manual_limits = true
+manual_limit_left = -2500.0
+manual_limit_top = -2500.0
+manual_limit_right = 2500.0
+manual_limit_bottom = 2500.0
+
+[node name="player" parent="world" unique_id=1191854658 instance=ExtResource("3_wo7qi")]
+z_index = 4
+
+[node name="HUD" parent="world" unique_id=111301308 instance=ExtResource("4_fexyi")]
+
+[node name="forParallax" type="Parallax2D" parent="." unique_id=1771096118]
+visible = false
+modulate = Color(1, 1, 1, 0.69411767)
+z_index = 5
+scroll_scale = Vector2(1.2, 1.2)
+scroll_offset = Vector2(-168, -2152)
+repeat_size = Vector2(2669.18, 2844.29)
+
+[node name="forground" type="Sprite2D" parent="forParallax" unique_id=1805475507]
+scale = Vector2(2.6074977, 1.8533319)
+texture = ExtResource("5_ojrv2")
+
+[node name="doors" type="Node2D" parent="." unique_id=2078246328]
+
+[node name="d1" type="Node2D" parent="doors" unique_id=783105231]
+position = Vector2(576, -1552)
+script = ExtResource("13_04vn8")
+amplitude = 15.0
+frequency = 3.0
+
+[node name="LevelDoor_1" parent="doors/d1" unique_id=1719544716 instance=ExtResource("6_k5b87")]
+z_index = 2
+position = Vector2(-10.963623, 1.5509033)
 level_id = "1"
+display_name = "实验室"
 chapter_id = "1"
 target_scene = "res://src/scenes/stage_1/stage_1.tscn"
 inactive_texture = ExtResource("8_wo7qi")
 cleared_texture = ExtResource("9_ojrv2")
 
-[node name="ResetSaveButton" parent="." unique_id=500532727 instance=ExtResource("12_ojrv2")]
-position = Vector2(-368, 463)
+[node name="圣光bgParticles2" parent="doors/d1" unique_id=1762973368 instance=ExtResource("10_3dqv0")]
+z_index = 1
+position = Vector2(-10.963623, 1.5509033)
 
-[node name="BGParallax" type="Parallax2D" parent="." unique_id=31548028]
-z_index = -10
-scroll_scale = Vector2(0, 0.35)
-repeat_size = Vector2(1024, 1536)
-autoscroll = Vector2(0, 40)
-repeat_times = 8
+[node name="d2" type="Node2D" parent="doors" unique_id=1812317464]
+position = Vector2(-856, -1608)
+script = ExtResource("13_04vn8")
+amplitude = 15.0
+frequency = 3.0
 
-[node name="Background" type="Sprite2D" parent="BGParallax" unique_id=523936827]
-texture = ExtResource("13_vjnyx")
+[node name="圣光bgParticles" parent="doors/d2" unique_id=1671666537 instance=ExtResource("10_3dqv0")]
+z_index = 1
+position = Vector2(-1.1329346, -0.6203613)
 
-[node name="MidParallax" type="Parallax2D" parent="." unique_id=1461585417]
-z_index = -5
-scroll_scale = Vector2(0, 0.7)
-repeat_size = Vector2(1024, 1536)
-autoscroll = Vector2(0, 90)
-repeat_times = 8
+[node name="LevelDoor_2" parent="doors/d2" unique_id=1040225753 instance=ExtResource("6_k5b87")]
+z_index = 2
+position = Vector2(-1.1329346, -0.6203613)
+level_id = "2"
+display_name = "通风管道"
+chapter_id = "2"
+target_scene = "res://src/scenes/stage_1/stage_1.tscn"
+inactive_texture = ExtResource("14_dq2pn")
+cleared_texture = ExtResource("15_kt4f8")
 
-[node name="midground" type="Sprite2D" parent="MidParallax" unique_id=1795409664]
-texture = ExtResource("14_3dqv0")
+[editable path="BGParallax/heavyFog"]

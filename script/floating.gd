@@ -1,4 +1,3 @@
-# 挂到任意节点上，自动上下浮动
 extends Node2D
 
 @export var amplitude: float = 10.0
