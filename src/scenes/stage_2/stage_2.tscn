@@ -298,7 +298,7 @@ position = Vector2(1260.9, 668)
 scale = Vector2(0.21666653, 0.21666653)
 sprite_frames = SubResource("SpriteFrames_eu8ha")
 animation = &"fan"
-frame_progress = 0.078774095
+frame_progress = 0.27334452
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=458968790]
 visible = false
