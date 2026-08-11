@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" format=3 uid="uid://bchqcsu2iay36"]
 
-[ext_resource type="Texture2D" uid="uid://dom8n30bhs3hh" path="res://assets/关卡一/瓦片.png" id="1_ekdh4"]
+[ext_resource type="Texture2D" uid="uid://xs1i8as1xuyy" path="res://assets/关卡一/瓦片.png" id="1_ekdh4"]
 [ext_resource type="Texture2D" uid="uid://oj3yvd8jmiaw" path="res://assets/关卡及大厅/lobby_hall_tileset_64_atlas_16x16.png" id="2_4i22l"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nfetq"]
