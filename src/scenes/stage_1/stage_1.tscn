@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://c4n1sxje4rbxe"]
 
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="1_krhqc"]
-[ext_resource type="Texture2D" uid="uid://dpjv22yg0wn1q" path="res://assets/关卡一/背景(无水印.png" id="1_s4gg2"]
-[ext_resource type="Texture2D" uid="uid://b2kh3o4rj8emd" path="res://assets/关卡一/场景道具图集.png" id="2_88t4y"]
+[ext_resource type="Texture2D" uid="uid://d31h5kan5ne16" path="res://assets/关卡一/背景(无水印.png" id="1_s4gg2"]
+[ext_resource type="Texture2D" uid="uid://bauwhyi7jm8ex" path="res://assets/关卡一/场景道具图集.png" id="2_88t4y"]
 [ext_resource type="TileSet" uid="uid://bchqcsu2iay36" path="res://assets/关卡一/lab瓦片.tres" id="2_krhqc"]
-[ext_resource type="Texture2D" uid="uid://dk4wp0g2cqwnh" path="res://assets/关卡一/中景3.png" id="2_ndbc8"]
-[ext_resource type="Texture2D" uid="uid://bnvp5c4yw0wo7" path="res://assets/关卡一/中景4.png" id="3_do0c6"]
+[ext_resource type="Texture2D" uid="uid://ckb16tbpcck75" path="res://assets/关卡一/中景3.png" id="2_ndbc8"]
+[ext_resource type="Texture2D" uid="uid://b4qppjqit4yfe" path="res://assets/关卡一/中景4.png" id="3_do0c6"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_do0c6"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="6_ol0ao"]
 [ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="7_cq86n"]
@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://jt13i75roure" path="res://script/glass.gd" id="10_4bx1i"]
 [ext_resource type="PackedScene" uid="uid://dmi0ubl4i1ms7" path="res://src/scenes/stage_1/stage_1checkpoint.tscn" id="10_24bcq"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="11_ol0ao"]
-[ext_resource type="FontFile" uid="uid://c4wcgtkesy0v6" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="12_0e0d6"]
+[ext_resource type="FontFile" uid="uid://bugkl5nl4pw3e" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="12_0e0d6"]
 [ext_resource type="PackedScene" uid="uid://bcbss0dlws54n" path="res://src/scenes/可交互物体/interact_body.tscn" id="17_jvrvq"]
 [ext_resource type="PackedScene" uid="uid://b7qlat2rwnwv" path="res://src/scenes/exit_portal.tscn" id="18_cq86n"]
 
@@ -98,7 +98,7 @@ region = Rect2(3406, 132, 569, 727)
 size = Vector2(448.0451, 522.5065)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4non"]
-size = Vector2(64, 1647.5)
+size = Vector2(272, 856)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cq86n"]
 size = Vector2(164, 352)
@@ -177,9 +177,12 @@ shape = SubResource("RectangleShape2D_bnet0")
 position = Vector2(3346.1255, -2879.9998)
 
 [node name="thunder2" parent="." unique_id=1326201166 instance=ExtResource("7_t8eqi")]
-position = Vector2(-2672, -8)
+position = Vector2(808, -2640)
 
-[node name="thunder" parent="thunder2/vfx_thunder" parent_id_path=PackedInt32Array(1326201166, 1210320534) index="1" unique_id=2024225593]
+[node name="vfx_thunder" parent="thunder2" index="0" unique_id=1210320534]
+position = Vector2(-8.630615, -1872)
+
+[node name="thunder" parent="thunder2/vfx_thunder" index="1" unique_id=2024225593]
 position = Vector2(2.125496, -504)
 points = PackedVector2Array(-17, -1126, -8, 528)
 
@@ -187,22 +190,22 @@ points = PackedVector2Array(-17, -1126, -8, 528)
 position = Vector2(157.2439, 538.86426)
 
 [node name="item20" parent="thunder2" index="1" unique_id=1231308016]
-position = Vector2(3328.0002, -2784)
+position = Vector2(5.2441406, -72)
 
-[node name="vfx_thunder_orbit-2" parent="thunder2" unique_id=1210320534 instance=ExtResource("8_gfom6")]
-position = Vector2(3298.1255, -2816)
+[node name="vfx_thunder_orbit-2" parent="thunder2" unique_id=998422730 instance=ExtResource("8_gfom6")]
+position = Vector2(-24.630615, -104)
 rotation = 2.4888396
 scale = Vector2(1.0000001, 0.99999994)
 
 [node name="KillZone2" parent="thunder2" unique_id=1192454430 instance=ExtResource("7_cq86n")]
-position = Vector2(3154.756, -4322.9893)
+position = Vector2(-168, -1610.9893)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="thunder2/KillZone2" unique_id=1643717495]
 position = Vector2(173.2439, 1530.9893)
 shape = SubResource("RectangleShape2D_bnet0")
 
 [node name="vfx_thunder_orbit-1" parent="thunder2" unique_id=280570131 instance=ExtResource("8_gfom6")]
-position = Vector2(3346.1255, -2879.9998)
+position = Vector2(23.369385, -167.99976)
 
 [node name="thunder3" parent="." unique_id=250297614 instance=ExtResource("7_t8eqi")]
 position = Vector2(2600, -8)
@@ -232,8 +235,11 @@ shape = SubResource("RectangleShape2D_bnet0")
 [node name="vfx_thunder_orbit-1" parent="thunder3" unique_id=1925250515 instance=ExtResource("8_gfom6")]
 position = Vector2(3346.1255, -2879.9998)
 
+[node name="ExitPortal" parent="." unique_id=578122377 instance=ExtResource("18_cq86n")]
+position = Vector2(7.9999995, -4063.9998)
+scale = Vector2(0.625, 0.625)
+
 [node name="world" type="Node2D" parent="." unique_id=1238890104]
-script = ExtResource("1_krhqc")
 
 [node name="Camera2D" type="Camera2D" parent="world" unique_id=804929480]
 scale = Vector2(0.7, 0.7)
@@ -279,7 +285,7 @@ position = Vector2(6840.8525, -6935.2715)
 texture = SubResource("AtlasTexture_pmp4l")
 
 [node name="item12" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=2128748188]
-position = Vector2(224.8062, -10705.271)
+position = Vector2(204.57364, -10813.179)
 texture = SubResource("AtlasTexture_tukse")
 
 [node name="item6" type="Sprite2D" parent="bigitem/Parallax2D" unique_id=634984924]
@@ -383,36 +389,36 @@ texture = SubResource("AtlasTexture_vkgpk")
 flip_h = true
 
 [node name="item14" type="Sprite2D" parent="装饰" unique_id=1472052973]
-position = Vector2(8682.016, -12674.572)
+position = Vector2(4544, -3800)
 rotation = 3.1415927
 texture = SubResource("AtlasTexture_krhqc")
 
 [node name="item15" type="Sprite2D" parent="装饰" unique_id=888549666]
-position = Vector2(11811.318, -9554.264)
+position = Vector2(3968.2568, -1905.5)
 texture = SubResource("AtlasTexture_krhqc")
 
 [node name="item16" type="Sprite2D" parent="装饰" unique_id=2088673271]
-position = Vector2(16287.21, -8077.2866)
+position = Vector2(7152, -2496)
 texture = SubResource("AtlasTexture_krhqc")
 
 [node name="item17" type="Sprite2D" parent="装饰" unique_id=1791157807]
-position = Vector2(10826.666, -9549.768)
+position = Vector2(2983.6045, -1901.0039)
 texture = SubResource("AtlasTexture_krhqc")
 
 [node name="item18" type="Sprite2D" parent="装饰" unique_id=1432028412]
-position = Vector2(12580.155, -9572.248)
+position = Vector2(4737.0938, -1923.4844)
 texture = SubResource("AtlasTexture_vleee")
 
 [node name="item19" type="Sprite2D" parent="装饰" unique_id=1708408819]
-position = Vector2(8158.217, -8034.5737)
+position = Vector2(4960, -3080)
 texture = SubResource("AtlasTexture_fgl26")
 
 [node name="item20" type="Sprite2D" parent="装饰" unique_id=495584434]
-position = Vector2(9208.062, -9545.271)
+position = Vector2(1365, -1896.5078)
 texture = SubResource("AtlasTexture_qwajx")
 
 [node name="item21" type="Sprite2D" parent="装饰" unique_id=888495284]
-position = Vector2(10873.875, -4075.7366)
+position = Vector2(2880, 1416)
 texture = SubResource("AtlasTexture_krhqc")
 
 [node name="item22" type="Sprite2D" parent="装饰" unique_id=679795779]
@@ -435,14 +441,13 @@ shape = SubResource("RectangleShape2D_jnn5y")
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("11_ol0ao")]
 
 [node name="Label" type="Label" parent="." unique_id=1147811110]
-offset_left = -105.0
-offset_top = -4294.0
-offset_right = 233.0
-offset_bottom = -4139.0
+offset_left = -160.0
+offset_top = -4232.0
+offset_right = 178.0
+offset_bottom = -4192.0
 theme_override_fonts/font = ExtResource("12_0e0d6")
-theme_override_font_sizes/font_size = 75
-text = "Final
-"
+theme_override_font_sizes/font_size = 32
+text = "Entrance"
 horizontal_alignment = 1
 
 [node name="KillZone" parent="." unique_id=1633494024 instance=ExtResource("7_cq86n")]
@@ -454,8 +459,17 @@ region_enabled = true
 region_rect = Rect2(1087, 0, 290, 859)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1645717717]
-position = Vector2(-7, -7.5)
+position = Vector2(1, -6)
 shape = SubResource("RectangleShape2D_n4non")
+
+[node name="vfx_thunder_orbit-2" parent="KillZone" unique_id=911738274 instance=ExtResource("8_gfom6")]
+visible = false
+position = Vector2(1646.2639, 2125.5225)
+rotation = 2.4888396
+scale = Vector2(1.0000001, 0.99999994)
+
+[node name="vfx_thunder_orbit-1" parent="KillZone" unique_id=1830669292 instance=ExtResource("8_gfom6")]
+position = Vector2(1, -314)
 
 [node name="interactBody" parent="." unique_id=125772546 instance=ExtResource("17_jvrvq")]
 position = Vector2(6144, -2176)
@@ -472,9 +486,6 @@ texture = ExtResource("2_88t4y")
 region_enabled = true
 region_rect = Rect2(1850, 33, 409, 821)
 
-[node name="ExitPortal" parent="." unique_id=578122377 instance=ExtResource("18_cq86n")]
-position = Vector2(10, -4237)
-
 [connection signal="body_entered" from="glass" to="glass" method="_on_body_entered"]
 
 [editable path="thunder"]
@@ -489,4 +500,6 @@ position = Vector2(10, -4237)
 [editable path="thunder3/vfx_thunder"]
 [editable path="thunder3/vfx_thunder_orbit-2"]
 [editable path="thunder3/vfx_thunder_orbit-1"]
+[editable path="KillZone/vfx_thunder_orbit-2"]
+[editable path="KillZone/vfx_thunder_orbit-1"]
 [editable path="interactBody"]

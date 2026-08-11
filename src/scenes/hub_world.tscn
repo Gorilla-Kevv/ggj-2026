@@ -1,10 +1,7 @@
 [gd_scene format=3 uid="uid://5rlg4reaioiq"]
 
-[ext_resource type="Script" uid="uid://b13yfxxf8xtgr" path="res://src/systems/wind_system.gd" id="1_ewkv2"]
-[ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="2_ttxux"]
-[ext_resource type="Script" uid="uid://cj0dhvn07qmgj" path="res://src/ui/wind_line.gd" id="3_xugx2"]
+[ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="3_wo7qi"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="4_fexyi"]
-[ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="5_player"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
 [ext_resource type="Texture2D" uid="uid://dklvlmoymcqg1" path="res://assets/关卡及大厅/door1in.tres" id="8_wo7qi"]
@@ -25,17 +22,21 @@
 
 [node name="HubWorld" type="Node2D" unique_id=90007121]
 
-[node name="WindSystem" type="Node2D" parent="." unique_id=240022375]
-script = ExtResource("1_ewkv2")
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1355164747]
+zoom = Vector2(0.7, 0.7)
+script = ExtResource("9_hm4b0")
 
-[node name="WindLine" type="Node2D" parent="." unique_id=728163279]
-script = ExtResource("3_xugx2")
+[node name="world_camera" type="Node2D" parent="." unique_id=898401663]
+script = ExtResource("10_wo7qi")
+target_camera = NodePath("../Camera2D")
+use_manual_limits = true
+manual_limit_left = -1350.0
+manual_limit_top = -2600.0
+manual_limit_right = 1350.0
+manual_limit_bottom = 2600.0
 
-[node name="TargetSelector" type="Node2D" parent="." unique_id=674330382]
-script = ExtResource("2_ttxux")
-
-[node name="Player" parent="." unique_id=1123126612 instance=ExtResource("5_player")]
-position = Vector2(-6, 449)
+[node name="player" parent="." unique_id=1191854658 instance=ExtResource("3_wo7qi")]
+position = Vector2(-240, 384)
 
 [node name="HUD" parent="." unique_id=111301308 instance=ExtResource("4_fexyi")]
 
@@ -92,19 +93,6 @@ chapter_id = "1"
 target_scene = "res://src/scenes/stage_1/stage_1.tscn"
 inactive_texture = ExtResource("8_wo7qi")
 cleared_texture = ExtResource("9_ojrv2")
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1355164747]
-zoom = Vector2(0.7, 0.7)
-script = ExtResource("9_hm4b0")
-
-[node name="world_camera" type="Node2D" parent="." unique_id=898401663]
-script = ExtResource("10_wo7qi")
-target_camera = NodePath("../Camera2D")
-use_manual_limits = true
-manual_limit_left = -1350.0
-manual_limit_top = -2600.0
-manual_limit_right = 1350.0
-manual_limit_bottom = 2600.0
 
 [node name="ResetSaveButton" parent="." unique_id=500532727 instance=ExtResource("12_ojrv2")]
 position = Vector2(-368, 463)

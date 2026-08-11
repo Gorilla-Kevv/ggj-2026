@@ -76,7 +76,7 @@ func select_target(index: int) -> void:
 
 	# 新目标高亮
 	if global.selected_target.is_in_group("interactable"):
-		_set_modulate_recursive(global.selected_target, Color.AQUA)
+		_set_modulate_recursive(global.selected_target, Color("6bffa3ff"))
 		print("[TargetSelector] 设置高亮: ", global.selected_target.name, " modulate=", global.selected_target.modulate)
 	else:
 		print("[TargetSelector] 目标不在interactable组: ", global.selected_target.name)
