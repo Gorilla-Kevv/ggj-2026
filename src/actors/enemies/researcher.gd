@@ -11,6 +11,7 @@
 # ============================================================
 extends BaseEnemy
 class_name Researcher
+@onready var light: PointLight2D = $light
 
 # ---------- 导出变量 ----------
 @export var patrol_points: Array[Marker2D] = []
@@ -36,6 +37,8 @@ func _ready() -> void:
 	# 从精灵朝向初始化巡逻方向 (镜像: scale.x < 0 → 朝左)
 	if sprite != null and sprite.scale.x < 0:
 		_patrol_direction = -1
+	if light:
+		light.color = Color("#00f8dd")
 	_enter_state(State.PATROL)
 
 # ---------- 侦测玩家: RayCast2D + 朝向 + 距离 ----------
@@ -171,7 +174,11 @@ func _on_state_entered(state: BaseEnemy.State) -> void:
 	match state:
 		State.CHASE:
 			_chase_timer = 0.0
+			if light:
+				light.color = Color("#b601ec")
 		State.PATROL:
+			if light:
+				light.color = Color("#00f8dd")
 			# 追丢后掉头向最后看到的玩家方向
 			if _player_last_seen_dir != 0:
 				_flip_sprite(_player_last_seen_dir)
