@@ -15,7 +15,6 @@ region = Rect2(1087, 0, 290, 859)
 [node name="thunder" type="Node2D" unique_id=30767940]
 
 [node name="vfx_thunder" parent="." unique_id=1210320534 instance=ExtResource("1_phwts")]
-unique_name_in_owner = true
 position = Vector2(3314.1255, -4584)
 rotation = -3.1415925
 script = ExtResource("2_1qcxu")
