@@ -19,6 +19,7 @@ var has_interactables: bool = false
 signal target_changed(new_target: Node2D)
 
 func _ready() -> void:
+	add_to_group("target_selector")
 	call_deferred("_refresh_targets")
 
 # 输入处理：R键 → 循环切换
@@ -35,6 +36,11 @@ func _input(event: InputEvent) -> void:
 
 # 重新扫描场景中的目标列表
 func _refresh_targets() -> void:
+	# 记住当前选中的目标，避免刷新后跳回玩家
+	var previous_target: Node2D = null
+	if current_index < targets.size():
+		previous_target = targets[current_index]
+
 	targets.clear()
 	has_interactables = false
 
@@ -48,6 +54,13 @@ func _refresh_targets() -> void:
 		if is_instance_valid(node):
 			targets.append(node)
 			has_interactables = true
+
+	# 3. 尝试恢复到之前选中的目标
+	if previous_target and is_instance_valid(previous_target):
+		var idx := targets.find(previous_target)
+		if idx >= 0:
+			select_target(idx)
+			return
 
 	if targets.size() > 0:
 		select_target(0)
