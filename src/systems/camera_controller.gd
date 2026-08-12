@@ -17,7 +17,10 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var global := get_node("/root/Global")
-	var target : Node2D= global.selected_target
+	var target = global.selected_target   # 不标注类型，避免已释放实例报错
 	if target == null or not is_instance_valid(target):
+		# 自清理：指向已释放对象时重置
+		if target != null:
+			global.selected_target = null
 		return
-	global_position = target.global_position
+	global_position = (target as Node2D).global_position

@@ -287,6 +287,9 @@ func apply_wind_force(force: Vector2) -> void:
 # 死亡入口：由 kill_zone / spike / 敌人 调用
 func die() -> void:
 	print("[Player] 死亡触发")
+	# 强制镜头锁定玩家
+	var global := get_node("/root/Global")
+	global.selected_target = self
 	player_died.emit()
 	set_physics_process(false)
 	_play_die_animation()
