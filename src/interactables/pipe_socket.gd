@@ -30,9 +30,14 @@ func _ready() -> void:
 
 func _get_snap_position() -> Vector2:
 	var point := get_node_or_null("SnapPoint") as Marker2D
-	#if point:
 	return point.global_position
-	#return global_position
+
+# 递归重置所有 CanvasItem 子节点的颜色
+func _reset_modulate_recursive(node: Node) -> void:
+	if node is CanvasItem:
+		node.modulate = Color.WHITE
+	for child in node.get_children():
+		_reset_modulate_recursive(child)
 
 func _on_body_entered(body: Node2D) -> void:
 	if _completed:
@@ -45,8 +50,8 @@ func _on_body_entered(body: Node2D) -> void:
 	if snap_to_self:
 		# 移出可交互组 → 不再被 TargetSelector/WindSystem 选中吹动
 		body.remove_from_group("interactable")
-		# 重置选中颜色
-		body.modulate = Color.WHITE
+		# 递归重置选中颜色 (父节点 + 所有子 CanvasItem)
+		_reset_modulate_recursive(body)
 		if body is RigidBody2D:
 			# 先冻结再传送，避免物理引擎把刚体拉回旧位置
 			body.freeze = true
