@@ -14,8 +14,8 @@ var _blast_timer: float = 0.0
 @export var suction_duration: float = 6.0
 @export var blast_duration: float = 5.0
 @export var calm_duration: float = 7.0
-@export var debris_interval: float = 1.5
-@export var debris_speed: float = 800.0
+@export var debris_interval: float = 0.8
+@export var debris_speed: float = 600.0
 @export var max_hp: float = 100.0
 @export var debris_paths: Array[String] = []
 @export var rock_scene: PackedScene
@@ -68,6 +68,7 @@ func _enter_phase(phase: Phase) -> void:
 			debris_timer.start(debris_interval)
 			phase_timer.start(suction_duration)
 			rock_timer.stop()
+			_switch_camera_to_player()
 			print("BossWindcatcher: 进入 SUCTION，debris_timer 启动，间隔=", debris_interval)
 		Phase.BLAST:
 			contact_area.monitoring = true          # 保持碰撞检测，但不致死
@@ -185,6 +186,13 @@ func _on_rock_timer_timeout() -> void:
 func _handle_death() -> void:
 	boss_defeated.emit()
 	super._handle_death()
+
+# 切回玩家镜头
+func _switch_camera_to_player() -> void:
+	var player := get_tree().get_first_node_in_group("player")
+	if player == null: return
+	var global := get_node("/root/Global")
+	global.selected_target = player
 
 func _detect_player() -> void: pass
 func _execute_ai(_delta: float) -> void: pass

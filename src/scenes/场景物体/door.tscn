@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dlcf5lf15i7xc"]
+
+[ext_resource type="Texture2D" uid="uid://uma7i166j0a3" path="res://assets/关卡五/基础瓦片.png" id="1_pmrbv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dnjl1"]
+size = Vector2(190, 189)
+
+[node name="door" type="StaticBody2D" unique_id=1842986555]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1018023571]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_dnjl1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=315383729]
+texture = ExtResource("1_pmrbv")
+region_enabled = true
+region_rect = Rect2(0, 0, 192, 192)

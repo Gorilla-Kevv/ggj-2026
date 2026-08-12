@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="7_b6aon"]
 [ext_resource type="PackedScene" uid="uid://3ccg0p5w88u6" path="res://src/scenes/enemies/boss_windcatcher.tscn" id="10_pnyal"]
 [ext_resource type="PackedScene" uid="uid://car8wrj1b2cin" path="res://src/scenes/stage_1/thunder.tscn" id="11_1c84j"]
+[ext_resource type="Script" uid="uid://hb1xn676fr5b" path="res://src/systems/boss_intro.gd" id="12_intro"]
+[ext_resource type="PackedScene" uid="uid://dlcf5lf15i7xc" path="res://src/scenes/场景物体/door.tscn" id="12_v3oy4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pnyal"]
 texture = ExtResource("7_a74nb")
@@ -53,7 +55,45 @@ sources/1 = SubResource("TileSetAtlasSource_pnyal")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pnyal"]
 normal = Vector2(0, 1)
 
+[sub_resource type="Animation" id="Animation_ilj22"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-96, 1568)]
+}
+
+[sub_resource type="Animation" id="Animation_2n0xl"]
+resource_name = "new_animation"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-96, 1568), Vector2(96, 1568)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bg4kp"]
+_data = {
+&"RESET": SubResource("Animation_ilj22"),
+&"new_animation": SubResource("Animation_2n0xl")
+}
+
 [node name="stage-5" type="Node2D" unique_id=244788794]
+position = Vector2(0, -6)
 
 [node name="background" type="Node2D" parent="." unique_id=390090017]
 z_index = -1000
@@ -128,8 +168,13 @@ shape = SubResource("WorldBoundaryShape2D_pnyal")
 
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("7_b6aon")]
 
+[node name="BossIntro" type="Node2D" parent="." unique_id=305741689]
+script = ExtResource("12_intro")
+door_node_path = NodePath("../door")
+
 [node name="boss_windcatcher" parent="." unique_id=591345490 instance=ExtResource("10_pnyal")]
 position = Vector2(2301, 666)
+rock_spawn_positions = Array[Vector2]([Vector2(700, 800), Vector2(1200, 400), Vector2(3000, 600), Vector2(4000, 300)])
 
 [node name="thunder" parent="." unique_id=30767940 instance=ExtResource("11_1c84j")]
 position = Vector2(-8250, 9708)
@@ -138,3 +183,9 @@ scale = Vector2(2.39, 2.39)
 [node name="thunder2" parent="." unique_id=1118934425 instance=ExtResource("11_1c84j")]
 position = Vector2(-5462, 9708.001)
 scale = Vector2(2.39, 2.39)
+
+[node name="door" parent="." unique_id=1842986555 instance=ExtResource("12_v3oy4")]
+position = Vector2(-96, 1568)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="door" unique_id=1077868938]
+libraries/ = SubResource("AnimationLibrary_bg4kp")
