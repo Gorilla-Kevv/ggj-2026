@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://car8wrj1b2cin" path="res://src/scenes/stage_1/thunder.tscn" id="11_1c84j"]
 [ext_resource type="Script" uid="uid://hb1xn676fr5b" path="res://src/systems/boss_intro.gd" id="12_intro"]
 [ext_resource type="PackedScene" uid="uid://dlcf5lf15i7xc" path="res://src/scenes/场景物体/door.tscn" id="12_v3oy4"]
+[ext_resource type="Script" uid="uid://bbawbdmrcr80" path="res://src/effects/blast_wind_effect.gd" id="13_blastfx"]
+[ext_resource type="Script" uid="uid://djw8vpg5m15ek" path="res://script/screen_shaker.gd" id="14_2n0xl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pnyal"]
 texture = ExtResource("7_a74nb")
@@ -171,6 +173,12 @@ shape = SubResource("WorldBoundaryShape2D_pnyal")
 [node name="BossIntro" type="Node2D" parent="." unique_id=305741689]
 script = ExtResource("12_intro")
 door_node_path = NodePath("../door")
+
+[node name="BlastWindEffect" type="Node2D" parent="." unique_id=402918563]
+script = ExtResource("13_blastfx")
+
+[node name="ScreenShaker" type="Node" parent="." unique_id=682194307]
+script = ExtResource("14_2n0xl")
 
 [node name="boss_windcatcher" parent="." unique_id=591345490 instance=ExtResource("10_pnyal")]
 position = Vector2(2301, 666)

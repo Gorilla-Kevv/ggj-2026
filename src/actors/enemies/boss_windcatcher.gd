@@ -30,6 +30,8 @@ var _blast_timer: float = 0.0
 @onready var debris_spawner: Node2D = $DebrisSpawner
 @onready var rock_timer: Timer = $RockTimer
 
+var blast_wind_effect: Node = null
+
 var current_phase: Phase = Phase.SUCTION
 var hp: float = max_hp
 var rock_hit_count: int = 0
@@ -48,6 +50,8 @@ func _ready() -> void:
 	phase_timer.timeout.connect(_on_phase_timer_timeout)
 	debris_timer.timeout.connect(_on_debris_timer_timeout)
 	rock_timer.timeout.connect(_on_rock_timer_timeout)
+	# 查找暴风特效节点
+	blast_wind_effect = get_node_or_null("/root/stage-5/BlastWindEffect")
 	# 初始不激活，等待开场动画结束后调用 activate()
 	set_physics_process(false)
 	print("BossWindcatcher: _ready 完成，等待 activate()")
@@ -68,6 +72,7 @@ func _enter_phase(phase: Phase) -> void:
 			debris_timer.start(debris_interval)
 			phase_timer.start(suction_duration)
 			rock_timer.stop()
+			_set_wind_effect(true, 1)            # 右吹、开
 			_switch_camera_to_player()
 			print("BossWindcatcher: 进入 SUCTION，debris_timer 启动，间隔=", debris_interval)
 		Phase.BLAST:
@@ -75,12 +80,14 @@ func _enter_phase(phase: Phase) -> void:
 			debris_timer.stop()
 			phase_timer.stop()
 			rock_timer.stop()
+			_set_wind_effect(true, -1)           # 左吹、开
 		Phase.CALM:
 			contact_area.monitoring = true
 			debris_timer.stop()
 			rock_timer.start(rock_spawn_interval)
-			phase_timer.start(calm_duration)       # 保底：超时自动回到 SUCTION
+			phase_timer.start(calm_duration)
 			rock_hit_count = 0
+			_set_wind_effect(false, 0)           # 关
 			print("BossWindcatcher: 进入 CALM，需要砸 ", rock_hits_needed, " 次，保底 ", calm_duration, " 秒")
 
 func _on_phase_timer_timeout() -> void:
@@ -140,7 +147,13 @@ func _apply_blast(delta: float) -> void:
 	_blast_timer += delta
 	var cycle: float = blast_pulse_on + blast_pulse_off
 	var t: float = fmod(_blast_timer, cycle)
-	if t > blast_pulse_on:
+	var pulse_on := t <= blast_pulse_on
+
+	# 通知特效脉冲状态
+	if blast_wind_effect and blast_wind_effect.has_method("set_pulse"):
+		blast_wind_effect.set_pulse(pulse_on)
+
+	if not pulse_on:
 		return    # 关风间隙
 	for body in suction_area.get_overlapping_bodies():
 		if body is RigidBody2D:
@@ -193,6 +206,21 @@ func _switch_camera_to_player() -> void:
 	if player == null: return
 	var global := get_node("/root/Global")
 	global.selected_target = player
+
+# 风线特效: dir=1 右吹, dir=-1 左吹, on=false 关闭
+func _set_wind_effect(on: bool, dir: int) -> void:
+	if blast_wind_effect == null:
+		return
+	if blast_wind_effect.has_method("set_active"):
+		blast_wind_effect.set_active(on)
+	if blast_wind_effect.has_method("set_direction"):
+		match dir:
+			1:
+				blast_wind_effect.set_direction(0)
+			-1:
+				blast_wind_effect.set_direction(1)
+			_:
+				pass
 
 func _detect_player() -> void: pass
 func _execute_ai(_delta: float) -> void: pass
