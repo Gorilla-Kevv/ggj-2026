@@ -1,0 +1,52 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://b5qmaeoigs8si" path="res://src/scenes/stage_3/scorpion.gd" id="1_scor"]
+[ext_resource type="PackedScene" uid="uid://r5ererm61uey" path="res://src/scenes/stage_3/scorpion_bullet.tscn" id="2_scor"]
+[ext_resource type="Texture2D" uid="uid://brm12ht80cvej" path="res://assets/particles/floaty_64.png" id="3_scor"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_scor"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_scor")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_scor")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_contact"]
+radius = 28.0
+
+[node name="scorpion" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_scor")
+bullet_scene = ExtResource("2_scor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="ContactArea" type="Area2D" parent="."]
+
+[node name="ContactShape" type="CollisionShape2D" parent="ContactArea"]
+shape = SubResource("CircleShape2D_contact")
+
+[node name="StunTimer" type="Timer" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_scor")
+animation = &"idle"
+
+[node name="BulletSpawn" type="Marker2D" parent="."]
