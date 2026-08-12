@@ -28,7 +28,7 @@ func _ready() -> void:
 		body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node2D) -> void:
-	print("[PipeSocket] 物体进入: ", body.name, " 在interactable组=", body.is_in_group("interactable"))
+	print("[PipeSocket] 【检测】物体进入: ", body.name, " 在interactable组=", body.is_in_group("interactable"))
 	if _completed:
 		print("[PipeSocket] 已拼合，忽略")
 		return
@@ -37,7 +37,6 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	_completed = true
-	print("[PipeSocket] 锁定物体 ", body.name)
 
 	if snap_to_self:
 		body.global_position = global_position
@@ -45,5 +44,7 @@ func _on_body_entered(body: Node2D) -> void:
 		if body is RigidBody2D:
 			body.linear_velocity = Vector2.ZERO
 			body.angular_velocity = 0.0
+		print("[PipeSocket] 【吸附】物体已锁定到 ", global_position)
 
 	pipe_connected.emit()
+	print("[PipeSocket] 【发信号】pipe_connected")
