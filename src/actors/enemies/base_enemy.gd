@@ -13,7 +13,7 @@ enum State { IDLE, PATROL, CHASE, ATTACK, STUNNED, DEAD }
 
 # ---------- 导出变量 (子类/编辑器可调) ----------
 @export var move_speed: float = 80.0
-@export var chase_speed: float = 120.0
+@export var chase_speed: float = 300.0
 @export var stun_duration: float = 2.0
 
 # ---------- 运行时状态 ----------
