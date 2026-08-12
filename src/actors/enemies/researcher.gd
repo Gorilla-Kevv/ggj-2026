@@ -136,7 +136,7 @@ func _chase(_delta: float) -> void:
 		_enter_state(State.PATROL)
 		return
 
-	var to_player := player.global_position - global_position
+	var to_player: Vector2 = player.global_position - global_position
 	if to_player.length() > 5.0:
 		velocity = to_player.normalized() * chase_speed
 		_flip_sprite(to_player.x)
