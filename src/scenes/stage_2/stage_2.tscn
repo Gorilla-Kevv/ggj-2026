@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="8_plmj3"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="9_d3i7k"]
 [ext_resource type="Texture2D" uid="uid://b6ukimvvw54ml" path="res://assets/关卡二/梯子贴图（装饰）.png" id="11_2sobb"]
-[ext_resource type="PackedScene" uid="uid://bcbss0dlws54n" path="res://src/scenes/可交互物体/interact_body.tscn" id="11_plmj3"]
 [ext_resource type="PackedScene" uid="uid://cugfsheqd7vpe" path="res://assets/关卡二/switchpoint.tscn" id="13_6a5rn"]
 [ext_resource type="Script" uid="uid://bw4ob1u6dpxk1" path="res://src/interactables/pipe_socket.gd" id="13_ib1sk"]
 [ext_resource type="Script" uid="uid://jwpsx1qi13lm" path="res://script/dashed_line_2d.gd" id="14_b58jk"]
@@ -348,10 +347,7 @@ color_ramp = SubResource("GradientTexture1D_ukbbq")
 color_initial_ramp = SubResource("GradientTexture1D_3pjab")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ydxt3"]
-size = Vector2(554.371, 1906.3608)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pes4y"]
-size = Vector2(769.332, 260.2152)
+size = Vector2(79.1958, 144.25085)
 
 [sub_resource type="Gradient" id="Gradient_251hh"]
 offsets = PackedFloat32Array(0, 0.52313167, 1)
@@ -384,9 +380,6 @@ scale_min = 1.5
 scale_max = 1.8
 color_ramp = SubResource("GradientTexture1D_ukbbq")
 color_initial_ramp = SubResource("GradientTexture1D_3pjab")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ib1sk"]
-size = Vector2(120, 80)
 
 [sub_resource type="Gradient" id="Gradient_1d18i"]
 offsets = PackedFloat32Array(0, 0.5423387, 0.87903225, 1)
@@ -570,25 +563,25 @@ monitorable = false
 script = ExtResource("13_ib1sk")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="MultiLayerControl/PipeSocket" unique_id=1707639529]
-position = Vector2(286.74683, -432.4839)
+position = Vector2(569.59033, 481.09927)
 shape = SubResource("RectangleShape2D_ydxt3")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="MultiLayerControl/PipeSocket" unique_id=1891161223]
-position = Vector2(-363.79065, 379.2754)
-shape = SubResource("RectangleShape2D_pes4y")
 
 [node name="Line2D" type="Line2D" parent="MultiLayerControl/PipeSocket" unique_id=1325969185]
 points = PackedVector2Array(-1.7520752, 532.01074, -754.11365, 515.0405, -748.4569, 260.48193, 3.9047852, 243.51123, -1.7519531, -814.3208, 580.90405, -627.64404, 586.5609, 532.01074, -1.7520752, 532.01074)
 width = 5.115
-default_color = Color(0.22745098, 1, 0.25882354, 0.18039216)
+default_color = Color(0.6156863, 0.40784314, 0.3372549, 0.0627451)
 script = ExtResource("14_b58jk")
 gap_length = 10.0
 
+[node name="SnapPoint" type="Marker2D" parent="MultiLayerControl/PipeSocket" unique_id=871213418]
+position = Vector2(303.71838, 294.42313)
+
 [node name="MovablePipe" parent="MultiLayerControl" unique_id=1378360413 instance=ExtResource("15_652hf")]
-position = Vector2(1303.9998, -6616.0005)
-collision_layer = 5
-collision_mask = 33
+z_index = 1
+position = Vector2(1335.9998, -6560.0005)
 gravity_scale = 0.0
+can_sleep = false
+continuous_cd = 1
 interact_mass = 10.0
 
 [node name="管道倾斜35度" type="TileMapLayer" parent="MultiLayerControl" unique_id=1707394448]
@@ -624,22 +617,8 @@ tile_map_layer = NodePath("../../MultiLayerControl/管道水平/管道倾斜45�
 target_camera = NodePath("../Camera2D")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("8_plmj3")]
+z_index = 2
 position = Vector2(1800, -3976)
-
-[node name="interactBody" parent="." unique_id=125772546 instance=ExtResource("11_plmj3")]
-visible = false
-position = Vector2(-1472, -328.00006)
-rotation = -1.9444342
-
-[node name="CollisionShape2D" parent="interactBody" index="0" unique_id=181797811]
-position = Vector2(-4, 0)
-shape = SubResource("RectangleShape2D_ib1sk")
-
-[node name="Sprite2D" parent="interactBody" index="1" unique_id=1226100119]
-scale = Vector2(0.080748655, 0.08074866)
-texture = ExtResource("2_5grbk")
-region_enabled = true
-region_rect = Rect2(154, 1599, 1624, 922)
 
 [node name="exit" type="Node2D" parent="." unique_id=473245454]
 position = Vector2(5984, -18400)
@@ -693,5 +672,4 @@ position = Vector2(607.99994, -4176)
 rotation = -0.9773844
 scale = Vector2(1.35, 1.35)
 
-[editable path="interactBody"]
 [editable path="exit/ExitPortal"]
