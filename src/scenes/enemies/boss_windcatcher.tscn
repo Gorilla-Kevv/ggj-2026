@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://3ccg0p5w88u6"]
+
+[ext_resource type="Script" uid="uid://d1qhtqwhc621k" path="res://src/actors/enemies/boss_windcatcher.gd" id="1_bll4m"]
+[ext_resource type="Texture2D" uid="uid://chjjxdgwsxbrt" path="res://assets/关卡五/text boss.png" id="3_jo65p"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dnkuf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jo65p")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jo65p"]
+size = Vector2(329.95313, 373.26563)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dnkuf"]
+size = Vector2(292, 366.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bn3bj"]
+size = Vector2(3482.5938, 2669.9219)
+
+[node name="boss_windcatcher" type="CharacterBody2D" unique_id=591345490]
+script = ExtResource("1_bll4m")
+suction_duration = 15.0
+blast_duration = 15.0
+calm_duration = 10.0
+debris_paths = Array[String](["res://src/scenes/enemies/石头/1.tscn", "res://src/scenes/enemies/石头/2.tscn", "res://src/scenes/enemies/石头/3.tscn"])
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1512496458]
+sprite_frames = SubResource("SpriteFrames_dnkuf")
+animation = &"new_animation"
+autoplay = "new_animation"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=516954237]
+position = Vector2(9, 30)
+shape = SubResource("RectangleShape2D_jo65p")
+
+[node name="ContactArea" type="Area2D" parent="." unique_id=1118366667]
+
+[node name="ContactShape" type="CollisionShape2D" parent="ContactArea" unique_id=1458115874]
+position = Vector2(9, 29.75)
+shape = SubResource("RectangleShape2D_dnkuf")
+
+[node name="SuctionArea" type="Area2D" parent="." unique_id=1097829429]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SuctionArea" unique_id=1199560256]
+position = Vector2(-1483.7031, 42.039063)
+shape = SubResource("RectangleShape2D_bn3bj")
+
+[node name="DebrisSpawner" type="Node2D" parent="." unique_id=1907035361]
+position = Vector2(-2856, 0)
+
+[node name="StunTimer" type="Timer" parent="." unique_id=1471572739]
+
+[node name="PhaseTimer" type="Timer" parent="." unique_id=382174072]
+
+[node name="DebrisTimer" type="Timer" parent="." unique_id=1121863071]
