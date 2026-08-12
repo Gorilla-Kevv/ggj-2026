@@ -11,7 +11,7 @@
 # ============================================================
 extends BaseEnemy
 class_name Researcher
-@onready var light: PointLight2D = $light
+@onready var light: PointLight2D = $AnimatedSprite2D/light
 
 # ---------- 导出变量 ----------
 @export var patrol_points: Array[Marker2D] = []

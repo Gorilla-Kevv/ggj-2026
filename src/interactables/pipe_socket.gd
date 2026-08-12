@@ -1,3 +1,14 @@
+#管道关卡
+#├── PipePiece (RigidBody2D)           ← 挂 pushable_box.gd，能吹动
+#│   ├── CollisionShape2D
+#│   └── Sprite2D (管道贴图)
+#│
+#├── PipeSocket (Area2D)               ← 挂 pipe_socket.gd，目标位置
+#│   ├── CollisionShape2D (比管道大一圈)
+#│   └── Sprite2D (半透明虚线框，提示"放在这里")
+#│
+#└── PassageBlocker (StaticBody2D)     ← 拼合后打开的障碍
+
 # 管道插槽 — 检测可交互物体到达目标位置后锁定
 # 放在目标位置的 Area2D 上
 extends Area2D
