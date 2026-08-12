@@ -14,6 +14,8 @@
 extends Area2D
 
 @export var snap_to_self: bool = true
+# 吸附偏移：管道视觉中心相对插槽原点的偏移，用于微调拼合位置
+@export var snap_offset: Vector2 = Vector2.ZERO
 @export var completion_sound: AudioStream = null
 
 var _completed: bool = false
@@ -28,23 +30,24 @@ func _ready() -> void:
 		body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node2D) -> void:
-	print("[PipeSocket] 【检测】物体进入: ", body.name, " 在interactable组=", body.is_in_group("interactable"))
 	if _completed:
-		print("[PipeSocket] 已拼合，忽略")
 		return
 	if not body.is_in_group("interactable"):
-		print("[PipeSocket] 不在interactable组，忽略")
 		return
 
 	_completed = true
 
 	if snap_to_self:
-		body.global_position = global_position
-		body.freeze = true
+		body.global_position = global_position + snap_offset
+		# 移出可交互组 → 不再被 TargetSelector/WindSystem 选中吹动
+		body.remove_from_group("interactable")
 		if body is RigidBody2D:
+			body.freeze = true
+			body.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC
 			body.linear_velocity = Vector2.ZERO
 			body.angular_velocity = 0.0
-		print("[PipeSocket] 【吸附】物体已锁定到 ", global_position)
+			body.sleeping = true
+		print("[PipeSocket] 【吸附】物体已锁定到 ", body.global_position)
 
 	pipe_connected.emit()
 	print("[PipeSocket] 【发信号】pipe_connected")
