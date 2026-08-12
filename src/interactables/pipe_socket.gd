@@ -14,8 +14,8 @@
 extends Area2D
 
 @export var snap_to_self: bool = true
-# 吸附偏移：管道视觉中心相对插槽原点的偏移，用于微调拼合位置
-@export var snap_offset: Vector2 = Vector2.ZERO
+# 吸附锚点：放入一个 Marker2D 子节点命名 "SnapPoint"，物体原点会自动对齐到它
+# 没有 SnapPoint 时回退到插槽原点
 @export var completion_sound: AudioStream = null
 
 var _completed: bool = false
@@ -29,6 +29,12 @@ func _ready() -> void:
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 
+func _get_snap_position() -> Vector2:
+	var point := get_node_or_null("SnapPoint") as Marker2D
+	if point:
+		return point.global_position
+	return global_position
+
 func _on_body_entered(body: Node2D) -> void:
 	if _completed:
 		return
@@ -38,7 +44,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_completed = true
 
 	if snap_to_self:
-		body.global_position = global_position + snap_offset
+		body.global_position = _get_snap_position()
 		# 移出可交互组 → 不再被 TargetSelector/WindSystem 选中吹动
 		body.remove_from_group("interactable")
 		if body is RigidBody2D:
