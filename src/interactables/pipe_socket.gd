@@ -21,16 +21,23 @@ var _completed: bool = false
 signal pipe_connected()
 
 func _ready() -> void:
+	monitoring = true
+	monitorable = false
+	collision_mask = 1
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node2D) -> void:
+	print("[PipeSocket] 物体进入: ", body.name, " 在interactable组=", body.is_in_group("interactable"))
 	if _completed:
+		print("[PipeSocket] 已拼合，忽略")
 		return
 	if not body.is_in_group("interactable"):
+		print("[PipeSocket] 不在interactable组，忽略")
 		return
 
 	_completed = true
+	print("[PipeSocket] 锁定物体 ", body.name)
 
 	if snap_to_self:
 		body.global_position = global_position
