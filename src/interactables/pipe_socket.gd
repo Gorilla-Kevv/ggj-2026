@@ -25,7 +25,6 @@ signal pipe_connected()
 func _ready() -> void:
 	monitoring = true
 	monitorable = false
-	collision_mask = 1
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 
@@ -47,12 +46,18 @@ func _on_body_entered(body: Node2D) -> void:
 		body.global_position = _get_snap_position()
 		# 移出可交互组 → 不再被 TargetSelector/WindSystem 选中吹动
 		body.remove_from_group("interactable")
+		# 重置选中颜色
+		body.modulate = Color.WHITE
 		if body is RigidBody2D:
 			body.freeze = true
 			body.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC
 			body.linear_velocity = Vector2.ZERO
 			body.angular_velocity = 0.0
 			body.sleeping = true
+		# 通知 TargetSelector 重新扫描目标列表
+		var selector := get_tree().get_first_node_in_group("target_selector")
+		if selector:
+			selector.call_deferred("_refresh_targets")
 		print("[PipeSocket] 【吸附】物体已锁定到 ", body.global_position)
 
 	pipe_connected.emit()
