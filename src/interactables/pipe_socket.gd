@@ -30,9 +30,9 @@ func _ready() -> void:
 
 func _get_snap_position() -> Vector2:
 	var point := get_node_or_null("SnapPoint") as Marker2D
-	if point:
-		return point.global_position
-	return global_position
+	#if point:
+	return point.global_position
+	#return global_position
 
 func _on_body_entered(body: Node2D) -> void:
 	if _completed:
@@ -43,17 +43,20 @@ func _on_body_entered(body: Node2D) -> void:
 	_completed = true
 
 	if snap_to_self:
-		body.global_position = _get_snap_position()
 		# 移出可交互组 → 不再被 TargetSelector/WindSystem 选中吹动
 		body.remove_from_group("interactable")
 		# 重置选中颜色
 		body.modulate = Color.WHITE
 		if body is RigidBody2D:
+			# 先冻结再传送，避免物理引擎把刚体拉回旧位置
 			body.freeze = true
 			body.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC
 			body.linear_velocity = Vector2.ZERO
 			body.angular_velocity = 0.0
-			body.sleeping = true
+			# 用物理服务器同步传送，防止唤醒时回弹
+			var t := body.global_transform
+			t.origin = _get_snap_position()
+			PhysicsServer2D.body_set_state(body.get_rid(), PhysicsServer2D.BODY_STATE_TRANSFORM, t)
 		# 通知 TargetSelector 重新扫描目标列表
 		var selector := get_tree().get_first_node_in_group("target_selector")
 		if selector:
