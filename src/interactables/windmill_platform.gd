@@ -16,6 +16,7 @@ var angular_velocity: float = 0.0
 var _carried_players: Array[CharacterBody2D] = []
 
 func _ready() -> void:
+	add_to_group("windmill")
 	sync_to_physics = true
 
 func _physics_process(delta: float) -> void:
