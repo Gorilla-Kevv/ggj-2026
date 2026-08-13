@@ -12,7 +12,7 @@ extends Node2D
 # current_index:      当前选中目标的索引
 # has_interactables:  是否存在除玩家外的可交互物体
 # switch_range:       R键可切换的可交互物体最大距离 (px)，超出距离的物体无法选中/操控
-@export var switch_range: float = 900.0
+@export var switch_range: float = 1000.0
 var targets: Array[Node2D] = []
 var current_index: int = 0
 var has_interactables: bool = false

@@ -1,0 +1,328 @@
+[gd_scene format=4 uid="uid://dp6uewl43s6le"]
+
+[ext_resource type="Script" uid="uid://ek5x7ch418ib" path="res://src/interactables/windmill_platform.gd" id="1_r5rnk"]
+[ext_resource type="Texture2D" uid="uid://dvhd3vpjqfien" path="res://assets/关卡二/贴图集 (2).png" id="2_pns7p"]
+[ext_resource type="TileSet" uid="uid://bm5gl7ecdsnjj" path="res://assets/关卡二/管道_水平.tres" id="3_xmlp7"]
+[ext_resource type="Script" uid="uid://d14h72oeq41ab" path="res://script/mapLayer.gd" id="4_qo3o2"]
+[ext_resource type="Texture2D" uid="uid://e3flxsyosgos" path="res://assets/关卡二/风扇.png" id="5_3it3s"]
+[ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_huw4e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqj6e"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hijbd"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0akiw"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5grbk"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtxcl"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xohn7"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlwbg"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plmj3"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3i7k"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rob4u"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnujg"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fnx1"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1umi"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ofj8"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ma88b"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivpn3"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6rfp"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pi25y"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymkpu"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sobb"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a5rn"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_652hf"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c074i"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib1sk"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b58jk"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqx2n"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trxhs"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydxt3"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pes4y"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 3360, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeisy"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 3360, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_346cs"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 3360, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1d18i"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 3360, 836, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8fibg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqj6e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hijbd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0akiw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5grbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtxcl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xohn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rlwbg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plmj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3i7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rob4u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnujg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fnx1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1umi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ofj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ma88b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ivpn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6rfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pi25y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymkpu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sobb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a5rn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_652hf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c074i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ib1sk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b58jk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqx2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trxhs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydxt3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pes4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeisy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_346cs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1d18i")
+}],
+"loop": true,
+"name": &"fan",
+"speed": 15.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_trxhs"]
+offsets = PackedFloat32Array(0, 0.518024, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 0.77254903, 0.85882354, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dk3ac"]
+gradient = SubResource("Gradient_trxhs")
+width = 1
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_645lv"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3pjab"]
+gradient = SubResource("Gradient_645lv")
+
+[sub_resource type="Gradient" id="Gradient_ydxt3"]
+offsets = PackedFloat32Array(0, 0.4714495, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ukbbq"]
+gradient = SubResource("Gradient_ydxt3")
+
+[sub_resource type="Curve" id="Curve_jeisy"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.09363295, 18.471054), 0.0, 0.0, 0, 0, Vector2(0.24271843, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.3745318, -22.889969), 0.0, 0.0, 0, 0, Vector2(0.5048543, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.61610484, 28.81131), 0.0, 0.0, 0, 0, Vector2(0.7475728, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.8651685, -24.038895), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="CurveTexture" id="CurveTexture_jeisy"]
+curve = SubResource("Curve_jeisy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2lvvb"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(200, 106.59, 1)
+gravity = Vector3(100, 0, 0)
+tangential_accel_min = -2.2351742e-06
+tangential_accel_max = 5.9999976
+tangential_accel_curve = SubResource("CurveTexture_jeisy")
+damping_max = 100.00001
+scale_min = 1.5
+scale_max = 1.8
+color_ramp = SubResource("GradientTexture1D_ukbbq")
+color_initial_ramp = SubResource("GradientTexture1D_3pjab")
+
+[node name="Windmill" type="Node2D" unique_id=1856313511]
+script = ExtResource("1_r5rnk")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=609277501]
+scale = Vector2(0.64527, 0.64527005)
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=961407682]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+texture = ExtResource("2_pns7p")
+region_enabled = true
+region_rect = Rect2(4652, 5475, 615, 1337)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Node2D" unique_id=1849650542]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+rotation = -1.5707964
+texture = ExtResource("2_pns7p")
+region_enabled = true
+region_rect = Rect2(4652, 5475, 615, 1337)
+
+[node name="Pipe horizon2" type="TileMapLayer" parent="." unique_id=670600718]
+position = Vector2(0, 14.000122)
+scale = Vector2(1.0000001, 1.0000001)
+tile_map_data = PackedByteArray("AAAGAP//AQAAAAAAAAAGAAAAAQAAAAEAAAAGAAEAAQAAAAEAAAAGAAIAAQAAAAEAAAAGAAMAAQAAAAEAAAAGAAQAAQAAAAEAAAAGAAUAAQACAAAAADAHAP//AQABAAAAAAAHAAAAAQABAAEAAAAHAAEAAQABAAEAAAAHAAIAAQABAAEAAAAHAAMAAQABAAEAAAAHAAQAAQABAAEAAAAHAAUAAQABAAAAADAIAP//AQABAAAAAAAIAAAAAQABAAEAAAAIAAEAAQABAAEAAAAIAAIAAQABAAEAAAAIAAMAAQABAAEAAAAIAAQAAQABAAEAAAAIAAUAAQABAAAAADAJAP//AQABAAAAAAAJAAAAAQABAAEAAAAJAAEAAQABAAEAAAAJAAIAAQABAAEAAAAJAAMAAQABAAEAAAAJAAQAAQABAAEAAAAJAAUAAQABAAAAADAKAP//AQABAAAAAAAKAAAAAQABAAEAAAAKAAEAAQABAAEAAAAKAAIAAQABAAEAAAAKAAMAAQABAAEAAAAKAAQAAQABAAEAAAAKAAUAAQABAAAAADALAP//AQABAAAAAAALAAAAAQABAAEAAAALAAEAAQABAAEAAAALAAIAAQABAAEAAAALAAMAAQABAAEAAAALAAQAAQABAAEAAAALAAUAAQABAAAAADAMAP//AQABAAAAAAAMAAAAAQABAAEAAAAMAAEAAQABAAEAAAAMAAIAAQABAAEAAAAMAAMAAQABAAEAAAAMAAQAAQABAAEAAAAMAAUAAQABAAAAADANAP//AQABAAAAAAANAAAAAQABAAEAAAANAAEAAQABAAEAAAANAAIAAQABAAEAAAANAAMAAQABAAEAAAANAAQAAQABAAEAAAANAAUAAQABAAAAADAOAP//AQABAAAAAAAOAAAAAQABAAEAAAAOAAEAAQABAAEAAAAOAAIAAQABAAEAAAAOAAMAAQABAAEAAAAOAAQAAQABAAEAAAAOAAUAAQABAAAAADAPAP//AQABAAAAAAAPAAAAAQABAAEAAAAPAAEAAQABAAEAAAAPAAIAAQABAAEAAAAPAAMAAQABAAEAAAAPAAQAAQABAAEAAAAPAAUAAQABAAAAADAQAP//AQABAAAAAAAQAAAAAQAEAAEAAAAQAAEAAQAEAAEAAAAQAAIAAQAEAAEAAAAQAAMAAQAEAAEAAAAQAAQAAQAEAAEAAAAQAAUAAQABAAIAAAARAP//AQAEAAAAAAARAAAAAQAEAAEAAAARAAEAAQABAAEAAAARAAIAAQAEAAEAAAARAAMAAQAEAAEAAAARAAQAAQABAAEAAAARAAUAAQAEAAIAAAASAP//AQAEAAAAAAASAAAAAQABAAEAAAASAAEAAQABAAEAAAASAAIAAQABAAEAAAASAAMAAQAEAAEAAAASAAQAAQABAAEAAAASAAUAAQAEAAIAAAATAP//AQABAAAAAAATAAAAAQABAAEAAAATAAEAAQAEAAEAAAATAAIAAQAEAAEAAAATAAMAAQAEAAEAAAATAAQAAQAEAAEAAAATAAUAAQABAAIAAAAUAP//AQAEAAAAAAAUAAAAAQABAAEAAAAUAAEAAQABAAEAAAAUAAIAAQABAAEAAAAUAAMAAQAEAAEAAAAUAAQAAQAEAAEAAAAUAAUAAQABAAIAAAAVAP//AQAEAAAAAAAVAAAAAQAEAAEAAAAVAAEAAQABAAEAAAAVAAIAAQABAAEAAAAVAAMAAQABAAEAAAAVAAQAAQAEAAEAAAAVAAUAAQAEAAIAAAAWAP//AQABAAAAAAAWAAAAAQABAAEAAAAWAAEAAQABAAEAAAAWAAIAAQAEAAEAAAAWAAMAAQABAAEAAAAWAAQAAQABAAEAAAAWAAUAAQABAAIAAAAXAP//AQABAAAAAAAXAAAAAQAEAAEAAAAXAAEAAQABAAEAAAAXAAIAAQABAAEAAAAXAAMAAQABAAEAAAAXAAQAAQABAAEAAAAXAAUAAQABAAIAAAAYAP//AQABAAAAAAAYAAAAAQABAAEAAAAYAAEAAQABAAEAAAAYAAIAAQABAAEAAAAYAAMAAQAEAAEAAAAYAAQAAQAEAAEAAAAYAAUAAQABAAIAAAAZAP//AQAEAAAAAAAZAAAAAQAEAAEAAAAZAAEAAQAEAAEAAAAZAAIAAQABAAEAAAAZAAMAAQABAAEAAAAZAAQAAQAEAAEAAAAZAAUAAQAEAAIAAAAaAP//AQABAAAAAAAaAAAAAQABAAEAAAAaAAEAAQAEAAEAAAAaAAIAAQAEAAEAAAAaAAMAAQABAAEAAAAaAAQAAQAEAAEAAAAaAAUAAQABAAIAAAAbAP//AQAEAAAAAAAbAAAAAQABAAEAAAAbAAEAAQABAAEAAAAbAAIAAQABAAEAAAAbAAMAAQABAAEAAAAbAAQAAQABAAEAAAAbAAUAAQABAAAAADAcAP//AQABAAAAAAAcAAAAAQABAAEAAAAcAAEAAQABAAEAAAAcAAIAAQABAAEAAAAcAAMAAQABAAEAAAAcAAQAAQABAAEAAAAcAAUAAQABAAAAADAdAP//AQABAAAAAAAdAAAAAQABAAEAAAAdAAEAAQABAAEAAAAdAAIAAQABAAEAAAAdAAMAAQABAAEAAAAdAAQAAQABAAEAAAAdAAUAAQABAAAAADAeAP//AQABAAAAAAAeAAAAAQABAAEAAAAeAAEAAQABAAEAAAAeAAIAAQABAAEAAAAeAAMAAQABAAEAAAAeAAQAAQABAAEAAAAeAAUAAQABAAAAADAfAP//AQABAAAAAAAfAAAAAQABAAEAAAAfAAEAAQABAAEAAAAfAAIAAQABAAEAAAAfAAMAAQABAAEAAAAfAAQAAQABAAEAAAAfAAUAAQABAAAAADAgAP//AQABAAAAAAAgAAAAAQABAAEAAAAgAAEAAQABAAEAAAAgAAIAAQABAAEAAAAgAAMAAQABAAEAAAAgAAQAAQABAAEAAAAgAAUAAQABAAAAADAhAP//AQABAAAAAAAhAAAAAQABAAEAAAAhAAEAAQABAAEAAAAhAAIAAQABAAEAAAAhAAMAAQABAAEAAAAhAAQAAQABAAEAAAAhAAUAAQABAAAAADAiAP//AQABAAAAAAAiAAAAAQABAAEAAAAiAAEAAQABAAEAAAAiAAIAAQABAAEAAAAiAAMAAQABAAEAAAAiAAQAAQABAAEAAAAiAAUAAQABAAAAADAjAP//AQABAAAAAAAjAAAAAQABAAEAAAAjAAEAAQABAAEAAAAjAAIAAQABAAEAAAAjAAMAAQABAAEAAAAjAAQAAQABAAEAAAAjAAUAAQABAAAAADAkAP//AQABAAAAAAAkAAAAAQABAAEAAAAkAAEAAQABAAEAAAAkAAIAAQABAAEAAAAkAAMAAQABAAEAAAAkAAQAAQABAAEAAAAkAAUAAQABAAAAADAlAP//AQABAAAAAAAlAAAAAQABAAEAAAAlAAEAAQABAAEAAAAlAAIAAQABAAEAAAAlAAMAAQABAAEAAAAlAAQAAQABAAEAAAAlAAUAAQABAAAAADAmAP//AQABAAAAAAAmAAAAAQABAAEAAAAmAAEAAQABAAEAAAAmAAIAAQABAAEAAAAmAAMAAQABAAEAAAAmAAQAAQABAAEAAAAmAAUAAQABAAAAADAnAP//AQABAAAAAAAnAAAAAQABAAEAAAAnAAEAAQABAAEAAAAnAAIAAQABAAEAAAAnAAMAAQABAAEAAAAnAAQAAQABAAEAAAAnAAUAAQABAAAAADAoAP//AQABAAAAAAAoAAAAAQABAAEAAAAoAAEAAQABAAEAAAAoAAIAAQABAAEAAAAoAAMAAQABAAEAAAAoAAQAAQABAAEAAAAoAAUAAQABAAAAADApAP//AQABAAAAAAApAAAAAQABAAEAAAApAAEAAQABAAEAAAApAAIAAQABAAEAAAApAAMAAQABAAEAAAApAAQAAQABAAEAAAApAAUAAQABAAAAADAqAP//AQABAAAAAAAqAAAAAQABAAEAAAAqAAEAAQABAAEAAAAqAAIAAQABAAEAAAAqAAMAAQABAAEAAAAqAAQAAQABAAEAAAAqAAUAAQABAAAAADArAP//AQAAAAAAAFArAAAAAgAAAAQAAGArAAEAAgAAAAQAAGArAAIAAgAAAAQAAGArAAMAAgAAAAQAAGArAAQAAgAAAAQAAGArAAUAAQACAAAAAFD9/wQAAQAAAAAAAAD9/wUAAQAAAAEAAAD9/wYAAQAAAAEAAAD9/wcAAQAAAAEAAAD9/wgAAQAAAAEAAAD9/wkAAQAAAAEAAAD9/woAAQAAAAEAAAD9/wsAAQAAAAEAAAD9/wwAAQAAAAEAAAD9/w0AAQAAAAEAAAD9/w4AAQAAAAEAAAD9/w8AAQAAAAEAAAD9/xAAAQAAAAEAAAD9/xEAAQAAAAEAAAD9/xIAAQAAAAEAAAD9/xMAAQAAAAEAAAD9/xQAAQAAAAEAAAD9/xUAAQAAAAEAAAD+/wQAAQABAAAAAAD+/wUAAQABAAEAAAD+/wYAAQABAAEAAAD+/wcAAQABAAEAAAD+/wgAAQAEAAEAAAD+/wkAAQAEAAEAAAD+/woAAQAEAAEAAAD+/wsAAQAEAAEAAAD+/wwAAQAEAAEAAAD+/w0AAQAEAAEAAAD+/w4AAQAEAAEAAAD+/w8AAQAEAAEAAAD+/xAAAQAEAAEAAAD+/xEAAQAEAAEAAAD+/xIAAQAEAAEAAAD+/xMAAQAEAAEAAAD+/xQAAQAEAAEAAAD+/xUAAQAEAAEAAAD//wQAAQABAAAAAAD//wUAAQABAAEAAAD//wYAAQABAAEAAAD//wcAAQABAAEAAAD//wgAAQAEAAEAAAD//wkAAQAEAAEAAAD//woAAQAEAAEAAAD//wsAAQAEAAEAAAD//wwAAQAEAAEAAAD//w0AAQAEAAEAAAD//w4AAQAEAAEAAAD//w8AAQAEAAEAAAD//xAAAQAEAAEAAAD//xEAAQAEAAEAAAD//xIAAQAEAAEAAAD//xMAAQAEAAEAAAD//xQAAQAEAAEAAAD//xUAAQAEAAEAAAAAAAQAAQABAAAAAAAAAAUAAQABAAEAAAAAAAYAAQABAAEAAAAAAAcAAQABAAEAAAAAAAgAAQAEAAEAAAAAAAkAAQAEAAEAAAAAAAoAAQAEAAEAAAAAAAsAAQAEAAEAAAAAAAwAAQAEAAEAAAAAAA0AAQAEAAEAAAAAAA4AAQAEAAEAAAAAAA8AAQAEAAEAAAAAABAAAQAEAAEAAAAAABEAAQAEAAEAAAAAABIAAQAEAAEAAAAAABMAAQAEAAEAAAAAABQAAQAEAAEAAAAAABUAAQAEAAEAAAABAAQAAQABAAAAAAABAAUAAQABAAEAAAABAAYAAQABAAEAAAABAAcAAQABAAEAAAABAAgAAQAEAAEAAAABAAkAAQAEAAEAAAABAAoAAQAEAAEAAAABAAsAAQAEAAEAAAABAAwAAQAEAAEAAAABAA0AAQAEAAEAAAABAA4AAQAEAAEAAAABAA8AAQAEAAEAAAABABAAAQAEAAEAAAABABEAAQAEAAEAAAABABIAAQAEAAEAAAABABMAAQAEAAEAAAABABQAAQAEAAEAAAABABUAAQAEAAEAAAACAAQAAQACAAAAAAACAAUAAQACAAEAAAACAAYAAQACAAEAAAACAAcAAQACAAEAAAACAAgAAQACAAEAAAACAAkAAQACAAEAAAACAAoAAQACAAEAAAACAAsAAQACAAEAAAACAAwAAQACAAEAAAACAA0AAQACAAEAAAACAA4AAQACAAEAAAACAA8AAQACAAEAAAACABAAAQACAAEAAAACABEAAQACAAEAAAACABIAAQACAAEAAAACABMAAQACAAEAAAACABQAAQACAAEAAAACABUAAQACAAEAAAD9/xYAAQACAAAAADD+/xYAAgABAAQAAAD//xYAAgABAAQAAAAAABYAAgABAAQAAAABABYAAgABAAQAAAACABYAAQAAAAAAADA=")
+tile_set = ExtResource("3_xmlp7")
+script = ExtResource("4_qo3o2")
+
+[node name="风扇" type="Node2D" parent="Pipe horizon2" unique_id=447378886]
+position = Vector2(792, 642)
+
+[node name="风扇" type="AnimatedSprite2D" parent="Pipe horizon2/风扇" unique_id=1274619117]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+position = Vector2(-88, -31.999996)
+rotation = 1.5707964
+scale = Vector2(0.49780533, 0.74050224)
+sprite_frames = SubResource("SpriteFrames_8fibg")
+animation = &"fan"
+flip_h = true
+
+[node name="windline_particles bg" parent="Pipe horizon2/风扇" unique_id=381050555 instance=ExtResource("6_huw4e")]
+position = Vector2(66.56641, -4)
+texture = SubResource("GradientTexture2D_dk3ac")
+process_material = SubResource("ParticleProcessMaterial_2lvvb")

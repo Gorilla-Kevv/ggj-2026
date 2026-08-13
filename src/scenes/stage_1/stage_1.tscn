@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://c4n1sxje4rbxe"]
 
 [ext_resource type="Texture2D" uid="uid://tuljece4o5ri" path="res://assets/关卡一/背景.res" id="1_2b4sv"]
+[ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="1_37afl"]
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="1_krhqc"]
 [ext_resource type="Texture2D" uid="uid://d31h5kan5ne16" path="res://assets/关卡一/背景(无水印.png" id="1_s4gg2"]
 [ext_resource type="Texture2D" uid="uid://dv4woirntpg5r" path="res://assets/关卡一/中景.res" id="2_37afl"]
@@ -30,7 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://bc1xamc7680ge" path="res://assets/关卡及大厅/door1out.tres" id="18_gfom6"]
 [ext_resource type="PackedScene" uid="uid://cv7n6kehynb4u" path="res://src/scenes/vfx/圣光bg_particles.tscn" id="21_x8quu"]
 [ext_resource type="Texture2D" uid="uid://t7db5tjl07mh" path="res://assets/关卡一/实验管破碎.tres" id="25_2i242"]
-[ext_resource type="FontFile" uid="uid://dx2hdfdvn5jcn" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="28_2b4sv"]
+[ext_resource type="FontFile" uid="uid://bpi4uuewtft3i" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="28_2b4sv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pinah"]
 atlas = ExtResource("2_88t4y")
@@ -773,6 +774,8 @@ hue_variation_max = 0.019999977
 anim_offset_max = 1.0
 
 [node name="stage-1" type="Node2D" unique_id=1265220519]
+script = ExtResource("1_37afl")
+switch_range = 10000.0
 metadata/_edit_horizontal_guides_ = [-636.0]
 
 [node name="background" type="Node2D" parent="." unique_id=1925680275]
@@ -1475,7 +1478,7 @@ tile_map_layer = NodePath("../../mid")
 target_camera = NodePath("../Camera2D")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("7_ndbc8")]
-position = Vector2(4303.548, -19931.96)
+position = Vector2(4043.186, -19112.004)
 
 [node name="windline_particles bg" parent="world" unique_id=381050555 instance=ExtResource("6_do0c6")]
 position = Vector2(-248, 384)
@@ -1495,6 +1498,11 @@ collision_layer = 8
 [node name="check4" parent="." unique_id=205018725 instance=ExtResource("10_24bcq")]
 position = Vector2(3840.0002, -19368.002)
 rotation = 3.1415927
+scale = Vector2(0.4448276, 0.4448276)
+collision_layer = 8
+
+[node name="check5" parent="." unique_id=514878756 instance=ExtResource("10_24bcq")]
+position = Vector2(864.00006, -11860.001)
 scale = Vector2(0.4448276, 0.4448276)
 collision_layer = 8
 
@@ -1710,8 +1718,9 @@ shape = SubResource("RectangleShape2D_jnn5y")
 [node name="interactBody" parent="." unique_id=125772546 groups=["interactable"] instance=ExtResource("17_jvrvq")]
 position = Vector2(3256, -18424)
 collision_mask = 19
+gravity_scale = 0.0
 display_name = "水箱"
-interact_mass = 1.0
+interact_mass = 7.0
 
 [node name="CollisionShape2D" parent="interactBody" index="0" unique_id=181797811]
 position = Vector2(0, 28)
