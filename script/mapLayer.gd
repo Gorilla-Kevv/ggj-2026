@@ -2,7 +2,7 @@ extends TileMapLayer
 @export var default := false
 
 # 非激活层颜色 #2f2c2e (深灰)，激活层恢复白色
-const INACTIVE_COLOR := Color(0.18431373, 0.17254902, 0.18039216, 1.0)
+const INACTIVE_COLOR := Color(0.342, 0.323, 0.336, 1.0)
 
 func _ready() -> void:
 	set_active(default)
