@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://cbsioycilshd" path="res://src/scenes/stage_3/drone.tscn" id="18_yhehv"]
 [ext_resource type="PackedScene" uid="uid://d1d04c4khjteb" path="res://src/scenes/stage_3/fire_tongue.tscn" id="19_62ok2"]
 [ext_resource type="Script" uid="uid://brkplr3x1w8q2" path="res://src/scenes/stage_3/rock_pillar.gd" id="20_rockp"]
+[ext_resource type="PackedScene" uid="uid://bjkyawp0sa43n" path="res://src/scenes/vfx/Tornade2d.tscn" id="21_3kmte"]
 [ext_resource type="PackedScene" uid="uid://crockpma02vn" path="res://src/scenes/stage_3/rock.tscn" id="21_rock"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0akiw"]
@@ -589,13 +590,10 @@ manual_limit_right = 25517.0
 manual_limit_bottom = 38.0
 
 [node name="player" parent="world" unique_id=2100000004 instance=ExtResource("6_ndbc8")]
-position = Vector2(161, -286)
+position = Vector2(165.00002, -295.00003)
 rotation = -0.028971216
 
 [node name="HUD" parent="." unique_id=2100000005 instance=ExtResource("7_hud")]
-
-[node name="tornade2d" parent="." unique_id=609605988 instance=ExtResource("15_o814t")]
-position = Vector2(4672, -288)
 
 [node name="ParallaxBG" type="Node2D" parent="." unique_id=2127270838]
 
@@ -606,7 +604,7 @@ repeat_size = Vector2(3344, 0)
 
 [node name="背景" type="Sprite2D" parent="ParallaxBG/ParallaxLayer" unique_id=446028588]
 z_index = -2
-position = Vector2(2019, -383)
+position = Vector2(1519, 42)
 scale = Vector2(2, 2)
 texture = ExtResource("12_7qff4")
 
@@ -616,7 +614,7 @@ texture = ExtResource("12_7qff4")
 position = Vector2(752, -99)
 
 [node name="scorpion2" parent="enemy" unique_id=631602802 instance=ExtResource("17_vll7g")]
-position = Vector2(4557, -121)
+position = Vector2(3832, -171)
 
 [node name="scorpion3" parent="enemy" unique_id=629263948 instance=ExtResource("17_vll7g")]
 position = Vector2(8698, -647)
@@ -642,7 +640,7 @@ position = Vector2(23975, -1181)
 rotation = -1.2667731
 
 [node name="drone" parent="enemy" unique_id=1376735938 instance=ExtResource("18_yhehv")]
-position = Vector2(14771, -393)
+position = Vector2(14509, -1387)
 
 [node name="drone2" parent="enemy" unique_id=30066374 instance=ExtResource("18_yhehv")]
 position = Vector2(17797, -2962)
@@ -655,10 +653,10 @@ position = Vector2(8878, -2926.9998)
 rotation = 2.5788224
 
 [node name="drone4" parent="enemy" unique_id=295125480 instance=ExtResource("18_yhehv")]
-position = Vector2(16421, -1100)
+position = Vector2(16209, -1392)
 
 [node name="drone5" parent="enemy" unique_id=234026041 instance=ExtResource("18_yhehv")]
-position = Vector2(17258, -1088)
+position = Vector2(17497, -1378)
 
 [node name="drone6" parent="enemy" unique_id=313193971 instance=ExtResource("18_yhehv")]
 position = Vector2(15921, -2671)
@@ -730,3 +728,11 @@ rotation = -2.4307668
 
 [node name="Rock2" parent="." unique_id=1658731467 instance=ExtResource("21_rock")]
 position = Vector2(21812, -343)
+
+[node name="tornade2d" parent="." unique_id=609605988 instance=ExtResource("21_3kmte")]
+position = Vector2(15477, -670.00006)
+scale = Vector2(2.6000004, 2.6000004)
+
+[node name="tornade2d2" parent="." unique_id=748316034 instance=ExtResource("21_3kmte")]
+position = Vector2(19680, -677)
+scale = Vector2(2.6000004, 2.6000004)
