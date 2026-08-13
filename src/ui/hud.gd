@@ -39,8 +39,8 @@ func _process(_delta: float) -> void:
 		else:
 			global.target_label_hint = ""
 
-	var target: Node2D = global.selected_target
-	if target and is_instance_valid(target):
+	var target = global.selected_target   # 不标注类型，避免已释放实例报错
+	if target != null and is_instance_valid(target):
 		var display_name: String = target.get_meta("display_name", target.name)
 		target_label.text = display_name
 	else:

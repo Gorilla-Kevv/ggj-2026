@@ -159,8 +159,11 @@ func _play_die_animation() -> void:
 
 # 等待动画结束或超时
 func _wait_for_animation_or_timeout(timeout: SceneTreeTimer) -> void:
-	while animated_sprite.is_playing() and timeout.time_left > 0:
-		await get_tree().process_frame
+	while is_instance_valid(animated_sprite) and animated_sprite.is_playing() and timeout.time_left > 0:
+		var tree := get_tree()
+		if tree == null:
+			return
+		await tree.process_frame
 
 # 播放受击动画 (供敌人/机关调用)
 func play_underattack() -> void:
@@ -281,6 +284,10 @@ func _handle_wall_bounce() -> void:
 func apply_wind_force(force: Vector2) -> void:
 	velocity += force
 	velocity = velocity.limit_length(MAX_SPEED)
+
+# 强击退：绕过速度上限，用于 Boss 弹开等强力击退
+func apply_knockback(force: Vector2) -> void:
+	velocity += force
 
 # ---------- 死亡与重生 ----------
 
