@@ -1,9 +1,10 @@
 [gd_scene format=4 uid="uid://h863uah8i20k"]
 
-[ext_resource type="Texture2D" uid="uid://cn5rs07tdijve" path="res://assets/关卡二/背景.png" id="1_58x1n"]
-[ext_resource type="Texture2D" uid="uid://dvhd3vpjqfien" path="res://assets/关卡二/贴图集 (2).png" id="2_5grbk"]
-[ext_resource type="Texture2D" uid="uid://rfs4hg4rflxt" path="res://assets/关卡二/中景.png" id="2_y6mv1"]
-[ext_resource type="Texture2D" uid="uid://e3flxsyosgos" path="res://assets/关卡二/风扇.png" id="3_0nw1n"]
+[ext_resource type="Texture2D" uid="uid://umkg6vmr3mmn" path="res://assets/关卡二/背景.png" id="1_58x1n"]
+[ext_resource type="Script" uid="uid://cves3ocusseom" path="res://src/systems/level_bgm.gd" id="1_652hf"]
+[ext_resource type="Texture2D" uid="uid://ctkd3ob2xqboq" path="res://assets/关卡二/贴图集 (2).png" id="2_5grbk"]
+[ext_resource type="Texture2D" uid="uid://b0a442ucaulbc" path="res://assets/关卡二/中景.png" id="2_y6mv1"]
+[ext_resource type="Texture2D" uid="uid://datfa23vjm8ui" path="res://assets/关卡二/风扇.png" id="3_0nw1n"]
 [ext_resource type="TileSet" uid="uid://cjcuddkdr03oi" path="res://assets/关卡一/lab背景瓦片.res" id="4_ma88b"]
 [ext_resource type="TileSet" uid="uid://bchqcsu2iay36" path="res://assets/关卡一/lab瓦片.tres" id="4_xohn7"]
 [ext_resource type="TileSet" uid="uid://ca6na8tut763j" path="res://assets/关卡二/管道.tres" id="5_rlwbg"]
@@ -14,12 +15,12 @@
 [ext_resource type="Script" uid="uid://d14h72oeq41ab" path="res://script/mapLayer.gd" id="7_ymkpu"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="8_plmj3"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="9_d3i7k"]
-[ext_resource type="Texture2D" uid="uid://b6ukimvvw54ml" path="res://assets/关卡二/梯子贴图（装饰）.png" id="11_2sobb"]
+[ext_resource type="Texture2D" uid="uid://10twvrmvqayx" path="res://assets/关卡二/梯子贴图（装饰）.png" id="11_2sobb"]
 [ext_resource type="PackedScene" uid="uid://cugfsheqd7vpe" path="res://assets/关卡二/switchpoint.tscn" id="13_6a5rn"]
 [ext_resource type="Script" uid="uid://bw4ob1u6dpxk1" path="res://src/interactables/pipe_socket.gd" id="13_ib1sk"]
 [ext_resource type="Script" uid="uid://jwpsx1qi13lm" path="res://script/dashed_line_2d.gd" id="14_b58jk"]
 [ext_resource type="PackedScene" uid="uid://drjfl160tes16" path="res://src/scenes/stage_2/movable_pipe.tscn" id="15_652hf"]
-[ext_resource type="FontFile" uid="uid://bpi4uuewtft3i" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="17_pi25y"]
+[ext_resource type="FontFile" uid="uid://dx2hdfdvn5jcn" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="17_pi25y"]
 [ext_resource type="PackedScene" uid="uid://b7qlat2rwnwv" path="res://src/scenes/exit_portal.tscn" id="18_ymkpu"]
 [ext_resource type="Texture2D" uid="uid://bc1xamc7680ge" path="res://assets/关卡及大厅/door1out.tres" id="19_2sobb"]
 [ext_resource type="PackedScene" uid="uid://cv7n6kehynb4u" path="res://src/scenes/vfx/圣光bg_particles.tscn" id="20_6a5rn"]
@@ -407,6 +408,8 @@ hue_variation_max = 0.019999977
 anim_offset_max = 1.0
 
 [node name="stage_2" type="Node2D" unique_id=923502148]
+script = ExtResource("1_652hf")
+stage_num = 2
 
 [node name="背景" type="Parallax2D" parent="." unique_id=613678622]
 visible = false
