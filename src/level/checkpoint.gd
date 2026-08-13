@@ -24,12 +24,14 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and not is_active:
 		activate()
 
-# 激活检查点：记录位置和关卡路径 → 更新视觉
+# 激活检查点：记录位置和关卡路径 → 回满能量 → 更新视觉
 func activate() -> void:
 	is_active = true
 	var global := get_node("/root/Global")
 	global.current_checkpoint = global_position
 	global.last_checkpoint_level = get_tree().current_scene.scene_file_path
+	# 抵达检查点即回满能量 (旅途补给)
+	global.refill_energy()
 	print("[Checkpoint] 激活 坐标=", global.current_checkpoint, " 关卡=", global.last_checkpoint_level)
 	_update_visual()
 	checkpoint_activated.emit(self)

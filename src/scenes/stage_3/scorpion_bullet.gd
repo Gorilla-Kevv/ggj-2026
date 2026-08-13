@@ -17,6 +17,10 @@ var _velocity: Vector2 = Vector2.ZERO
 func setup(start_pos: Vector2, vel: Vector2) -> void:
 	global_position = start_pos
 	_velocity = vel
+	# 贴图初始朝左，+PI 旋转让贴图正面指向飞行方向
+	var sprite := get_node_or_null("Sprite2D") as Sprite2D
+	if sprite and not _velocity.is_zero_approx():
+		sprite.rotation = _velocity.angle() + PI
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)

@@ -32,6 +32,8 @@ func _detect_player() -> void:
 	var player := get_tree().get_first_node_in_group("player")
 	if player == null:
 		return
+	# 任何状态下都面向玩家 (依左右翻转)
+	_facing_player(player)
 	_player_in_range = global_position.distance_to(player.global_position) <= detection_range
 	if current_state == State.IDLE and _player_in_range:
 		_enter_state(State.ATTACK)
@@ -62,7 +64,7 @@ func _attack(delta: float) -> void:
 func _facing_player(player: Node2D) -> void:
 	if animated_sprite == null:
 		return
-	animated_sprite.flip_h = player.global_position.x < global_position.x
+	animated_sprite.flip_h = player.global_position.x > global_position.x
 
 # 发射子弹
 func _fire(player: Node2D) -> void:

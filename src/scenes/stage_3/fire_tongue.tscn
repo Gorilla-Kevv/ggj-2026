@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://d1d04c4khjteb"]
+
+[ext_resource type="Script" uid="uid://cxcbut522ua4x" path="res://src/scenes/stage_3/fire_tongue.gd" id="1_ftg"]
+[ext_resource type="Texture2D" uid="uid://cag1ogsyavs6k" path="res://assets/关卡三/download.png" id="2_d40c1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35dyb"]
+atlas = ExtResource("2_d40c1")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htho1"]
+atlas = ExtResource("2_d40c1")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btwfd"]
+atlas = ExtResource("2_d40c1")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fvft"]
+atlas = ExtResource("2_d40c1")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40rtl"]
+atlas = ExtResource("2_d40c1")
+region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5pbb"]
+atlas = ExtResource("2_d40c1")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lukb4"]
+atlas = ExtResource("2_d40c1")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ikrix"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35dyb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htho1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btwfd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fvft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40rtl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5pbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lukb4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lukb4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_40rtl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7fvft")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(227.96664, 72)
+
+[node name="fire_tongue" type="Node2D" unique_id=1989752583]
+z_index = 1
+scale = Vector2(1.559999, 2.76)
+script = ExtResource("1_ftg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=722234130]
+z_index = 10
+position = Vector2(0, -46)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_ikrix")
+frame_progress = 0.33707765
+
+[node name="HitArea" type="Area2D" parent="." unique_id=661200629]
+collision_layer = 0
+monitoring = false
+
+[node name="HitShape" type="CollisionShape2D" parent="HitArea" unique_id=840648019]
+position = Vector2(2.884404, -63.983437)
+rotation = -1.5690455
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_hit")
