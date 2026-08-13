@@ -8,11 +8,13 @@
 [node name="TornadoViewport" type="SubViewport" parent="." unique_id=440283385]
 transparent_bg = true
 size = Vector2i(512, 512)
+render_target_update_mode = 4
 
 [node name="TornadoScene" parent="TornadoViewport" unique_id=1860589747 instance=ExtResource("1_e10te")]
 
 [node name="Camera3D" type="Camera3D" parent="TornadoViewport" unique_id=798620329]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4160609, 40)
+current = true
 projection = 1
 size = 55.0
 
