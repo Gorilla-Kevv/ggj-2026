@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bghpy3wy4nvp3"]
+
+[ext_resource type="PackedScene" uid="uid://c8j2mv2yucp00" path="res://src/scenes/enemies/researcher.tscn" id="1_hyw8j"]
+
+[node name="Node2D" type="Node2D" unique_id=153314450]
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1533621782]
+position = Vector2(463.99997, 223.99997)
+scale = Vector2(2.11, 2.11)
+
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=1828040723]
+position = Vector2(1064, 197.10004)
+scale = Vector2(2.11, 2.11)
+
+[node name="researcher" parent="." unique_id=511150063 node_paths=PackedStringArray("patrol_points") instance=ExtResource("1_hyw8j")]
+position = Vector2(232, 557.1)
+rotation = -0.8583144
+scale = Vector2(1.3184547, 1.3184547)
+patrol_points = [NodePath("../Marker2D"), NodePath(""), NodePath(""), NodePath("../Marker2D4")]
+
+[node name="AnimatedSprite2D" parent="researcher" index="0" unique_id=780533637]
+frame = 25
+frame_progress = 0.06198403
+
+[editable path="researcher"]

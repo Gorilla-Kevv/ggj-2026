@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cwte1ooe6265a"]
+
+[ext_resource type="Script" uid="uid://ceh52npqyjtnl" path="res://src/actors/enemies/throwable_rock.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b2lyt5tijjdoe" path="res://assets/关卡五/巨石遗迹（中景）.png" id="2_tex"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rock"]
+friction = 0.0
+bounce = 0.1
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2c1ya"]
+height = 136.30206
+
+[node name="throwable_rock" type="RigidBody2D" unique_id=24359664]
+mass = 0.8
+gravity_scale = 0.3
+collision_layer = 1
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_rock")
+contact_monitor = true
+max_contacts_reported = 4
+linear_damp = 0.3
+script = ExtResource("1_script")
+display_name = "巨石"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=61154442]
+position = Vector2(-7.0000005, 1.7881393e-07)
+rotation = -3.403392
+scale = Vector2(3.1444552, 1)
+shape = SubResource("CapsuleShape2D_2c1ya")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=539586389]
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_tex")
+region_enabled = true
+region_rect = Rect2(1783, 2249, 335, 414)

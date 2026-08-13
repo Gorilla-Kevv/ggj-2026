@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dabbr3phkpidy"]
 
 [ext_resource type="Script" uid="uid://qof7sulbhere" path="res://src/ui/hud.gd" id="1_mr4ol"]
-[ext_resource type="FontFile" uid="uid://bgo428xll6jfm" path="res://assets/temp/fonts/PixelOperator8.ttf" id="2_m12ob"]
+[ext_resource type="FontFile" uid="uid://dx2hdfdvn5jcn" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="3_q3cwv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q3cwv"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -39,7 +39,7 @@ offset_right = 209.0
 offset_bottom = 13.215942
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_fonts/font = ExtResource("2_m12ob")
+theme_override_fonts/font = ExtResource("3_q3cwv")
 theme_override_styles/background = SubResource("StyleBoxFlat_q3cwv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_dqg30")
 
@@ -55,5 +55,6 @@ offset_right = 0.37597656
 offset_bottom = 0.24798584
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_q3cwv")
 horizontal_alignment = 1
 vertical_alignment = 1

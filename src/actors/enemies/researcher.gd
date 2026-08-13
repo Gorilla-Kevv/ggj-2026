@@ -11,6 +11,7 @@
 # ============================================================
 extends BaseEnemy
 class_name Researcher
+@onready var light: PointLight2D = $AnimatedSprite2D/light
 
 # ---------- 导出变量 ----------
 @export var patrol_points: Array[Marker2D] = []
@@ -20,7 +21,7 @@ class_name Researcher
 
 # ---------- 子节点引用 ----------
 @onready var ray_cast: RayCast2D = $RayCast2D
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 # ---------- 运行时状态 ----------
@@ -33,6 +34,11 @@ var _player_last_seen_dir: int = 1    # 最后看到玩家的方向 (用于丢�
 # ---------- 辅助节点引用 ----------
 func _ready() -> void:
 	super._ready()
+	# 从精灵朝向初始化巡逻方向 (镜像: scale.x < 0 → 朝左)
+	if sprite != null and sprite.scale.x < 0:
+		_patrol_direction = -1
+	if light:
+		light.color = Color("#00f8dd")
 	_enter_state(State.PATROL)
 
 # ---------- 侦测玩家: RayCast2D + 朝向 + 距离 ----------
@@ -61,11 +67,22 @@ func _detect_player() -> void:
 			_chase_timer = 0.0
 			_player_last_seen_dir = 1 if to_player.x > 0 else -1
 	else:
-		# 巡逻中：只在面朝方向检测
+		# 巡逻中：射线仅水平前方（不检测斜上方）
 		ray_cast.target_position = Vector2(facing_dir * detection_range, 0)
-		var player_in_front: bool = (to_player.x * facing_dir) > 0   # 玩家在前方
-		if dist <= detection_range and player_in_front and _is_player_visible(player):
+		ray_cast.force_raycast_update()
+		var hit := ray_cast.get_collider()
+		var player_in_front: bool = (to_player.x * facing_dir) > 0
+		if player_in_front and hit != null and hit.is_in_group("player"):
+			print("[Researcher] 发现玩家！进入追击")
 			_enter_state(State.CHASE)
+
+# ---------- DEBUG ----------
+func _debug_trace(player: Node2D, dist: float, facing_dir: int, player_in_front: bool) -> void:
+	print("--- Researcher ---")
+	print("  距离: %.1f (阈值: %.1f)" % [dist, detection_range])
+	print("  面朝: %s  在前方: %s" % ["→" if facing_dir > 0 else "←", player_in_front])
+	print("  射线命中: %s" % _is_player_visible(player))
+	print("  触发: %s" % (dist <= detection_range and player_in_front and _is_player_visible(player)))
 
 # 射线检测：RayCast2D 是否碰到玩家
 func _is_player_visible(player: Node2D) -> bool:
@@ -96,10 +113,11 @@ func _patrol(delta: float) -> void:
 		return
 
 	var target_pos: Vector2 = patrol_points[_patrol_index].global_position
-	var dist: float = absf(target_pos.x - global_position.x)
+	var to_target := target_pos - global_position
+	var dist: float = to_target.length()
 
 	if dist < 4.0:
-		# 到达端点 → 立即翻转 + 停顿
+		# 到达端点 → 停顿 + 翻转
 		_patrol_pause_timer = patrol_pause
 		_patrol_index += _patrol_direction
 		if _patrol_index >= patrol_points.size():
@@ -111,9 +129,8 @@ func _patrol(delta: float) -> void:
 			_patrol_index = 1
 			_flip_sprite(_patrol_direction)
 	else:
-		velocity.x = (target_pos.x - global_position.x) / absf(target_pos.x - global_position.x) * move_speed
-		velocity.y = 0.0
-		_flip_sprite(velocity.x)
+		velocity = to_target.normalized() * move_speed
+		_flip_sprite(to_target.x)
 
 # ---------- 追击 ----------
 func _chase(_delta: float) -> void:
@@ -122,13 +139,15 @@ func _chase(_delta: float) -> void:
 		_enter_state(State.PATROL)
 		return
 
-	var dir_x: float = 1.0 if player.global_position.x > global_position.x else -1.0
-	velocity.x = dir_x * chase_speed
-	velocity.y = 0.0
+	var to_player: Vector2 = player.global_position - global_position
+	if to_player.length() > 5.0:
+		velocity = to_player.normalized() * chase_speed
+		_flip_sprite(to_player.x)
+	else:
+		velocity = Vector2.ZERO
 
 	# 钳制：不超出巡逻点 X 范围
 	velocity.x *= _clamp_to_patrol_bounds()
-	_flip_sprite(dir_x)
 
 # 如果超出巡逻边界 → 减速为0，防止踏空
 func _clamp_to_patrol_bounds() -> float:
@@ -147,14 +166,19 @@ func _clamp_to_patrol_bounds() -> float:
 # ---------- 翻转精灵 ----------
 func _flip_sprite(dir_x: float) -> void:
 	if dir_x != 0 and sprite != null:
-		sprite.flip_h = dir_x < 0
+		sprite.scale.x = absf(sprite.scale.x) * (-1.0 if dir_x < 0 else 1.0)
+		_patrol_direction = -1 if dir_x < 0 else 1
 
 # ---------- 状态进入 ----------
 func _on_state_entered(state: BaseEnemy.State) -> void:
 	match state:
 		State.CHASE:
 			_chase_timer = 0.0
+			if light:
+				light.color = Color("#b601ec")
 		State.PATROL:
+			if light:
+				light.color = Color("#00f8dd")
 			# 追丢后掉头向最后看到的玩家方向
 			if _player_last_seen_dir != 0:
 				_flip_sprite(_player_last_seen_dir)

@@ -292,6 +292,9 @@ func die() -> void:
 		return
 	_is_dead = true
 	print("[Player] 死亡触发")
+	# 强制镜头锁定玩家
+	var global := get_node("/root/Global")
+	global.selected_target = self
 	player_died.emit()
 	set_physics_process(false)
 	_play_die_animation()

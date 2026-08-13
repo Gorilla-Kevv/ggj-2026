@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cugfsheqd7vpe"]
+
+[ext_resource type="Script" uid="uid://baugevgwb3nk3" path="res://script/switchpoint.gd" id="1_3fe5c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2aqsu"]
+size = Vector2(82, 98)
+
+[node name="switchpoint" type="Area2D" unique_id=1636037829]
+script = ExtResource("1_3fe5c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1778284780]
+shape = SubResource("RectangleShape2D_2aqsu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

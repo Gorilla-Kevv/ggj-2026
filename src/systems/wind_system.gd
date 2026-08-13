@@ -78,7 +78,9 @@ func _process(delta: float) -> void:
 			if body:
 				if body.sleeping:
 					body.sleeping = false
-				body.apply_central_impulse(direction * 300.0 * strength)
+				body.apply_central_impulse(direction * 400.0 * strength)
+				# 连续弱力辅助，帮助克服残留摩擦
+				body.apply_central_force(direction * 150.0 * strength)
 		if not global.has_energy():
 			_stop_wind()
 

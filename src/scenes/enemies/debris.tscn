@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dgxdvodyswpot"]
+
+[ext_resource type="Script" uid="uid://cu8d7f6ifmn0d" path="res://src/actors/enemies/debris.gd" id="1_hrxa7"]
+[ext_resource type="Texture2D" uid="uid://b2lyt5tijjdoe" path="res://assets/关卡五/巨石遗迹（中景）.png" id="2_26tpu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hrxa7"]
+size = Vector2(155.74924, 52.328327)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26tpu"]
+size = Vector2(167, 57)
+
+[node name="debris" type="Area2D" unique_id=2030578753]
+script = ExtResource("1_hrxa7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1500560696]
+rotation = -0.5235988
+shape = SubResource("RectangleShape2D_hrxa7")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=705928109]
+position = Vector2(2.9802322e-08, 0)
+scale = Vector2(0.48573524, 0.46624467)
+texture = ExtResource("2_26tpu")
+region_enabled = true
+region_rect = Rect2(3061, 7223, 405, 283)
+
+[node name="ContactArea" type="Area2D" parent="." unique_id=724355346]
+rotation = -0.5235988
+
+[node name="ContactShape" type="CollisionShape2D" parent="ContactArea" unique_id=1167906874]
+shape = SubResource("RectangleShape2D_26tpu")
