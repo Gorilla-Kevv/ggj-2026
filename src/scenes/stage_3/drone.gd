@@ -16,12 +16,12 @@ class_name ChargerDrone
 @export var patrol_range: float = 140.0     # 巡航范围单侧半径 (px)
 @export var detection_range: float = 620.0  # 索敌侦测半径 (大圆, px)
 @export var patrol_speed: float = 70.0      # 巡航速度 (px/s)
-@export var normal_chase_speed: float = 180.0  # 正常追速度 (略低于玩家, 可拉开) (px/s)
+@export var normal_chase_speed: float = 150.0  # 正常追速度 (明显低于玩家, 持续拉开距离) (px/s)
 @export var chase_accel: float = 400.0      # 正常追加速度 (px/s^2)
-@export var dash_speed: float = 540.0       # 冲刺最高速度 (很快, 需闪避) (px/s)
-@export var dash_accel: float = 1600.0      # 冲刺加速度 (px/s^2)
-@export var dash_interval: float = 1.8      # 两次冲刺的间隔 (秒)
-@export var dash_duration: float = 0.65     # 单次冲刺持续时长 (秒)
+@export var dash_speed: float = 400.0       # 冲刺最高速度 (略高于玩家最高速, 需配合走位躲) (px/s)
+@export var dash_accel: float = 1200.0      # 冲刺加速度 (px/s^2)
+@export var dash_interval: float = 2.2      # 两次冲刺的间隔 (秒)
+@export var dash_duration: float = 0.55     # 单次冲刺持续时长 (秒)
 @export var crash_stall_time: float = 0.9   # 撞后停滞时长 (秒)
 
 # ---------- 子节点引用 ----------

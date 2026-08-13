@@ -13,8 +13,8 @@
 extends Area2D
 
 # ---------- 导出变量 (编辑器配置) ----------
-@export var lift_force: float = 450.0      # 风力加速度 (px/s²)，越大越难抵抗
-@export var max_up_speed: float = 320.0    # 气流内沿风向速度上限 (反向抗风不受限)
+@export var lift_force: float = 1800.0     # 风力加速度 (px/s²)，越大越难抵抗 (移动中也能明显偏航)
+@export var max_up_speed: float = 900.0    # 气流内沿风向速度上限 (反向抗风不受限)
 @export var particle_gravity: float = 160.0  # 粒子沿风向的额外加速
 
 # ---------- 子节点引用 ----------

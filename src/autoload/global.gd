@@ -71,17 +71,35 @@ func _ready() -> void:
 # 消耗能量 (每帧由 WindSystem 调用)
 # delta: 上一帧耗时 (秒)
 func drain_energy(delta: float) -> void:
-	energy = maxf(0.0, energy - ENERGY_DRAIN * delta)
+	energy = maxf(0.0, energy - ENERGY_DRAIN * _get_drain_multiplier() * delta)
 	energy_changed.emit(energy)
 	if energy <= 0.0:
 		energy_depleted.emit()
+
+# 移动能量消耗倍率: 按当前关卡调整 (第3关消耗 x2，其他关 1x)
+func _get_drain_multiplier() -> float:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return 1.0
+	if scene.scene_file_path == "res://src/scenes/stage_3/stage_3.tscn":
+		return 2.0
+	return 1.0
+
+# 能量回复倍率: 按当前关卡调整 (第3关消耗加倍，回复也加快予以补偿，x2.5；其他关 1x)
+func _get_regen_multiplier() -> float:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return 1.0
+	if scene.scene_file_path == "res://src/scenes/stage_3/stage_3.tscn":
+		return 2.5
+	return 1.0
 
 # 自动回复能量 (当前未在 _process 中自动调用，需由外部驱动)
 # 实际由 WindSystem 控制是否在吹风，非吹风期由外部调用
 func regen_energy(delta: float) -> void:
 	if energy >= ENERGY_MAX:
 		return
-	energy = minf(ENERGY_MAX, energy + ENERGY_REGEN * delta)
+	energy = minf(ENERGY_MAX, energy + ENERGY_REGEN * _get_regen_multiplier() * delta)
 	energy_changed.emit(energy)
 	if energy >= ENERGY_MAX:
 		energy_full.emit()
