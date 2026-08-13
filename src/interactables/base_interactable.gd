@@ -26,7 +26,8 @@ func _ready() -> void:
 func apply_wind_force(force: Vector2) -> void:
 	if sleeping:
 		sleeping = false
-	apply_central_force(force)
+	# 用冲量立即改变速度，持续力会被摩擦/重力抵消导致推不动
+	apply_central_impulse(force)
 
 func on_selected() -> void:
 	modulate = Color(1.0, 0.941, 0.537, 0.757)
