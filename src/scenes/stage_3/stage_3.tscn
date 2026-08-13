@@ -594,9 +594,6 @@ rotation = -0.028971216
 
 [node name="HUD" parent="." unique_id=2100000005 instance=ExtResource("7_hud")]
 
-[node name="tornade2d" parent="." unique_id=609605988 instance=ExtResource("15_o814t")]
-position = Vector2(4672, -288)
-
 [node name="ParallaxBG" type="Node2D" parent="." unique_id=2127270838]
 
 [node name="ParallaxLayer" type="Parallax2D" parent="ParallaxBG" unique_id=1851285144]
@@ -606,7 +603,7 @@ repeat_size = Vector2(3344, 0)
 
 [node name="背景" type="Sprite2D" parent="ParallaxBG/ParallaxLayer" unique_id=446028588]
 z_index = -2
-position = Vector2(2019, -383)
+position = Vector2(1519, 42)
 scale = Vector2(2, 2)
 texture = ExtResource("12_7qff4")
 
@@ -616,7 +613,7 @@ texture = ExtResource("12_7qff4")
 position = Vector2(752, -99)
 
 [node name="scorpion2" parent="enemy" unique_id=631602802 instance=ExtResource("17_vll7g")]
-position = Vector2(4557, -121)
+position = Vector2(3832, -171)
 
 [node name="scorpion3" parent="enemy" unique_id=629263948 instance=ExtResource("17_vll7g")]
 position = Vector2(8698, -647)
