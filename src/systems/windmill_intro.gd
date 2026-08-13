@@ -58,11 +58,12 @@ func _play_intro() -> void:
 	# 步骤2：停留观察
 	await get_tree().create_timer(focus_duration).timeout
 
-	# 步骤3：恢复 zoom + 回玩家
+	# 步骤3：恢复 zoom (回到场景默认) + 回玩家
 	var back_target: Vector2 = player.global_position if player else windmill.global_position
+	var default_zoom: Vector2 = camera._default_zoom if camera.get("_default_zoom") != null else Vector2.ONE
 	var tween2 := create_tween()
 	tween2.set_parallel(true)
-	tween2.tween_property(camera, "zoom", Vector2(1.0, 1.0), zoom_transition)
+	tween2.tween_property(camera, "zoom", default_zoom, zoom_transition)
 	tween2.tween_property(camera, "global_position", back_target, zoom_transition)
 	await tween2.finished
 

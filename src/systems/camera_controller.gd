@@ -14,8 +14,9 @@ extends Camera2D
 @export var follow_speed: float = 5.0
 # 选中风车力臂时的 zoom (越小视野越大)
 @export var windmill_zoom: float = 0.4
-# 正常 zoom
-@export var normal_zoom: float = 1.0
+
+# 场景默认 zoom (运行时从场景设置记住，选中风车时临时切到 windmill_zoom，切回后恢复)
+var _default_zoom: Vector2 = Vector2.ONE
 
 # 镜头锁定：设为一个节点时，无视 selected_target 强制跟随它
 var camera_lock_target: Node2D = null
@@ -27,7 +28,8 @@ func _ready() -> void:
 	enabled = true
 	position_smoothing_enabled = true
 	position_smoothing_speed = follow_speed
-	zoom = Vector2(normal_zoom, normal_zoom)
+	# 记住场景里设置的 zoom (如 0.7)，避免覆盖成员的手动配置
+	_default_zoom = zoom
 
 func _process(_delta: float) -> void:
 	# 入场动画接管期间，不干预
@@ -54,7 +56,7 @@ func _update_zoom(target: Node2D) -> void:
 	if _is_windmill_target(target):
 		zoom = Vector2(windmill_zoom, windmill_zoom)
 	else:
-		zoom = Vector2(normal_zoom, normal_zoom)
+		zoom = _default_zoom
 
 # 判断选中目标是否属于风车 (力臂或风车主体)
 func _is_windmill_target(node: Node2D) -> bool:
