@@ -38,8 +38,16 @@ const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
 # KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
 const KEY_MOVE_FORCE: float = 200.0
-# WIND_ACCEL:              吹风线性加速系数 (越大越快达到目标速度)
-const WIND_ACCEL: float = 8.0
+# MAX_MANUAL_SPEED:        手动吹风/操控可达到的沿风向速度上限 (px/s)。
+#                          防止玩家单靠左键无限加速绕过机关；环境风/回弹等物理冲量可超过此值。
+const MAX_MANUAL_SPEED: float = 350.0
+# MANUAL_WIND_ACCEL:       手动吹风推动速率 (px/s²)，等效原 move_toward 的 accel*MAX_SPEED
+#                          与 strength 解耦 (初按即满速响应)，只作用于沿风向分量 (热风偏航不受影响)
+const MANUAL_WIND_ACCEL: float = 8000.0
+
+# 第3关热风火花场景：飞行时前方擦出橙红火星，合理化"热区=飞得慢但凝汽回得快"的设定
+const FIRE_SPARKS_SCENE: PackedScene = preload("res://src/effects/stage3_fire_sparks.tscn")
+const STAGE_3_PATH: String = "res://src/scenes/stage_3/stage_3.tscn"
 
 # ---------- 子节点引用 ----------
 # animated_sprite:         AnimatedSprite2D 动画 (idle / rolling / die / underattack)
@@ -48,6 +56,8 @@ const WIND_ACCEL: float = 8.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var trail_particles: GPUParticles2D = $windline_particles_player
 @onready var trail_material: ParticleProcessMaterial = null
+var _spark_particles: GPUParticles2D = null
+var _in_stage_3: bool = false
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
@@ -63,19 +73,24 @@ func _ready() -> void:
 	# 重生后定位到检查点
 	_restore_checkpoint()
 	_connect_wind_system()
+	# 第3关: 悬挂热风火花发射器 (仅该关生效)
+	_in_stage_3 = _is_stage_3()
+	if _in_stage_3:
+		_spark_particles = FIRE_SPARKS_SCENE.instantiate()
+		add_child(_spark_particles)
 
 # 从 Global 恢复检查点位置 (死亡重生/场景重载后调用)
 func _restore_checkpoint() -> void:
 	var global := get_node("/root/Global")
+	# 任何重生都回满能量 (无检查点数据时也要回满)
+	global.refill_energy()
 	if global.current_checkpoint != Vector2.ZERO:
 		global_position = global.current_checkpoint
-		global.refill_energy()
 		print("[Player] 重生到检查点 坐标=", global.current_checkpoint)
 		_enter_idle()
 	elif global.hub_return != Vector2.ZERO and get_tree().current_scene.scene_file_path == global.HUB_SCENE:
 		global_position = global.hub_return
 		global.hub_return = Vector2.ZERO
-		global.refill_energy()
 		_enter_idle()
 	else:
 		print("[Player] 无检查点数据，留在默认出生位 坐标=", global_position)
@@ -104,7 +119,7 @@ func _on_wind_started(_target: Node2D, _direction: Vector2) -> void:
 		if audio and audio.has_method("sfx_fly"):
 			audio.sfx_fly()
 
-# 持续吹风回调：线性提升发射——按住越久速度越快，模拟风滚草被吹起
+# 持续吹风回调：只推动"沿风向"分量，保留垂直分量，确保与热风/环境风叠加生效
 # target:    风作用的目标 (仅当 target == self 时才对自己生效)
 # direction: 风向单位向量 (鼠标→目标)
 # strength:  风力强度 [0.0, 1.0] (随按住时间递增)
@@ -113,12 +128,15 @@ func _on_wind_updated(target: Node2D, direction: Vector2, strength: float) -> vo
 		return
 	_last_wind_strength = strength
 
-	# 目标速度：沿风向线性提升
-	var target_velocity := direction * MAX_SPEED * strength
-	# 地面加速慢 (有摩擦感)，空中加速快 (轻盈)
-	var accel := WIND_ACCEL * (0.5 if is_on_floor() else 1.0)
-	# 线性趋近目标速度
-	velocity = velocity.move_toward(target_velocity, accel * MAX_SPEED * strength * get_physics_process_delta_time())
+	# 沿风向分量朝 target_along 以 MANUAL_WIND_ACCEL 速率逼近 (等效原 move_toward，
+	# 速率足够大才能在每帧 *0.2 的地面摩擦下推得动)；垂直分量完全不动，
+	# 因此手动吹风不会吸收热风的偏航，热风照常把玩家吹偏航/加速。
+	# 速率与 strength 解耦：初按即是满速响应 (起手灵敏)，strength 只决定目标速度。
+	var along: float = velocity.dot(direction)
+	var target_along := MAX_MANUAL_SPEED * strength
+	var rate := MANUAL_WIND_ACCEL * (0.5 if is_on_floor() else 1.0) * get_physics_process_delta_time()
+	var step := clampf(target_along - along, -rate, rate)
+	velocity += direction * step
 
 func _on_wind_stopped() -> void:
 	# 风停后不再标记为吹风状态，动画速度交由 _process 根据 velocity 衰减
@@ -184,6 +202,7 @@ func play_underattack() -> void:
 # 同时驱动风迹线粒子跟随运动方向
 func _process(_delta: float) -> void:
 	_update_trail()
+	_update_sparks()
 
 	if current_anim != AnimState.ROLLING or animated_sprite == null:
 		return
@@ -217,16 +236,41 @@ func _update_trail() -> void:
 		trail_material.initial_velocity_min = speed * 0.35
 		trail_material.initial_velocity_max = speed * 0.7
 
+# 第3关热风火花：飞行 (速度超过阈值) 时紧盯运动方向，在"前方"边缘抛出向后溅射的火星。
+# 顶点距球心 COLLISION_RADIUS+6px，随速度越快火花越多越密。
+func _update_sparks() -> void:
+	if _spark_particles == null:
+		return
+	var speed := velocity.length()
+	if speed < 120.0:
+		_spark_particles.emitting = false
+		return
+	_spark_particles.emitting = true
+	_spark_particles.rotation = velocity.angle()
+	_spark_particles.position = Vector2(COLLISION_RADIUS + 6.0, 0.0)
+	_spark_particles.amount = clampi(int(speed / 40.0), 4, 12)
+
+# 关卡判断: 是否第3关 (逐帧按当前场景判定，换关自动失效)
+func _is_stage_3() -> bool:
+	var scene := get_tree().current_scene
+	return scene != null and scene.scene_file_path == STAGE_3_PATH
+
+# 关卡移动速度倍率: 第3关操控速度减半，其他关不变
+func _get_movement_multiplier() -> float:
+	return 0.5 if _is_stage_3() else 1.0
+
 # ---------- 物理 ----------
 
 var _was_on_floor: bool = false
 
 # 每物理帧：上抛/平抛运动 + 落地弹跳滚动
 func _physics_process(delta: float) -> void:
-	# A/D 键左右移动
+	# A/D 键左右移动 (手动速度受 MAX_MANUAL_SPEED 限制；风向/物理冲量不受此限)
 	var input_dir := Input.get_axis("move_left", "move_right")
 	if input_dir != 0.0:
-		velocity.x += input_dir * KEY_MOVE_FORCE * delta
+		var can_accel: bool = (input_dir > 0.0 and velocity.x < MAX_MANUAL_SPEED) or (input_dir < 0.0 and velocity.x > -MAX_MANUAL_SPEED)
+		if can_accel:
+			velocity.x += input_dir * KEY_MOVE_FORCE * _get_movement_multiplier() * delta
 
 	var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity") * GRAVITY_SCALE
 

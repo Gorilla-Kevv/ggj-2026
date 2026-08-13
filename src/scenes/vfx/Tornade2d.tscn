@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bjkyawp0sa43n"]
+
+[ext_resource type="PackedScene" uid="uid://cowd0k7a0jqoy" path="res://src/scenes/vfx/tornado3d.tscn" id="1_e10te"]
+[ext_resource type="Script" uid="uid://dvjfu7njeje8w" path="res://script/viewport_sprite.gd" id="2_ntmdv"]
+[ext_resource type="Texture2D" uid="uid://c74r7uqnvbqx7" path="res://assets/player_placeholder.png" id="3_ntmdv"]
+[ext_resource type="Script" uid="uid://cqntrnd2dfly1" path="res://src/scenes/vfx/tornade2d.gd" id="4_tornd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tornd"]
+size = Vector2(360, 900)
+
+[node name="tornade2d" type="Node2D" unique_id=609605988]
+script = ExtResource("4_tornd")
+
+[node name="TornadoViewport" type="SubViewport" parent="." unique_id=440283385]
+transparent_bg = true
+render_target_update_mode = 4
+
+[node name="TornadoScene" parent="TornadoViewport" unique_id=1860589747 instance=ExtResource("1_e10te")]
+
+[node name="Camera3D" type="Camera3D" parent="TornadoViewport" unique_id=798620329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4160609, 5.0629034)
+projection = 1
+current = true
+size = 3.155
+
+[node name="TornadoSprite" type="Sprite2D" parent="." unique_id=1931645969]
+texture = ExtResource("3_ntmdv")
+script = ExtResource("2_ntmdv")
+viewport_path = NodePath("../TornadoViewport")
+placeholder_texture = ExtResource("3_ntmdv")
+
+[node name="TornadoArea" type="Area2D" parent="." unique_id=1576340041]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TornadoArea" unique_id=1597266042]
+position = Vector2(0, -276)
+shape = SubResource("RectangleShape2D_tornd")

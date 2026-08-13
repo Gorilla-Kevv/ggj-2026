@@ -11,6 +11,8 @@ extends Node2D
 # targets:            当前场景中所有可操作目标 (主角 + 可交互物体)
 # current_index:      当前选中目标的索引
 # has_interactables:  是否存在除玩家外的可交互物体
+# switch_range:       R键可切换的可交互物体最大距离 (px)，超出距离的物体无法选中/操控
+@export var switch_range: float = 900.0
 var targets: Array[Node2D] = []
 var current_index: int = 0
 var has_interactables: bool = false
@@ -28,11 +30,31 @@ func _input(event: InputEvent) -> void:
 		print("[TargetSelector] R键按下 has_interactables=", has_interactables)
 		if not has_interactables:
 			# 除玩家外没有可交互物体 → 通知 HUD (持续3秒)
-			var global := get_node("/root/Global")
-			global.target_label_hint = "无可选物体"
-			global.target_label_hint_time = Time.get_ticks_msec()
+			_show_hint("无可选物体")
+		elif _get_in_range_interactables().is_empty():
+			# 有可交互物体但都在玩家范围外 → 只能切回玩家，提示
+			_show_hint("范围内无可选物体")
 		else:
 			_cycle_target()
+
+# 通知 HUD 显示提示 (持续3秒)
+func _show_hint(text: String) -> void:
+	var global := get_node("/root/Global")
+	global.target_label_hint = text
+	global.target_label_hint_time = Time.get_ticks_msec()
+
+# 获取玩家周围 switch_range 内的可交互物体 (供 R 键切换)
+func _get_in_range_interactables() -> Array[Node2D]:
+	var result: Array[Node2D] = []
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player == null:
+		return result
+	for node in targets:
+		if not is_instance_valid(node) or not node.is_in_group("interactable"):
+			continue
+		if player.global_position.distance_to(node.global_position) <= switch_range:
+			result.append(node)
+	return result
 
 # 重新扫描场景中的目标列表
 func _refresh_targets() -> void:
@@ -65,21 +87,24 @@ func _refresh_targets() -> void:
 	if targets.size() > 0:
 		select_target(0)
 
-# 切换到下一个目标 (R键触发)
+# 切换到下一个目标 (R键触发)：只在玩家范围内物体之间循环，玩家始终可切回
 func _cycle_target() -> void:
 	if targets.size() <= 1:
 		print("[TargetSelector] _cycle_target 跳过 targets.size=", targets.size())
 		return
-	# 从当前索引往后找第一个有效目标
+	var in_range := _get_in_range_interactables()
+	# 从当前索引往后找第一个有效目标 (玩家 index 0 永远可选，范围内物体可选)
 	var start := current_index
 	var next_index := (start + 1) % targets.size()
 	while next_index != start:
 		if is_instance_valid(targets[next_index]):
-			select_target(next_index)
-			return
+			var t: Node2D = targets[next_index]
+			if not t.is_in_group("interactable") or in_range.has(t):
+				select_target(next_index)
+				return
 		next_index = (next_index + 1) % targets.size()
-	# 所有目标都无效 → 刷新列表
-	_refresh_targets()
+	# 没有范围内新目标 → 切回玩家 (不选中已飞走的物体)
+	select_target(0)
 
 func select_target(index: int) -> void:
 	var old_index := current_index

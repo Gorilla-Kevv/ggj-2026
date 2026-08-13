@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://crockpma02vn"]
+
+[ext_resource type="Script" uid="uid://brkrock2yavn3" path="res://src/scenes/stage_3/rock.gd" id="1_rock"]
+[ext_resource type="Texture2D" uid="uid://dvlay17lp6q27" path="res://assets/关卡三/25eec26572d8b66ced47663682f3374f.png" id="2_gnnrm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juap6"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gnnrm"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjl05"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8f1e5"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(1536, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8gxx"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(0, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lkyy"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(512, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rhmk"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(1024, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h66jm"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(1536, 512, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mdu4"]
+atlas = ExtResource("2_gnnrm")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rock"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juap6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gnnrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hjl05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8f1e5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8gxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lkyy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rhmk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h66jm")
+}],
+"loop": false,
+"name": &"broken",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6mdu4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gnnrm"]
+radius = 193.0
+height = 768.0
+
+[node name="Rock" type="RigidBody2D" unique_id=1658731467]
+collision_mask = 3
+linear_damp = 0.8
+script = ExtResource("1_rock")
+display_name = "石头"
+interact_mass = 8.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=512662490]
+position = Vector2(-12.999996, 13)
+scale = Vector2(0.3181857, 0.36676422)
+sprite_frames = SubResource("SpriteFrames_rock")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1448628974]
+position = Vector2(-4, 0)
+scale = Vector2(0.19909197, 0.19909197)
+shape = SubResource("CapsuleShape2D_gnnrm")

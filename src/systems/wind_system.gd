@@ -12,7 +12,7 @@ extends Node2D
 # MICRO_BURST_FORCE:       短点微风力度
 # MICRO_BURST_THRESHOLD:   判定为"短点"的按住时间阈值 (秒)
 const MAX_WIND_FORCE: float = 800.0
-const RAMP_TIME: float = 4.0
+const RAMP_TIME: float = 1.5
 const MICRO_BURST_FORCE: float = 200.0
 const MICRO_BURST_THRESHOLD: float = 0.5
 
@@ -72,15 +72,17 @@ func _process(delta: float) -> void:
 		var strength := clampf(blow_hold_time / RAMP_TIME, 0.0, 1.0)
 		var direction := _get_wind_direction()
 		wind_updated.emit(global.selected_target, direction, strength)
-		# 交互物直接用冲量推 (瞬间速度变化，排除持续力被锁死的问题)
+		# 交互物受力：有 apply_wind_force 方法则调用 (兼容 RigidBody2D 和风车臂)
 		if global.selected_target.is_in_group("interactable"):
-			var body := global.selected_target as RigidBody2D
-			if body:
-				if body.sleeping:
-					body.sleeping = false
-				body.apply_central_impulse(direction * 400.0 * strength)
-				# 连续弱力辅助，帮助克服残留摩擦
-				body.apply_central_force(direction * 150.0 * strength)
+			if global.selected_target.has_method("apply_wind_force"):
+				global.selected_target.apply_wind_force(direction * 400.0 * strength)
+			else:
+				var body := global.selected_target as RigidBody2D
+				if body:
+					if body.sleeping:
+						body.sleeping = false
+					body.apply_central_impulse(direction * 400.0 * strength)
+					body.apply_central_force(direction * 150.0 * strength)
 		if not global.has_energy():
 			_stop_wind()
 
@@ -89,15 +91,14 @@ func _process(delta: float) -> void:
 		if blow_hold_time < MICRO_BURST_THRESHOLD:
 			micro_burst.emit(global.selected_target, _get_wind_direction())
 			if global.selected_target != null and is_instance_valid(global.selected_target) and global.selected_target.is_in_group("interactable"):
-				var body := global.selected_target as RigidBody2D
-				if body:
-					if body.sleeping:
-						body.sleeping = false
-					body.apply_central_impulse(_get_wind_direction() * 100.0)
-		_stop_wind()
-
-# 内部：停止吹风，重置状态
-func _stop_wind() -> void:
+				if global.selected_target.has_method("apply_wind_force"):
+					global.selected_target.apply_wind_force(_get_wind_direction() * 100.0)
+				else:
+					var body := global.selected_target as RigidBody2D
+					if body:
+						if body.sleeping:
+							body.sleeping = false
+						body.apply_central_impulse(_get_wind_direction() * 100.0)
 	is_blowing = false
 	blow_hold_time = 0.0
 	wind_stopped.emit()
