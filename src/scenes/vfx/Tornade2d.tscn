@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bjkyawp0sa43n"]
+
+[ext_resource type="PackedScene" uid="uid://cowd0k7a0jqoy" path="res://src/scenes/vfx/tornado3d.tscn" id="1_e10te"]
+[ext_resource type="Script" uid="uid://dvjfu7njeje8w" path="res://script/viewport_sprite.gd" id="2_ntmdv"]
+
+[node name="tornade2d" type="Node2D" unique_id=609605988]
+
+[node name="TornadoViewport" type="SubViewport" parent="." unique_id=440283385]
+transparent_bg = true
+size = Vector2i(512, 512)
+
+[node name="TornadoScene" parent="TornadoViewport" unique_id=1860589747 instance=ExtResource("1_e10te")]
+
+[node name="Camera3D" type="Camera3D" parent="TornadoViewport" unique_id=798620329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4160609, 40)
+projection = 1
+size = 55.0
+
+[node name="TornadoSprite" type="Sprite2D" parent="." unique_id=1931645969]
+script = ExtResource("2_ntmdv")
+viewport_path = NodePath("../TornadoViewport")
