@@ -105,6 +105,11 @@ func select_target(index: int) -> void:
 	else:
 		print("[TargetSelector] 目标不在interactable组: ", new_target.name if is_instance_valid(new_target) else "(已释放)")
 
+	# 切换音效
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio and audio.has_method("sfx_select"):
+		audio.sfx_select()
+
 	target_changed.emit(global.selected_target)
 
 # 递归设色：自身 + 所有子节点的 modulate

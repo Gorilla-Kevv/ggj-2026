@@ -74,6 +74,10 @@ func _detect_player() -> void:
 		var player_in_front: bool = (to_player.x * facing_dir) > 0
 		if player_in_front and hit != null and hit.is_in_group("player"):
 			print("[Researcher] 发现玩家！进入追击")
+			# 发现玩家音效
+			var audio := get_node_or_null("/root/AudioManager")
+			if audio and audio.has_method("sfx_find_player"):
+				audio.sfx_find_player()
 			_enter_state(State.CHASE)
 
 # ---------- DEBUG ----------
