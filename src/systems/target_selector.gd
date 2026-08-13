@@ -70,29 +70,40 @@ func _cycle_target() -> void:
 	if targets.size() <= 1:
 		print("[TargetSelector] _cycle_target 跳过 targets.size=", targets.size())
 		return
-	var next_index := (current_index + 1) % targets.size()
-	print("[TargetSelector] _cycle_target 切换到 index=", next_index)
-	select_target(next_index)
+	# 从当前索引往后找第一个有效目标
+	var start := current_index
+	var next_index := (start + 1) % targets.size()
+	while next_index != start:
+		if is_instance_valid(targets[next_index]):
+			select_target(next_index)
+			return
+		next_index = (next_index + 1) % targets.size()
+	# 所有目标都无效 → 刷新列表
+	_refresh_targets()
 
 func select_target(index: int) -> void:
 	var old_index := current_index
 	print("[TargetSelector] select_target 旧index=", old_index, " 新index=", index, " 目标列表=", targets)
 	# 取消旧目标高亮
-	if old_index < targets.size() and targets[old_index].is_in_group("interactable"):
+	if old_index < targets.size() and is_instance_valid(targets[old_index]) and targets[old_index].is_in_group("interactable"):
 		_set_modulate_recursive(targets[old_index], Color.WHITE)
 		print("[TargetSelector] 取消高亮: ", targets[old_index].name)
 
 	current_index = clampi(index, 0, targets.size() - 1)
 
 	var global := get_node("/root/Global")
-	global.selected_target = targets[current_index]
+	var new_target = targets[current_index]
+	if new_target == null or not is_instance_valid(new_target):
+		global.selected_target = null
+		return
+	global.selected_target = new_target
 
 	# 新目标高亮
-	if global.selected_target.is_in_group("interactable"):
-		_set_modulate_recursive(global.selected_target, Color("6bffa3ff"))
-		print("[TargetSelector] 设置高亮: ", global.selected_target.name, " modulate=", global.selected_target.modulate)
+	if is_instance_valid(new_target) and new_target.is_in_group("interactable"):
+		_set_modulate_recursive(new_target, Color("6bffa3ff"))
+		print("[TargetSelector] 设置高亮: ", new_target.name, " modulate=", new_target.modulate)
 	else:
-		print("[TargetSelector] 目标不在interactable组: ", global.selected_target.name)
+		print("[TargetSelector] 目标不在interactable组: ", new_target.name if is_instance_valid(new_target) else "(已释放)")
 
 	target_changed.emit(global.selected_target)
 
