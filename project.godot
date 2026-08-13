@@ -15,9 +15,14 @@ run/main_scene="uid://d3474cm128ak6"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+default_bus_layout="res://assets/audio/default_bus_layout.tres"
+
 [autoload]
 
 Global="*res://src/autoload/global.gd"
+AudioManager="*res://src/autoload/audio_manager.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 MCPRuntimeProbe="*uid://bsg12huaf1u5i"
 
