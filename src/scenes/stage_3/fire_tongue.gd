@@ -10,8 +10,9 @@ extends Node2D
 class_name FireTongue
 
 # ---------- 导出变量 (编辑器可调) ----------
-@export var interval: float = 1.6        # 两次喷射的间隔 (秒)
+@export var interval: float = 2.4        # 两次喷射的间隔 (秒)
 @export var active_duration: float = 5.0 # 单次喷射持续时长 (秒)
+@export var never_extinguish: bool = false  # 永不熄灭 (一进场景就持续喷火，直到被删除)
 
 # ---------- 子节点引用 ----------
 @onready var hit_area: Area2D = $HitArea
@@ -24,11 +25,20 @@ var _is_firing: bool = false
 
 func _ready() -> void:
 	hit_area.body_entered.connect(_on_body_entered)
-	hit_area.monitoring = false
 	animated_sprite.visible = false
+	if never_extinguish:
+		# 永不熄灭: 初始即开启判定区 + 显示并播放火舌
+		hit_area.monitoring = true
+		animated_sprite.visible = true
+		_play_fire_anim()
+	else:
+		hit_area.monitoring = false
 
 # 周期循环: 待机倒计时 → 喷射 → 待机
 func _physics_process(delta: float) -> void:
+	if never_extinguish:
+		_check_overlap()   # 永不熄灭: 只做重叠兜底判死
+		return
 	if _is_firing:
 		_active_timer -= delta
 		if _active_timer <= 0.0:

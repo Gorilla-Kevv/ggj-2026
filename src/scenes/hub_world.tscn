@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c5kkwn6h5d6x2" path="res://assets/关卡及大厅/lobby_parallax_near_1024x1536.png" id="5_ojrv2"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
-[ext_resource type="Texture2D" uid="uid://dom8n30bhs3hh" path="res://assets/关卡一/瓦片.png" id="8_h1hsm"]
+[ext_resource type="Texture2D" uid="uid://xs1i8as1xuyy" path="res://assets/关卡一/瓦片.png" id="8_h1hsm"]
 [ext_resource type="Texture2D" uid="uid://dklvlmoymcqg1" path="res://assets/关卡及大厅/door1in.tres" id="8_wo7qi"]
 [ext_resource type="Texture2D" uid="uid://oj3yvd8jmiaw" path="res://assets/关卡及大厅/lobby_hall_tileset_64_atlas_16x16.png" id="9_55ke6"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="9_hm4b0"]
@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://cets2xmh26q0m" path="res://src/scenes/vfx/heavy_fog.tscn" id="16_dq2pn"]
 [ext_resource type="Texture2D" uid="uid://c4n80kycmmho4" path="res://assets/关卡及大厅/door3in.tres" id="21_h0si0"]
 [ext_resource type="Texture2D" uid="uid://dwyhd37v28osj" path="res://assets/关卡及大厅/door3out.tres" id="22_h1hsm"]
+[ext_resource type="Texture2D" uid="uid://bm4mgo00qqpf2" path="res://assets/关卡及大厅/door5in.tres" id="24_40snv"]
+[ext_resource type="Texture2D" uid="uid://bxsibmg630ftf" path="res://assets/关卡及大厅/door5out.tres" id="25_nlasg"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ost8a"]
 
@@ -556,7 +558,7 @@ texture = ExtResource("5_ojrv2")
 [node name="doors" type="Node2D" parent="." unique_id=2078246328]
 
 [node name="d1" type="Node2D" parent="doors" unique_id=783105231]
-position = Vector2(576, -1552)
+position = Vector2(298, 175)
 script = ExtResource("13_04vn8")
 amplitude = 15.0
 frequency = 3.0
@@ -576,7 +578,7 @@ z_index = 1
 position = Vector2(-10.963623, 1.5509033)
 
 [node name="d2" type="Node2D" parent="doors" unique_id=1812317464]
-position = Vector2(-856, -1608)
+position = Vector2(487, -729)
 script = ExtResource("13_04vn8")
 amplitude = 15.0
 frequency = 3.0
@@ -596,7 +598,7 @@ inactive_texture = ExtResource("14_dq2pn")
 cleared_texture = ExtResource("15_kt4f8")
 
 [node name="d3" type="Node2D" parent="doors" unique_id=206380167]
-position = Vector2(-525, -1126)
+position = Vector2(-832, -1421)
 script = ExtResource("13_04vn8")
 amplitude = 15.0
 frequency = 3.0
@@ -605,13 +607,33 @@ frequency = 3.0
 z_index = 2
 position = Vector2(-10.963623, 1.5509033)
 level_id = "3"
-display_name = "实验室"
+display_name = "沙漠"
 chapter_id = "1"
 target_scene = "res://src/scenes/stage_3/stage_3.tscn"
 inactive_texture = ExtResource("21_h0si0")
 cleared_texture = ExtResource("22_h1hsm")
 
 [node name="圣光bgParticles2" parent="doors/d3" unique_id=958572500 instance=ExtResource("10_3dqv0")]
+z_index = 1
+position = Vector2(-10.963623, 1.5509033)
+
+[node name="d5" type="Node2D" parent="doors" unique_id=924786566]
+position = Vector2(802, -2000)
+script = ExtResource("13_04vn8")
+amplitude = 15.0
+frequency = 3.0
+
+[node name="LevelDoor_5" parent="doors/d5" unique_id=1498509727 instance=ExtResource("6_k5b87")]
+z_index = 2
+position = Vector2(-10.963623, 1.5509033)
+level_id = "5"
+display_name = "boss"
+chapter_id = "1"
+target_scene = "res://src/scenes/stage_1/stage_1.tscn"
+inactive_texture = ExtResource("24_40snv")
+cleared_texture = ExtResource("25_nlasg")
+
+[node name="圣光bgParticles2" parent="doors/d5" unique_id=1617176555 instance=ExtResource("10_3dqv0")]
 z_index = 1
 position = Vector2(-10.963623, 1.5509033)
 

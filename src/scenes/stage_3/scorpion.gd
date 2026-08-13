@@ -74,7 +74,13 @@ func _fire(player: Node2D) -> void:
 	var dir: Vector2 = (player.global_position - global_position).normalized()
 	var spawn_pos: Vector2 = bullet_spawn.global_position if bullet_spawn else global_position
 	bullet.setup(spawn_pos, dir * bullet_speed)
-	get_tree().current_scene.add_child(bullet)
+	# 挂到当前场景；场景切换/测试环境 current_scene 可能为 null，逐级回退避免 add_child(null)
+	var parent: Node = get_tree().current_scene
+	if parent == null:
+		parent = get_parent()
+	if parent == null:
+		parent = get_tree().root
+	parent.add_child(bullet)
 
 # ---------- 动画 ----------
 func _play_anim(anim: String) -> void:
