@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://r5ererm61uey"]
 
 [ext_resource type="Script" uid="uid://rnrhnum4qk8i" path="res://src/scenes/stage_3/scorpion_bullet.gd" id="1_1x2y"]
-[ext_resource type="Texture2D" uid="uid://brm12ht80cvej" path="res://assets/particles/floaty_64.png" id="2_3z4w"]
+[ext_resource type="Texture2D" uid="uid://r4cranj3yxi8" path="res://assets/关卡三/1d8b277da83be5ee0bd6ad1fbae83428.png" id="2_qqvha"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bullet"]
 
@@ -12,7 +12,7 @@ script = ExtResource("1_1x2y")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1076994487]
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_3z4w")
+texture = ExtResource("2_qqvha")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1163728556]
 shape = SubResource("CircleShape2D_bullet")

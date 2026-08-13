@@ -1,27 +1,9 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://p0mt1eu8leag"]
 
 [ext_resource type="Script" uid="uid://b5qmaeoigs8si" path="res://src/scenes/stage_3/scorpion.gd" id="1_scor"]
 [ext_resource type="PackedScene" uid="uid://r5ererm61uey" path="res://src/scenes/stage_3/scorpion_bullet.tscn" id="2_scor"]
-[ext_resource type="Texture2D" uid="uid://brm12ht80cvej" path="res://assets/particles/floaty_64.png" id="3_scor"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_scor"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_scor")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_scor")
-}],
-"loop": false,
-"name": &"shoot",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://c7yo28oiiwc3l" path="res://assets/关卡三/rock_scorpion_idle_unfold_3x4_256.png" id="3_2mqcf"]
+[ext_resource type="Texture2D" uid="uid://c4jht35ca67s6" path="res://assets/关卡三/rock_scorpion_shoot_2x3_256.png" id="4_8yk4q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 22.0
@@ -29,24 +11,119 @@ radius = 22.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_contact"]
 radius = 28.0
 
-[node name="scorpion" type="CharacterBody2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_83qtb"]
+atlas = ExtResource("3_2mqcf")
+region = Rect2(0, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bxhf"]
+atlas = ExtResource("3_2mqcf")
+region = Rect2(256, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4y1l"]
+atlas = ExtResource("3_2mqcf")
+region = Rect2(512, 512, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srink"]
+atlas = ExtResource("3_2mqcf")
+region = Rect2(0, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq7o5"]
+atlas = ExtResource("3_2mqcf")
+region = Rect2(256, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqgeu"]
+atlas = ExtResource("3_2mqcf")
+region = Rect2(512, 768, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvu0c"]
+atlas = ExtResource("4_8yk4q")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6iun"]
+atlas = ExtResource("4_8yk4q")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxeo6"]
+atlas = ExtResource("4_8yk4q")
+region = Rect2(0, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ng8fh"]
+atlas = ExtResource("4_8yk4q")
+region = Rect2(256, 256, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdeod"]
+atlas = ExtResource("4_8yk4q")
+region = Rect2(256, 512, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_scor"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83qtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bxhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4y1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srink")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iq7o5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqgeu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvu0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6iun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxeo6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ng8fh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdeod")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 10.0
+}]
+
+[node name="scorpion" type="CharacterBody2D" unique_id=631602802]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_scor")
 bullet_scene = ExtResource("2_scor")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=684350300]
 shape = SubResource("CircleShape2D_body")
 
-[node name="ContactArea" type="Area2D" parent="."]
+[node name="ContactArea" type="Area2D" parent="." unique_id=1211163413]
 
-[node name="ContactShape" type="CollisionShape2D" parent="ContactArea"]
+[node name="ContactShape" type="CollisionShape2D" parent="ContactArea" unique_id=572478717]
 shape = SubResource("CircleShape2D_contact")
 
-[node name="StunTimer" type="Timer" parent="."]
+[node name="StunTimer" type="Timer" parent="." unique_id=1876378981]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=748130154]
+position = Vector2(0, -32)
+scale = Vector2(0.74609375, 0.74609375)
 sprite_frames = SubResource("SpriteFrames_scor")
-animation = &"idle"
+animation = &"shoot"
+autoplay = "idle"
+frame = 4
+frame_progress = 1.0
 
-[node name="BulletSpawn" type="Marker2D" parent="."]
+[node name="BulletSpawn" type="Marker2D" parent="." unique_id=174028590]
