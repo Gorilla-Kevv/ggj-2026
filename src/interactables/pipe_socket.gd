@@ -32,10 +32,10 @@ func _get_snap_position() -> Vector2:
 	var point := get_node_or_null("SnapPoint") as Marker2D
 	return point.global_position
 
-# 递归重置所有 CanvasItem 子节点的颜色
+# 递归重置所有 CanvasItem 子节点的高亮 (用 self_modulate，不碰用户的 modulate 染色)
 func _reset_modulate_recursive(node: Node) -> void:
 	if node is CanvasItem:
-		node.modulate = Color.WHITE
+		node.self_modulate = Color.WHITE
 	for child in node.get_children():
 		_reset_modulate_recursive(child)
 

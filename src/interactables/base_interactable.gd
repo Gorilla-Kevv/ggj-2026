@@ -30,7 +30,7 @@ func apply_wind_force(force: Vector2) -> void:
 	apply_central_impulse(force)
 
 func on_selected() -> void:
-	modulate = Color(1.0, 0.941, 0.537, 0.757)
+	self_modulate = Color(1.0, 0.941, 0.537, 0.757)
 
 func on_deselected() -> void:
-	modulate = Color.WHITE
+	self_modulate = Color.WHITE

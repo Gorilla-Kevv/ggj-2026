@@ -111,7 +111,7 @@ func select_target(index: int) -> void:
 	print("[TargetSelector] select_target 旧index=", old_index, " 新index=", index, " 目标列表=", targets)
 	# 取消旧目标高亮
 	if old_index < targets.size() and is_instance_valid(targets[old_index]) and targets[old_index].is_in_group("interactable"):
-		_set_modulate_recursive(targets[old_index], Color.WHITE)
+		_set_highlight_recursive(targets[old_index], Color.WHITE)
 		print("[TargetSelector] 取消高亮: ", targets[old_index].name)
 
 	current_index = clampi(index, 0, targets.size() - 1)
@@ -125,19 +125,19 @@ func select_target(index: int) -> void:
 
 	# 新目标高亮
 	if is_instance_valid(new_target) and new_target.is_in_group("interactable"):
-		_set_modulate_recursive(new_target, Color("6bffa3ff"))
-		print("[TargetSelector] 设置高亮: ", new_target.name, " modulate=", new_target.modulate)
+		_set_highlight_recursive(new_target, Color("6bffa3ff"))
+		print("[TargetSelector] 设置高亮: ", new_target.name)
 	else:
 		print("[TargetSelector] 目标不在interactable组: ", new_target.name if is_instance_valid(new_target) else "(已释放)")
 
 	target_changed.emit(global.selected_target)
 
-# 递归设色：自身 + 所有子节点的 modulate
-func _set_modulate_recursive(node: Node, color: Color) -> void:
+# 递归设高亮：用 self_modulate (只叠加自身颜色，不覆盖用户的 modulate 染色)
+func _set_highlight_recursive(node: Node, color: Color) -> void:
 	if node is CanvasItem:
-		node.modulate = color
+		node.self_modulate = color
 	for child in node.get_children():
-		_set_modulate_recursive(child, color)
+		_set_highlight_recursive(child, color)
 
 # 获取当前选中目标 (供外部查询)
 func get_current_target() -> Node2D:

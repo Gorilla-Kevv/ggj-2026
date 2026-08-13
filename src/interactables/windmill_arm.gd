@@ -21,7 +21,7 @@ func apply_wind_force(force: Vector2) -> void:
 		platform.apply_arm_force(self, force)
 
 func on_selected() -> void:
-	modulate = Color.AQUA
+	self_modulate = Color.AQUA
 
 func on_deselected() -> void:
-	modulate = Color.WHITE
+	self_modulate = Color.WHITE
