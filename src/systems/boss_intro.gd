@@ -9,14 +9,26 @@ extends Node2D
 @export var boss_look_pos: Vector2 = Vector2(2301, 666)
 @export var door_node_path: NodePath      # 在 Inspector 中拖入 door 节点
 @export var door_anim_name: String = "new_animation"
+@export var boss_anim_player_path: NodePath   # Boss 的 AnimationPlayer 路径
+@export var boss_showup_anim: String = "show up"
+@export var boss_loop_anim: String = "new_animation"
 @export var look_duration: float = 2.0
 
 var _triggered: bool = false
+var _door_anim_player: AnimationPlayer = null
+var _shaking_door: bool = false
+var _shake_timer: float = 0.0
 
 func _ready() -> void:
 	set_process(true)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	# door 动画播放期间持续震动
+	if _shaking_door and _door_anim_player and _door_anim_player.is_playing():
+		_shake_timer -= delta
+		if _shake_timer <= 0.0:
+			_shake(10.0, 0.08)
+			_shake_timer = 0.08
 	if _triggered: return
 	var player := get_tree().get_first_node_in_group("player")
 	if player == null: return
@@ -69,6 +81,19 @@ func _play_intro() -> void:
 	camera.global_position = boss_look_pos
 	await get_tree().create_timer(1.5).timeout
 
+	# 步骤1b：循环播放 Boss 常态动画
+	var boss_anim: AnimationPlayer = null
+	if boss_anim_player_path:
+		boss_anim = get_node_or_null(boss_anim_player_path) as AnimationPlayer
+	if boss_anim == null and boss:
+		for child in boss.get_children():
+			if child is AnimationPlayer:
+				boss_anim = child
+				break
+	if boss_anim and boss_anim.has_animation(boss_loop_anim):
+		boss_anim.play(boss_loop_anim)
+		print("[BossIntro] 循环播放 Boss ", boss_loop_anim)
+
 	# 查找 door 节点
 	var door_node: Node2D = null
 	if door_node_path:
@@ -95,6 +120,8 @@ func _play_intro() -> void:
 				break
 		if anim_player and anim_player.has_animation(door_anim_name):
 			anim_player.play(door_anim_name)
+			_door_anim_player = anim_player
+			_shaking_door = true
 			print("[BossIntro] 播放 door 动画: ", door_anim_name)
 
 	# 步骤3：停留观察
@@ -102,10 +129,12 @@ func _play_intro() -> void:
 
 	# 步骤4：切回玩家
 	camera.position_smoothing_speed = 5.0
-	if original_target and is_instance_valid(original_target):
+	if original_target != null and is_instance_valid(original_target):
 		global.selected_target = original_target
-	else:
+	elif player != null and is_instance_valid(player):
 		global.selected_target = player
+	else:
+		global.selected_target = null
 
 	# 等摄像机回位
 	await get_tree().create_timer(1.0).timeout
@@ -119,3 +148,10 @@ func _restore_player(player: Node2D) -> void:
 	if player == null: return
 	player.set_physics_process(true)
 	player.set_process(true)
+
+# 触发屏幕震动
+func _shake(strength: float, duration: float) -> void:
+	for node in get_tree().get_nodes_in_group("screen_shaker"):
+		if node.has_method("screen_shake"):
+			node.screen_shake(strength, duration)
+			return

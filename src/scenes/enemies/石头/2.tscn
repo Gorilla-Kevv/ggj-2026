@@ -10,7 +10,7 @@ size = Vector2(172.59552, 66.83199)
 size = Vector2(158.01932, 83.35452)
 
 [node name="debris" type="Area2D" unique_id=2030578753]
-scale = Vector2(2.195, 2.195)
+scale = Vector2(1.145, 1.145)
 script = ExtResource("1_xadic")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1500560696]
