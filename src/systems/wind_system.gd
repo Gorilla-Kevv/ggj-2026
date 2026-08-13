@@ -99,6 +99,10 @@ func _process(delta: float) -> void:
 						if body.sleeping:
 							body.sleeping = false
 						body.apply_central_impulse(_get_wind_direction() * 100.0)
+		_stop_wind()
+
+# 内部：停止吹风，重置状态
+func _stop_wind() -> void:
 	is_blowing = false
 	blow_hold_time = 0.0
 	wind_stopped.emit()
