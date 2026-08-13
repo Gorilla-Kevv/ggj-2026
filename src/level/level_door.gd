@@ -115,7 +115,7 @@ func _on_hint_area_body_exited(body: Node2D) -> void:
 # 更新提示标签内容与颜色
 func _update_label() -> void:
 	var global := get_node("/root/Global")
-	var text := display_name
+	var text := display_name + " " + level_id
 	if not level_id.is_empty() and global.is_level_clear(level_id):
 		text += "  ✓已通关"
 		name_label.modulate = CLEARED_COLOR

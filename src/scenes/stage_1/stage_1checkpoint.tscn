@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://dmi0ubl4i1ms7"]
 
 [ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="1_bx16v"]
-[ext_resource type="Texture2D" uid="uid://b2kh3o4rj8emd" path="res://assets/关卡一/场景道具图集.png" id="1_p8xp8"]
-[ext_resource type="Texture2D" uid="uid://brm12ht80cvej" path="res://assets/particles/floaty_64.png" id="2_iujar"]
-[ext_resource type="FontFile" uid="uid://c4wcgtkesy0v6" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="3_iujar"]
+[ext_resource type="Texture2D" uid="uid://bauwhyi7jm8ex" path="res://assets/关卡一/场景道具图集.png" id="1_p8xp8"]
+[ext_resource type="Texture2D" uid="uid://hewrsaj3o8hr" path="res://assets/particles/floaty_64.png" id="2_iujar"]
+[ext_resource type="FontFile" uid="uid://dx2hdfdvn5jcn" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="4_iujar"]
+[ext_resource type="Texture2D" uid="uid://dx4cgptvtjgqa" path="res://assets/particles/T_VFX_simple_1.png" id="5_choif"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iujar"]
 blend_mode = 1
@@ -66,6 +67,14 @@ offset_left = -323.72107
 offset_top = -413.64365
 offset_right = 300.27893
 offset_bottom = -349.64365
-theme_override_fonts/font = ExtResource("3_iujar")
+theme_override_fonts/font = ExtResource("4_iujar")
 theme_override_font_sizes/font_size = 64
 text = "CHECKPOINT"
+horizontal_alignment = 1
+
+[node name="light" type="PointLight2D" parent="." unique_id=378804364]
+position = Vector2(-14.999992, -62.000046)
+scale = Vector2(0.36758378, 0.36758378)
+color = Color(0.75209004, 0.922226, 7.70092e-07, 1)
+texture = ExtResource("5_choif")
+texture_scale = 0.65

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cv7n6kehynb4u"]
+
+[ext_resource type="Texture2D" uid="uid://bay6agt1jy7xj" path="res://assets/particles/random_selection.png" id="1_qe4we"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_1wgbb"]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_akf2t"]
+offsets = PackedFloat32Array(0, 0.5423387, 0.88508064, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.29803923, 1, 1, 1, 0.29803923, 1, 1, 1, 1, 1, 1, 0.5137255)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_58fr0"]
+gradient = SubResource("Gradient_akf2t")
+
+[sub_resource type="Curve" id="Curve_0md4d"]
+_data = [Vector2(0, 0.3077773), 0.0, 2.734173, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qa4ox"]
+curve = SubResource("Curve_0md4d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0vmuo"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_qa4ox")
+color_ramp = SubResource("GradientTexture1D_58fr0")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.019999977
+anim_offset_max = 1.0
+
+[node name="圣光bgParticles" type="GPUParticles2D" unique_id=1671666537]
+material = SubResource("CanvasItemMaterial_1wgbb")
+texture = ExtResource("1_qe4we")
+process_material = SubResource("ParticleProcessMaterial_0vmuo")

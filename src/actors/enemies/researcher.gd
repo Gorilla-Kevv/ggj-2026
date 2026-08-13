@@ -11,6 +11,7 @@
 # ============================================================
 extends BaseEnemy
 class_name Researcher
+@onready var light: PointLight2D = $AnimatedSprite2D/light
 
 # ---------- 导出变量 ----------
 @export var patrol_points: Array[Marker2D] = []
@@ -36,6 +37,8 @@ func _ready() -> void:
 	# 从精灵朝向初始化巡逻方向 (镜像: scale.x < 0 → 朝左)
 	if sprite != null and sprite.scale.x < 0:
 		_patrol_direction = -1
+	if light:
+		light.color = Color("#00f8dd")
 	_enter_state(State.PATROL)
 
 # ---------- 侦测玩家: RayCast2D + 朝向 + 距离 ----------
@@ -110,10 +113,11 @@ func _patrol(delta: float) -> void:
 		return
 
 	var target_pos: Vector2 = patrol_points[_patrol_index].global_position
-	var dist: float = absf(target_pos.x - global_position.x)
+	var to_target := target_pos - global_position
+	var dist: float = to_target.length()
 
 	if dist < 4.0:
-		# 到达端点 → 立即翻转 + 停顿
+		# 到达端点 → 停顿 + 翻转
 		_patrol_pause_timer = patrol_pause
 		_patrol_index += _patrol_direction
 		if _patrol_index >= patrol_points.size():
@@ -125,9 +129,8 @@ func _patrol(delta: float) -> void:
 			_patrol_index = 1
 			_flip_sprite(_patrol_direction)
 	else:
-		velocity.x = (target_pos.x - global_position.x) / absf(target_pos.x - global_position.x) * move_speed
-		velocity.y = 0.0
-		_flip_sprite(velocity.x)
+		velocity = to_target.normalized() * move_speed
+		_flip_sprite(to_target.x)
 
 # ---------- 追击 ----------
 func _chase(_delta: float) -> void:
@@ -136,14 +139,12 @@ func _chase(_delta: float) -> void:
 		_enter_state(State.PATROL)
 		return
 
-	var dx: float = player.global_position.x - global_position.x
-	if absf(dx) > 5.0:
-		var dir_x: float = 1.0 if dx > 0 else -1.0
-		velocity.x = dir_x * chase_speed
-		_flip_sprite(dir_x)
+	var to_player: Vector2 = player.global_position - global_position
+	if to_player.length() > 5.0:
+		velocity = to_player.normalized() * chase_speed
+		_flip_sprite(to_player.x)
 	else:
-		velocity.x = 0.0
-	velocity.y = 0.0
+		velocity = Vector2.ZERO
 
 	# 钳制：不超出巡逻点 X 范围
 	velocity.x *= _clamp_to_patrol_bounds()
@@ -173,7 +174,11 @@ func _on_state_entered(state: BaseEnemy.State) -> void:
 	match state:
 		State.CHASE:
 			_chase_timer = 0.0
+			if light:
+				light.color = Color("#b601ec")
 		State.PATROL:
+			if light:
+				light.color = Color("#00f8dd")
 			# 追丢后掉头向最后看到的玩家方向
 			if _player_last_seen_dir != 0:
 				_flip_sprite(_player_last_seen_dir)

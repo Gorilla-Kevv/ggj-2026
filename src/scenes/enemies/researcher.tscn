@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dh7claylxm237" path="res://src/actors/enemies/researcher.gd" id="1_b7bw7"]
 [ext_resource type="Texture2D" uid="uid://lg6rhqu3p8ng" path="res://assets/enemie/研究员行走.png" id="2_uwkql"]
+[ext_resource type="Texture2D" uid="uid://dx4cgptvtjgqa" path="res://assets/particles/T_VFX_simple_1.png" id="3_wvrkk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1wkg6"]
 atlas = ExtResource("2_uwkql")
@@ -238,6 +239,13 @@ animation = &"new_animation"
 autoplay = "new_animation"
 frame = 23
 frame_progress = 0.7715029
+
+[node name="light" type="PointLight2D" parent="AnimatedSprite2D" unique_id=370840141]
+position = Vector2(102.07799, 14.582573)
+scale = Vector2(0.8962271, 0.8962271)
+color = Color(0, 0.97386736, 0.8673417, 1)
+texture = ExtResource("3_wvrkk")
+texture_scale = 0.65
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1591041895]
 position = Vector2(-1, -6)

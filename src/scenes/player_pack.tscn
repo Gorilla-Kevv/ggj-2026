@@ -12,7 +12,7 @@ script = ExtResource("1_jpl66")
 
 [node name="WindLine" type="Node2D" parent="." unique_id=2028683109]
 script = ExtResource("2_y1w25")
-line_color = Color(0.42, 1, 0.64, 0.4)
+line_color = Color(0.41960785, 1, 0.6392157, 0.25490198)
 
 [node name="TargetSelector" type="Node2D" parent="." unique_id=1033369240]
 position = Vector2(-0.17261505, 0.2803688)

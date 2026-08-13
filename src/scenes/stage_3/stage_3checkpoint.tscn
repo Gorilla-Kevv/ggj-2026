@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://qp18ujbq1wda"]
+
+[ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="1_45udu"]
+[ext_resource type="Texture2D" uid="uid://brm12ht80cvej" path="res://assets/particles/floaty_64.png" id="2_0j2tl"]
+[ext_resource type="Texture2D" uid="uid://b7plr547nsxtp" path="res://assets/关卡三/canyon_stone_statue_pose_v1.png" id="2_fxl61"]
+[ext_resource type="FontFile" uid="uid://c4wcgtkesy0v6" path="res://assets/temp/fonts/PixelOperator8-Bold.ttf" id="4_i6i2y"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iujar"]
+blend_mode = 1
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 7
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_choif"]
+offsets = PackedFloat32Array(0, 0.44354838, 1)
+colors = PackedColorArray(0.3529412, 0.67058825, 0.6039216, 1, 0.75450164, 0.52593696, 0.26954412, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5xwf4"]
+gradient = SubResource("Gradient_choif")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8wir1"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(5.03, 3.525, 1)
+emission_shape = 1
+emission_sphere_radius = 37.74
+angle_min = 1.0728835e-05
+angle_max = 300.0
+spread = 180.0
+angular_velocity_min = -56.690014
+angular_velocity_max = 209.75998
+gravity = Vector3(-100, 0, 0)
+color_ramp = SubResource("GradientTexture1D_5xwf4")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = 0.009999977
+anim_speed_max = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_choif"]
+size = Vector2(79, 295)
+
+[node name="check" type="Area2D" unique_id=1601024764]
+script = ExtResource("1_45udu")
+
+[node name="CanyonStoneStatuePoseV1" type="Sprite2D" parent="." unique_id=1926449434]
+position = Vector2(-10, -54)
+scale = Vector2(0.42902714, 0.42902714)
+texture = ExtResource("2_fxl61")
+
+[node name="Particles2D" type="GPUParticles2D" parent="." unique_id=1440384659]
+material = SubResource("CanvasItemMaterial_iujar")
+position = Vector2(-7, -54)
+amount = 15
+texture = ExtResource("2_0j2tl")
+randomness = 1.0
+fixed_fps = 0
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_8wir1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2104015242]
+position = Vector2(-10.5, -68.5)
+shape = SubResource("RectangleShape2D_choif")
+
+[node name="Label" type="Label" parent="." unique_id=1084128472]
+offset_left = -323.72107
+offset_top = -413.64365
+offset_right = 300.27893
+offset_bottom = -349.64365
+theme_override_fonts/font = ExtResource("4_i6i2y")
+theme_override_font_sizes/font_size = 64
+text = "CHECKPOINT"

@@ -11,6 +11,8 @@ extends CharacterBody2D
 # ---------- 动画状态 ----------
 enum AnimState { IDLE, ROLLING }
 var current_anim: AnimState = AnimState.IDLE
+# 死亡一次性守卫：子弹/接触点可能同时触发多次 die()，防止重复启动重生协程
+var _is_dead: bool = false
 
 # ---------- 物理参数 (可在编辑器中调整) ----------
 # 空中运动遵循上抛/平抛物理：水平速度惯性保持，仅垂直受重力+轻微空气阻力
@@ -26,12 +28,12 @@ var current_anim: AnimState = AnimState.IDLE
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数
 const GRAVITY_SCALE: float = 0.1
-const MAX_SPEED: float = 600.0
+const MAX_SPEED: float = 1000.0
 const AIR_DRAG_VERTICAL: float = 0.992
-const GROUND_FRICTION: float = 0.97
+const GROUND_FRICTION: float = 0.2
 const GROUND_BOUNCE: float = 0.7
 const WALL_BOUNCE: float = 1.2
-const MIN_BOUNCE_VELOCITY: float = 1.0
+const MIN_BOUNCE_VELOCITY: float = 5.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
 # KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
@@ -291,8 +293,11 @@ func apply_knockback(force: Vector2) -> void:
 
 # ---------- 死亡与重生 ----------
 
-# 死亡入口：由 kill_zone / spike / 敌人 调用
+# 死亡入口：由 kill_zone / spike / 敌人 调用 (防重入：子弹+接触点可能同时触发)
 func die() -> void:
+	if _is_dead:
+		return
+	_is_dead = true
 	print("[Player] 死亡触发")
 	# 强制镜头锁定玩家
 	var global := get_node("/root/Global")
