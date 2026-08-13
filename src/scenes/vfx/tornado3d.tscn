@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://cowd0k7a0jqoy"]
+
+[ext_resource type="PackedScene" uid="uid://brenl2qltpqgr" path="res://assets/model/tor.fbx" id="1_i20pl"]
+[ext_resource type="Script" uid="uid://bqig7avpnxsbk" path="res://scripts/tornado_scene.gd" id="2_dcurr"]
+[ext_resource type="Material" uid="uid://iyunv8nrlye3" path="res://assets/materials/tornado_flow.tres" id="3_wppad"]
+[ext_resource type="Material" uid="uid://cwomunsqo82w8" path="res://assets/materials/tornado_outer_flow.tres" id="4_mhsay"]
+
+[sub_resource type="Environment" id="Environment_tornado_glow"]
+background_mode = 1
+background_color = Color(0.028, 0.03, 0.04, 1)
+background_energy_multiplier = 16.0
+ambient_light_source = 2
+ambient_light_color = Color(0.34, 0.36, 0.44, 1)
+ambient_light_energy = 0.3
+tonemap_mode = 2
+glow_enabled = true
+glow_levels/1 = 0.6
+glow_levels/2 = 0.32
+glow_levels/3 = 0.12
+glow_intensity = 0.56
+glow_strength = 1.1
+glow_blend_mode = 0
+glow_hdr_threshold = 1.05
+glow_hdr_scale = 2.2
+
+[node name="TornadoScene" type="Node3D" unique_id=1860589747]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1262692367]
+environment = SubResource("Environment_tornado_glow")
+
+[node name="TornadoModel" parent="." unique_id=2020794863 instance=ExtResource("1_i20pl")]
+process_mode = 3
+transform = Transform3D(-20.690855, 0, -97.68301, 0, 100, 0, 97.68301, 0, -20.690855, 0, 0, 0)
+script = ExtResource("2_dcurr")
+rotation_speed_degrees = 160.0
+
+[node name="attribdelete1" parent="TornadoModel" index="0" unique_id=9882178]
+material_override = ExtResource("3_wppad")
+
+[node name="TornadoModel2" parent="." unique_id=1233909523 instance=ExtResource("1_i20pl")]
+process_mode = 3
+transform = Transform3D(70.18063, 0, -143.70438, 0, 100, 0, 143.70438, 0, 70.18063, 0, 0, 0)
+script = ExtResource("2_dcurr")
+rotation_speed_degrees = 160.0
+
+[node name="attribdelete1" parent="TornadoModel2" index="0" unique_id=9882178]
+transform = Transform3D(0.83370936, 0, 0, 0, 1.0000001, 0, 0, 0, 0.8529888, 0, 0, 0)
+material_override = ExtResource("4_mhsay")
+
+[editable path="TornadoModel"]
+[editable path="TornadoModel2"]

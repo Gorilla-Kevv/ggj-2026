@@ -1,13 +1,13 @@
 [gd_scene format=4 uid="uid://d3474cm128ak6"]
 
 [ext_resource type="PackedScene" uid="uid://b7qlat2rwnwv" path="res://src/scenes/exit_portal.tscn" id="1_dq6t5"]
-[ext_resource type="Texture2D" uid="uid://ctkd3ob2xqboq" path="res://assets/关卡二/贴图集 (2).png" id="1_pm0q1"]
-[ext_resource type="Texture2D" uid="uid://cskpao4xq7tkm" path="res://assets/关卡三/canyon_inner_rock_match_tileset_8x4_32.png" id="1_si8kp"]
+[ext_resource type="Texture2D" uid="uid://dvhd3vpjqfien" path="res://assets/关卡二/贴图集 (2).png" id="1_pm0q1"]
+[ext_resource type="Texture2D" uid="uid://ccwkgjr46t2na" path="res://assets/关卡三/canyon_inner_rock_match_tileset_8x4_32.png" id="1_si8kp"]
 [ext_resource type="Texture2D" uid="uid://b58744qdje17e" path="res://assets/关卡三/weathered_rock_bridge_4state_2x2_512.png" id="1_vjyfk"]
-[ext_resource type="Texture2D" uid="uid://buojtt0kdxkbo" path="res://assets/关卡三/岩浆.png" id="2_c1ixv"]
+[ext_resource type="Texture2D" uid="uid://x10csq6se5m2" path="res://assets/关卡三/岩浆.png" id="2_c1ixv"]
 [ext_resource type="Texture2D" uid="uid://dwyhd37v28osj" path="res://assets/关卡及大厅/door3out.tres" id="2_vjyfk"]
-[ext_resource type="Texture2D" uid="uid://blckw2cfy1bn" path="res://assets/关卡三/canyon_tileset_8x8_128_preview.png" id="2_ykrtx"]
-[ext_resource type="Texture2D" uid="uid://he560p3nrwj" path="res://assets/关卡三/canyon_updraft_vent_tile_32.png" id="3_dq6t5"]
+[ext_resource type="Texture2D" uid="uid://c8kqpsafus6b8" path="res://assets/关卡三/canyon_tileset_8x8_128_preview.png" id="2_ykrtx"]
+[ext_resource type="Texture2D" uid="uid://qjrnxbl77bll" path="res://assets/关卡三/canyon_updraft_vent_tile_32.png" id="3_dq6t5"]
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="4_krhqc"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="5_ol0ao"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="6_ndbc8"]
@@ -594,6 +594,9 @@ rotation = -0.028971216
 
 [node name="HUD" parent="." unique_id=2100000005 instance=ExtResource("7_hud")]
 
+[node name="tornade2d" parent="." unique_id=609605988 instance=ExtResource("15_o814t")]
+position = Vector2(4672, -288)
+
 [node name="ParallaxBG" type="Node2D" parent="." unique_id=2127270838]
 
 [node name="ParallaxLayer" type="Parallax2D" parent="ParallaxBG" unique_id=1851285144]
@@ -603,7 +606,7 @@ repeat_size = Vector2(3344, 0)
 
 [node name="背景" type="Sprite2D" parent="ParallaxBG/ParallaxLayer" unique_id=446028588]
 z_index = -2
-position = Vector2(1398, 173.5)
+position = Vector2(2019, -383)
 scale = Vector2(2, 2)
 texture = ExtResource("12_7qff4")
 
