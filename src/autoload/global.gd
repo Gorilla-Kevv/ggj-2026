@@ -75,6 +75,10 @@ func drain_energy(delta: float) -> void:
 	energy_changed.emit(energy)
 	if energy <= 0.0:
 		energy_depleted.emit()
+		# 能量耗尽音效
+		var audio := get_node_or_null("/root/AudioManager")
+		if audio and audio.has_method("sfx_energy_out"):
+			audio.sfx_energy_out()
 
 # 自动回复能量 (当前未在 _process 中自动调用，需由外部驱动)
 # 实际由 WindSystem 控制是否在吹风，非吹风期由外部调用

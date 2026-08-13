@@ -99,6 +99,10 @@ func _on_wind_started(_target: Node2D, _direction: Vector2) -> void:
 	if _target == self:
 		_is_being_blown = true
 		_enter_rolling()
+		# 飞行音效
+		var audio := get_node_or_null("/root/AudioManager")
+		if audio and audio.has_method("sfx_fly"):
+			audio.sfx_fly()
 
 # 持续吹风回调：线性提升发射——按住越久速度越快，模拟风滚草被吹起
 # target:    风作用的目标 (仅当 target == self 时才对自己生效)
@@ -299,6 +303,12 @@ func die() -> void:
 		return
 	_is_dead = true
 	print("[Player] 死亡触发")
+	# 停止音乐 + 死亡音效
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio and audio.has_method("stop_music"):
+		audio.stop_music()
+	if audio and audio.has_method("sfx_player_dead"):
+		audio.sfx_player_dead()
 	# 强制镜头锁定玩家
 	var global := get_node("/root/Global")
 	global.selected_target = self
