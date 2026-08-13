@@ -6,9 +6,9 @@
 # ============================================================
 extends AnimatableBody2D
 
-@export var torque_factor: float = 100.0    # 力→扭矩系数
-@export var friction: float = 0.99          # 角速度衰减 (每帧)
-@export var max_angular_speed: float = 6.0  # 最大角速度 (rad/s)
+@export var torque_factor: float = 30.0     # 力→扭矩系数 (越大转越快)
+@export var friction: float = 0.95          # 角速度衰减 (每帧乘数，<1 才衰减，越接近0衰减越快)
+@export var max_angular_speed: float = 2.0  # 最大角速度 (rad/s)
 
 var angular_velocity: float = 0.0
 
