@@ -3498,7 +3498,7 @@ target_camera = NodePath("../Camera2D")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("8_plmj3")]
 z_index = 2
-position = Vector2(4931.429, -8873.354)
+position = Vector2(4840.039, -13141.339)
 
 [node name="WindSystem" parent="world/player" index="0" unique_id=1869246313]
 position = Vector2(5.227539, 1.1152344)
@@ -3801,8 +3801,8 @@ message = "提示：额
 Enter/E 取消弹窗"
 
 [node name="提示5" parent="." unique_id=1379018203 instance=ExtResource("44_na3su")]
-position = Vector2(5264, -13936)
-scale = Vector2(2.5754209, 1.4728541)
+position = Vector2(5272, -14056)
+scale = Vector2(2.5754209, 2.3128347)
 title = "玩法"
 message = "提示：看到通风管道的枢纽了吗？
 快转动它
