@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://iyunv8nrlye3"]
 
 [ext_resource type="Shader" uid="uid://cs4r15je631yt" path="res://assets/shaders/tornado_flow.gdshader" id="1_shader"]
-[ext_resource type="Texture2D" uid="uid://b1xbguu3q5wcu" path="res://assets/tx/T_Noise_HU85k.png" id="2_he0b2"]
+[ext_resource type="Texture2D" uid="uid://cjgyjtikknfop" path="res://assets/tx/T_Noise_HU85k.png" id="2_he0b2"]
 
 [resource]
 render_priority = 0

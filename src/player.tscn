@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bdlom736orpb"]
 
 [ext_resource type="Script" uid="uid://ck2pnn6g1wik0" path="res://src/actors/player.gd" id="1_lowyb"]
-[ext_resource type="Texture2D" uid="uid://j6o3s7fc8rsp" path="res://assets/characters/compete.png" id="2_bktlc"]
+[ext_resource type="Texture2D" uid="uid://n5hauuf7yxdk" path="res://assets/characters/compete.png" id="2_bktlc"]
 [ext_resource type="PackedScene" uid="uid://cahjmbq1f6wqf" path="res://src/scenes/windline_particles_player.tscn" id="3_ehvfd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pg28d"]
@@ -284,6 +284,7 @@ radius = 50.159744
 
 [node name="Player" type="CharacterBody2D" unique_id=100373247]
 collision_mask = 31
+visibility_layer = 5
 script = ExtResource("1_lowyb")
 
 [node name="WindAnchor" type="Marker2D" parent="." unique_id=1712369073]
@@ -302,3 +303,11 @@ debug_color = Color(0, 0.6, 0.69803923, 0)
 
 [node name="windline_particles_player" parent="." unique_id=1326748121 instance=ExtResource("3_ehvfd")]
 position = Vector2(0, -9)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1000940467]
+visibility_layer = 4
+position = Vector2(-2, -47)
+scale = Vector2(0.4124424, 0.4124424)
+texture = ExtResource("2_bktlc")
+region_enabled = true
+region_rect = Rect2(782, 532, 228, 217)

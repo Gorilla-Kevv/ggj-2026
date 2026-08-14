@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://jagdw00yq0eg"]
 
-[ext_resource type="Texture2D" uid="uid://dapi2whbbk5dy" path="res://assets/关卡二/新瓦片集.png" id="1_fvy56"]
-[ext_resource type="Texture2D" uid="uid://drdaq5c6ikshp" path="res://assets/关卡二/新新瓦片集.png" id="2_lwrql"]
+[ext_resource type="Texture2D" uid="uid://d6xs15jlfjej" path="res://assets/关卡二/新瓦片集.png" id="1_fvy56"]
+[ext_resource type="Texture2D" uid="uid://gpgmhtkr1iqa" path="res://assets/关卡二/新新瓦片集.png" id="2_lwrql"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ljd6b"]
 texture = ExtResource("1_fvy56")

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bdlom736orpb" path="res://src/player.tscn" id="4_4n1jn"]
 
 [node name="player_pack" type="Node2D" unique_id=1191854658]
+visibility_layer = 5
 
 [node name="WindSystem" type="Node2D" parent="." unique_id=1869246313]
 script = ExtResource("1_jpl66")
