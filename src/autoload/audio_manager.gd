@@ -40,6 +40,24 @@ func _ready() -> void:
 		add_child(p)
 		sfx_players.append(p)
 
+	# 监听场景切换，自动播放对应关卡 BGM (不依赖 stage 场景挂脚本)
+	get_tree().scene_changed.connect(_on_scene_changed)
+	# 当前已加载的场景也触发一次
+	call_deferred("_on_scene_changed", get_tree().current_scene)
+
+# 场景切换时根据场景路径自动播放 BGM
+func _on_scene_changed(scene: Node) -> void:
+	if scene == null:
+		return
+	var path := scene.scene_file_path
+	if path.contains("stage_1"):
+		play_stage_music(1)
+	elif path.contains("stage_2"):
+		play_stage_music(2)
+	elif path.contains("stage_3"):
+		play_stage_music(3)
+	# stage_5 (Boss 关) 由 BossIntro 触发音乐，这里不处理
+
 func _process(_delta: float) -> void:
 	# 自定义循环点：播放到 loop_end 时跳回 loop_start
 	if not _loop_active or music_player == null or not music_player.playing:

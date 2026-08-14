@@ -22,5 +22,5 @@ func _on_body_exited(body: Node2D) -> void:
 			
 
 func _switch_layer():
-	layer1.set_active(not layer1.enabled)
-	layer2.set_active(not layer2.enabled)
+	layer1.set_active(not layer1.collision_enabled)
+	layer2.set_active(not layer2.collision_enabled)

@@ -1,24 +1,23 @@
 [gd_scene format=4 uid="uid://d3474cm128ak6"]
 
-[ext_resource type="Script" uid="uid://cves3ocusseom" path="res://src/systems/level_bgm.gd" id="0_bgm"]
 [ext_resource type="PackedScene" uid="uid://b7qlat2rwnwv" path="res://src/scenes/exit_portal.tscn" id="1_dq6t5"]
-[ext_resource type="Texture2D" uid="uid://ctkd3ob2xqboq" path="res://assets/关卡二/贴图集 (2).png" id="1_pm0q1"]
-[ext_resource type="Texture2D" uid="uid://cskpao4xq7tkm" path="res://assets/关卡三/canyon_inner_rock_match_tileset_8x4_32.png" id="1_si8kp"]
+[ext_resource type="Texture2D" uid="uid://dvhd3vpjqfien" path="res://assets/关卡二/贴图集 (2).png" id="1_pm0q1"]
+[ext_resource type="Texture2D" uid="uid://ccwkgjr46t2na" path="res://assets/关卡三/canyon_inner_rock_match_tileset_8x4_32.png" id="1_si8kp"]
 [ext_resource type="Texture2D" uid="uid://b58744qdje17e" path="res://assets/关卡三/weathered_rock_bridge_4state_2x2_512.png" id="1_vjyfk"]
-[ext_resource type="Texture2D" uid="uid://buojtt0kdxkbo" path="res://assets/关卡三/岩浆.png" id="2_c1ixv"]
+[ext_resource type="Texture2D" uid="uid://x10csq6se5m2" path="res://assets/关卡三/岩浆.png" id="2_c1ixv"]
 [ext_resource type="Texture2D" uid="uid://dwyhd37v28osj" path="res://assets/关卡及大厅/door3out.tres" id="2_vjyfk"]
-[ext_resource type="Texture2D" uid="uid://blckw2cfy1bn" path="res://assets/关卡三/canyon_tileset_8x8_128_preview.png" id="2_ykrtx"]
-[ext_resource type="Texture2D" uid="uid://he560p3nrwj" path="res://assets/关卡三/canyon_updraft_vent_tile_32.png" id="3_dq6t5"]
+[ext_resource type="Texture2D" uid="uid://c8kqpsafus6b8" path="res://assets/关卡三/canyon_tileset_8x8_128_preview.png" id="2_ykrtx"]
+[ext_resource type="Texture2D" uid="uid://qjrnxbl77bll" path="res://assets/关卡三/canyon_updraft_vent_tile_32.png" id="3_dq6t5"]
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="4_krhqc"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="5_ol0ao"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="6_ndbc8"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="7_hud"]
-[ext_resource type="Texture2D" uid="uid://n5f2rpfq6tcj" path="res://assets/关卡三/weathered_rock_bridge_template_registered_12f_grid4x3_768x640.png" id="11_62ok2"]
-[ext_resource type="Texture2D" uid="uid://c1luppmkqwbsr" path="res://assets/关卡三/背景.png" id="12_7qff4"]
+[ext_resource type="Texture2D" uid="uid://j22m43iwb5vx" path="res://assets/关卡三/weathered_rock_bridge_template_registered_12f_grid4x3_768x640.png" id="11_62ok2"]
+[ext_resource type="Texture2D" uid="uid://ch0tjnh0sebmx" path="res://assets/关卡三/背景.png" id="12_7qff4"]
 [ext_resource type="Script" uid="uid://c4dos6ea1fov" path="res://src/scenes/stage_3/magma.gd" id="13_magma"]
 [ext_resource type="PackedScene" uid="uid://qp18ujbq1wda" path="res://src/scenes/stage_3/stage_3checkpoint.tscn" id="15_o814t"]
-[ext_resource type="PackedScene" uid="uid://m1bllphcpxtj" path="res://src/scenes/updraft.tscn" id="16_ty6vd"]
-[ext_resource type="PackedScene" uid="uid://p0mt1eu8leag" path="res://src/scenes/stage_3/scorpion.tscn" id="17_vll7g"]
+[ext_resource type="PackedScene" path="res://src/scenes/updraft.tscn" id="16_ty6vd"]
+[ext_resource type="PackedScene" path="res://src/scenes/stage_3/scorpion.tscn" id="17_vll7g"]
 [ext_resource type="PackedScene" uid="uid://cbsioycilshd" path="res://src/scenes/stage_3/drone.tscn" id="18_yhehv"]
 [ext_resource type="PackedScene" uid="uid://d1d04c4khjteb" path="res://src/scenes/stage_3/fire_tongue.tscn" id="19_62ok2"]
 [ext_resource type="Script" uid="uid://brkplr3x1w8q2" path="res://src/scenes/stage_3/rock_pillar.gd" id="20_rockp"]
@@ -331,8 +330,6 @@ size = Vector2(457, 193)
 
 [node name="Stage3" type="Node2D" unique_id=1912252555]
 position = Vector2(-4, 1)
-script = ExtResource("0_bgm")
-stage_num = 3
 
 [node name="入口" type="Sprite2D" parent="." unique_id=764175571]
 position = Vector2(111, -349.00003)
@@ -593,7 +590,7 @@ manual_limit_right = 25517.0
 manual_limit_bottom = 38.0
 
 [node name="player" parent="world" unique_id=2100000004 instance=ExtResource("6_ndbc8")]
-position = Vector2(165.00002, -295.00003)
+position = Vector2(199.35278, -345.69247)
 rotation = -0.028971216
 
 [node name="HUD" parent="." unique_id=2100000005 instance=ExtResource("7_hud")]

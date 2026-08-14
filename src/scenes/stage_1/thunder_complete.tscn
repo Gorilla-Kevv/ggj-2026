@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://p5e7ll7iyu31"]
+
+[ext_resource type="PackedScene" uid="uid://baux3cgfuij5j" path="res://src/scenes/vfx/vfx_thunder.tscn" id="1_3fhh5"]
+[ext_resource type="Script" uid="uid://1bnedirt5pjp" path="res://script/vfx_thunder.gd" id="2_bjp3o"]
+[ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="3_mfkx1"]
+[ext_resource type="Texture2D" uid="uid://bauwhyi7jm8ex" path="res://assets/关卡一/场景道具图集.png" id="4_gmjc1"]
+[ext_resource type="PackedScene" uid="uid://b7f2renisonyb" path="res://src/scenes/vfx/vfx_thunder_orbit.tscn" id="5_lepsr"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7v542"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Curve" id="Curve_5ij1d"]
+_data = [Vector2(0, 0.50022095), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_30x4y"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_5bc6n"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_gisr2"]
+curve_x = SubResource("Curve_5ij1d")
+curve_y = SubResource("Curve_30x4y")
+curve_z = SubResource("Curve_5bc6n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2q43b"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 50.0
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 1, 0)
+initial_velocity_min = -500.0
+initial_velocity_max = -400.0
+radial_velocity_min = 499.99997
+radial_velocity_max = 699.99994
+gravity = Vector3(0, 98, 0)
+scale_min = 0.049999997
+scale_max = 0.19999999
+scale_curve = SubResource("CurveXYZTexture_gisr2")
+color = Color(0.5176471, 1, 0.3372549, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vbder"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Curve" id="Curve_0xeag"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.1928839, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vb3ko"]
+curve = SubResource("Curve_0xeag")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1eo7x"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 0.29999998
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_vb3ko")
+color = Color(0.74509805, 1, 0.78039217, 0.7254902)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ma3ex"]
+size = Vector2(64, 4049.216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8quu"]
+atlas = ExtResource("4_gmjc1")
+region = Rect2(1087, 0, 290, 859)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bnet0"]
+size = Vector2(111.12988, 327.5)
+
+[node name="thunder3" type="Node2D" unique_id=1674506782]
+rotation = -1.0089488
+
+[node name="vfx_thunder" parent="." unique_id=1210320534 instance=ExtResource("1_3fhh5")]
+position = Vector2(7.369629, -1736)
+rotation = -3.1415925
+script = ExtResource("2_bjp3o")
+
+[node name="thunder" parent="vfx_thunder" index="1" unique_id=2024225593]
+position = Vector2(2.125496, -504)
+points = PackedVector2Array(-17, -1126, -160.05078, 2965.3027)
+gradient = null
+
+[node name="sparkles" parent="vfx_thunder" index="2" unique_id=1222566371]
+material = SubResource("CanvasItemMaterial_7v542")
+position = Vector2(-188.75629, 2430.8474)
+process_material = SubResource("ParticleProcessMaterial_2q43b")
+
+[node name="flare" parent="vfx_thunder" index="3" unique_id=2019850149]
+material = SubResource("CanvasItemMaterial_vbder")
+position = Vector2(-180.75629, 2430.8474)
+process_material = SubResource("ParticleProcessMaterial_1eo7x")
+
+[node name="PointLight2D" parent="vfx_thunder" index="4" unique_id=1467332989]
+position = Vector2(-188.75629, 2494.8474)
+
+[node name="KillZone" parent="vfx_thunder" unique_id=1192454430 instance=ExtResource("3_mfkx1")]
+position = Vector2(-0.63067627, -784)
+rotation = 3.1415925
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="vfx_thunder/KillZone" unique_id=394060182]
+position = Vector2(106.24461, -1209.0822)
+rotation = 0.044569276
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_ma3ex")
+
+[node name="item20" type="Sprite2D" parent="." unique_id=23582295]
+position = Vector2(21.244385, 64)
+scale = Vector2(0.384, 0.384)
+texture = SubResource("AtlasTexture_x8quu")
+
+[node name="vfx_thunder_orbit-2" parent="." unique_id=1833928285 instance=ExtResource("5_lepsr")]
+position = Vector2(-8.630371, 32)
+rotation = 2.4888396
+scale = Vector2(1.0000001, 0.99999994)
+
+[node name="sparkles" parent="vfx_thunder_orbit-2" index="2" unique_id=1222566371]
+material = SubResource("CanvasItemMaterial_7v542")
+process_material = SubResource("ParticleProcessMaterial_2q43b")
+
+[node name="flare" parent="vfx_thunder_orbit-2" index="3" unique_id=2019850149]
+material = SubResource("CanvasItemMaterial_vbder")
+process_material = SubResource("ParticleProcessMaterial_1eo7x")
+
+[node name="KillZone2" parent="." unique_id=1165661269 instance=ExtResource("3_mfkx1")]
+position = Vector2(8.000244, 56)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone2" unique_id=1416569589]
+position = Vector2(-0.00024414063, 0)
+shape = SubResource("RectangleShape2D_bnet0")
+
+[node name="vfx_thunder_orbit-1" parent="." unique_id=1856143013 instance=ExtResource("5_lepsr")]
+position = Vector2(39.36963, -31.999756)
+
+[node name="sparkles" parent="vfx_thunder_orbit-1" index="2" unique_id=1222566371]
+material = SubResource("CanvasItemMaterial_7v542")
+process_material = SubResource("ParticleProcessMaterial_2q43b")
+
+[node name="flare" parent="vfx_thunder_orbit-1" index="3" unique_id=2019850149]
+material = SubResource("CanvasItemMaterial_vbder")
+process_material = SubResource("ParticleProcessMaterial_1eo7x")
+
+[editable path="vfx_thunder"]
+[editable path="vfx_thunder_orbit-2"]
+[editable path="vfx_thunder_orbit-1"]

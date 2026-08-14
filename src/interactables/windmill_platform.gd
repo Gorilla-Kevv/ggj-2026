@@ -6,9 +6,9 @@
 # ============================================================
 extends AnimatableBody2D
 
-@export var torque_factor: float = 100.0    # 力→扭矩系数
-@export var friction: float = 0.99          # 角速度衰减 (每帧)
-@export var max_angular_speed: float = 6.0  # 最大角速度 (rad/s)
+@export var torque_factor: float = 30.0    # 力→扭矩系数
+@export var friction: float = 0.95          # 角速度衰减 (每帧)
+@export var max_angular_speed: float = 2.0  # 最大角速度 (rad/s)
 
 var angular_velocity: float = 0.0
 
@@ -16,6 +16,7 @@ var angular_velocity: float = 0.0
 var _carried_players: Array[CharacterBody2D] = []
 
 func _ready() -> void:
+	add_to_group("windmill")
 	sync_to_physics = true
 
 func _physics_process(delta: float) -> void:
@@ -41,13 +42,16 @@ func apply_arm_force(arm: Node2D, force: Vector2) -> void:
 
 # 玩家站在风车上 → 记录，每帧绕中轴旋转
 func _on_body_entered(body: Node2D) -> void:
+	print("[Windmill] 检测到物体进入: ", body.name, " 是玩家=", body.is_in_group("player"))
 	if body.is_in_group("player") and body is CharacterBody2D:
 		if body not in _carried_players:
 			_carried_players.append(body)
+			print("[Windmill] 玩家绑定风车，当前跟随人数=", _carried_players.size())
 
 func _on_body_exited(body: Node2D) -> void:
 	if body in _carried_players:
 		_carried_players.erase(body)
+		print("[Windmill] 玩家离开风车，剩余=", _carried_players.size())
 
 func _carry_players(delta_angle: float) -> void:
 	for player in _carried_players:

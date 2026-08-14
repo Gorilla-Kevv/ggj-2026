@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dapi2whbbk5dy" path="res://assets/关卡二/新瓦片集.png" id="2_j7bjf"]
 [ext_resource type="Texture2D" uid="uid://drdaq5c6ikshp" path="res://assets/关卡二/新新瓦片集.png" id="3_3t4ca"]
 [ext_resource type="Texture2D" uid="uid://e3flxsyosgos" path="res://assets/关卡二/风扇.png" id="5_n4ogn"]
+[ext_resource type="PackedScene" path="res://src/scenes/updraft.tscn" id="6_8o7qj"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_e4l6a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jeisy"]
@@ -325,6 +326,9 @@ size = Vector2(1.1169891, 456.20398)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wabap"]
 size = Vector2(112.154976, 12.482574)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7bjf"]
+size = Vector2(248.90164, 600)
+
 [node name="MovablePipe" type="RigidBody2D" unique_id=1378360413]
 rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
@@ -344,7 +348,7 @@ rotation = -0.7853982
 modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
 position = Vector2(-344, -96.00001)
 rotation = -0.8581222
-scale = Vector2(0.21666653, 0.21666653)
+scale = Vector2(0.21666653, 0.5510703)
 sprite_frames = SubResource("SpriteFrames_eu8ha")
 animation = &"fan"
 autoplay = "fan"
@@ -378,3 +382,15 @@ shape = SubResource("RectangleShape2D_wabap")
 
 [node name="Windanchor" type="Marker2D" parent="." unique_id=1598835100]
 position = Vector2(19.80066, 8.487305)
+
+[node name="Updraft" parent="." unique_id=542354484 instance=ExtResource("6_8o7qj")]
+position = Vector2(33.941128, -192.33307)
+
+[node name="CollisionShape2D" parent="Updraft" index="0" unique_id=1864003472]
+position = Vector2(-5.6568527, 0)
+shape = SubResource("RectangleShape2D_j7bjf")
+
+[node name="windline_particles bg" parent="Updraft" index="1" unique_id=381050555]
+visible = false
+
+[editable path="Updraft"]
