@@ -629,7 +629,7 @@ position = Vector2(-10.963623, 1.5509033)
 level_id = "5"
 display_name = "boss"
 chapter_id = "1"
-target_scene = "res://src/scenes/stage_1/stage_1.tscn"
+target_scene = "res://src/scenes/stage_5/stage_5.tscn"
 inactive_texture = ExtResource("24_40snv")
 cleared_texture = ExtResource("25_nlasg")
 
