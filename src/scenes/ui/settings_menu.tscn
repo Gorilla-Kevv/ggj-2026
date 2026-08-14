@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://mfx8kqpow0x6"]
 
-[ext_resource type="Script" path="res://src/ui/settings_menu.gd" id="1_k3g1x"]
+[ext_resource type="Script" uid="uid://byqu5utnky5sv" path="res://src/ui/settings_menu.gd" id="1_k3g1x"]
+[ext_resource type="Texture2D" uid="uid://ci52c5mbyt8ei" path="res://assets/关卡及大厅/lobby_parallax_far_1024x1536.png" id="2_1wfml"]
 
 [node name="settings_menu" type="Control" unique_id=428322849]
 layout_mode = 3
@@ -9,4 +10,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -1280.0
 offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_k3g1x")
+
+[node name="LobbyParallaxFar1024x1536" type="Sprite2D" parent="." unique_id=344762428]
+position = Vector2(607.99994, 303.99997)
+scale = Vector2(1.5443548, 1.5443548)
+texture = ExtResource("2_1wfml")
