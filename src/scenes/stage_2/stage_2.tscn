@@ -42,7 +42,6 @@
 [ext_resource type="Script" uid="uid://c5gt83pc4m7cc" path="res://src/systems/windmill_intro.gd" id="36_346cs"]
 [ext_resource type="PackedScene" uid="uid://cwminimapk2ta" path="res://src/ui/minimap.tscn" id="37_minimap"]
 [ext_resource type="Texture2D" uid="uid://bpynwtnptsido" path="res://assets/关卡及大厅/door2in.tres" id="40_wabap"]
-[ext_resource type="PackedScene" uid="uid://c5joifw24wcsm" path="res://src/scenes/screen_shaker.tscn" id="43_ocard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_poi7k"]
 size = Vector2(66.1529, 213.4938)
@@ -3730,8 +3729,6 @@ position = Vector2(-1184, -2536)
 
 [node name="windline_particles bg" parent="Updraft9" index="1" unique_id=381050555]
 process_material = SubResource("ParticleProcessMaterial_on7ce")
-
-[node name="ScreenShaker" parent="." unique_id=1018084538 instance=ExtResource("43_ocard")]
 
 [connection signal="body_entered" from="MultiLayerControl/Pipe/Pipe 30d/switchpoint9" to="MultiLayerControl/Pipe/Pipe 30d/switchpoint9" method="_on_body_entered"]
 [connection signal="body_exited" from="MultiLayerControl/Pipe/Pipe 30d/switchpoint9" to="MultiLayerControl/Pipe/Pipe 30d/switchpoint9" method="_on_body_exited"]
