@@ -84,10 +84,6 @@ func _restore_checkpoint() -> void:
 	var global := get_node("/root/Global")
 	# 任何重生都回满能量 (无检查点数据时也要回满)
 	global.refill_energy()
-	# 重生后重播当前关卡 BGM
-	var audio := get_node_or_null("/root/AudioManager")
-	if audio and audio.has_method("replay_current_music"):
-		audio.replay_current_music()
 	if global.current_checkpoint != Vector2.ZERO:
 		global_position = global.current_checkpoint
 		print("[Player] 重生到检查点 坐标=", global.current_checkpoint)

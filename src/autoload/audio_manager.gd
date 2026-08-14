@@ -19,6 +19,7 @@ extends Node
 var music_player: AudioStreamPlayer
 var sfx_players: Array[AudioStreamPlayer] = []
 var _current_music_path: String = ""
+var _tracked_scene: Node = null         # 已跟踪的场景实例 (用于检测切换/重载)
 var _loop_start: float = 0.0      # 循环起点（秒），0=从头循环
 var _loop_end: float = -1.0       # 循环结束点（秒），-1=播到结尾
 var _loop_active: bool = false    # 是否启用自定义循环点
@@ -40,32 +41,47 @@ func _ready() -> void:
 		add_child(p)
 		sfx_players.append(p)
 
-	# 监听场景切换，自动播放对应关卡 BGM (不依赖 stage 场景挂脚本)
-	get_tree().scene_changed.connect(_on_scene_changed)
-	# 当前已加载的场景也触发一次
-	call_deferred("_on_scene_changed", get_tree().current_scene)
-
-# 场景切换时根据场景路径自动播放 BGM
-func _on_scene_changed(scene: Node) -> void:
+# 每帧轮询场景实例变化 (scene_changed 信号在部分切换路径下不可靠，故不依赖它)
+func _poll_scene_change() -> void:
+	var scene := get_tree().current_scene
+	if scene == _tracked_scene:
+		return
+	# 场景实例变化了：切换新关卡 或 死亡重载
+	var previous_path := ""
+	if _tracked_scene != null:
+		previous_path = _tracked_scene.scene_file_path
+	_tracked_scene = scene
 	if scene == null:
 		return
-	refresh_current_stage_music()
+	var is_reload := (scene.scene_file_path == previous_path)
+	refresh_current_stage_music(is_reload)
+	print("[AudioManager] 场景变化: ", scene.scene_file_path, " 重载=", is_reload)
 
 # 根据当前场景刷新 BGM (玩家重生/场景重载后调用)
-func refresh_current_stage_music() -> void:
+# force: 强制重播当前音乐 (用于死亡重载，绕过"同路径跳过"检查)
+func refresh_current_stage_music(force: bool = false) -> void:
 	var scene := get_tree().current_scene
 	if scene == null:
+		print("[AudioManager] refresh: current_scene 为 null")
 		return
 	var path := scene.scene_file_path
+	print("[AudioManager] refresh: 场景路径=", path, " force=", force)
 	if path.contains("stage_1"):
-		play_stage_music(1)
+		play_stage_music(1, force)
 	elif path.contains("stage_2"):
-		play_stage_music(2)
+		play_stage_music(2, force)
 	elif path.contains("stage_3"):
-		play_stage_music(3)
+		play_stage_music(3, force)
+	else:
+		# 非关卡场景 (hub 等)：停止当前关卡音乐
+		if _current_music_path != "":
+			print("[AudioManager] 非关卡场景，停止音乐")
+			play_music("")
 	# stage_5 (Boss 关) 由 BossIntro 触发音乐，这里不处理
 
 func _process(_delta: float) -> void:
+	_poll_scene_change()
+
 	# 自定义循环点：播放到 loop_end 时跳回 loop_start
 	if _loop_active and music_player != null and music_player.playing and music_player.stream != null:
 		var end := _loop_end if _loop_end >= 0.0 else music_player.stream.get_length()
@@ -91,11 +107,11 @@ const SFX_DEAD := "res://assets/fx/dead.wav"
 const SFX_DEAD_2 := "res://assets/fx/dead_2.wav"
 const SFX_CHECKPOINT := "res://assets/fx/checkpoint.wav"
 
-func play_stage_music(stage: int) -> void:
+func play_stage_music(stage: int, force: bool = false) -> void:
 	match stage:
-		1: play_music_looped(BGM_STAGE_1, 0.54, 18.0)
-		2: play_music_looped(BGM_STAGE_2, 0.54, 105.27)
-		3: play_music_looped(BGM_STAGE_3, 0.5, 120.5)
+		1: play_music_looped(BGM_STAGE_1, 0.54, 18.0, -1.0, force)
+		2: play_music_looped(BGM_STAGE_2, 0.54, 105.27, -1.0, force)
+		3: play_music_looped(BGM_STAGE_3, 0.5, 120.5, -1.0, force)
 		_: play_music("")
 
 func play_boss_fight_music() -> void:
@@ -114,11 +130,11 @@ func play_music(path: String, fade_time: float = -1.0) -> void:
 	_play_music_internal(path, fade_time)
 
 # 播放音乐并设置循环区间 (播放到 loop_end 秒跳回 loop_start 秒)
-func play_music_looped(path: String, loop_start: float, loop_end: float = -1.0, fade_time: float = -1.0) -> void:
+func play_music_looped(path: String, loop_start: float, loop_end: float = -1.0, fade_time: float = -1.0, force: bool = false) -> void:
 	_loop_active = true
 	_loop_start = loop_start
 	_loop_end = loop_end
-	_play_music_internal(path, fade_time)
+	_play_music_internal(path, fade_time, force)
 
 # 强制重播当前关卡 BGM (玩家重生用，绕过"同路径跳过"检查)
 func replay_current_music() -> void:
@@ -128,7 +144,9 @@ func replay_current_music() -> void:
 	_play_music_internal(_current_music_path, 0.3, true)
 
 func _play_music_internal(path: String, fade_time: float, force: bool = false) -> void:
+	print("[AudioManager] _play_music_internal path=", path, " 当前=", _current_music_path, " force=", force)
 	if path == _current_music_path and not force:
+		print("[AudioManager] 同曲跳过")
 		return
 	_current_music_path = path
 	var t := default_fade_time if fade_time < 0.0 else fade_time
@@ -141,6 +159,7 @@ func _play_music_internal(path: String, fade_time: float, force: bool = false) -
 	if stream == null:
 		push_warning("AudioManager: 无法加载音乐 " + path)
 		return
+	print("[AudioManager] 开始播放 ", path, " fade=", t)
 	_crossfade_to(stream, t)
 
 # 停止音乐 (带淡出)
@@ -181,7 +200,7 @@ func sfx_energy_out() -> void:
 
 func sfx_fly() -> void:
 	# 5% 概率触发飞行音效，避免频繁吹风时音效过于嘈杂
-	if randf() > 0.05:
+	if randf() > 0.01:
 		return
 	play_sfx(SFX_FLY, -6.0)
 
@@ -200,9 +219,11 @@ func sfx_checkpoint() -> void:
 # ---------- 内部实现 ----------
 
 func _crossfade_to(stream: AudioStream, fade_time: float) -> void:
-	if fade_time <= 0.0:
+	# 首次播放 (当前无曲目) 直接开始，避免多余的淡出静音
+	if fade_time <= 0.0 or music_player.stream == null:
 		music_player.stop()
 		music_player.stream = stream
+		music_player.volume_db = music_volume_db
 		music_player.play()
 		return
 	# 淡出当前 → 切换 → 淡入
