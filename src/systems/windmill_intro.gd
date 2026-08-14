@@ -4,6 +4,7 @@
 # 玩家 y 达到触发线时(仅一次)：聚焦风车 + 镜头 zoom 缩小(视野扩大) → 停留 → 回玩家 → 恢复
 # ============================================================
 extends Node2D
+@onready var animation_player: AnimationPlayer = $"../Windmill/AnimationPlayer"
 
 @export var trigger_y: float = -13578.0    # 触发线 (玩家 y <= 此值时触发)
 @export var windmill_path: NodePath          # 拖入 Windmill 节点
@@ -49,6 +50,7 @@ func _play_intro() -> void:
 	camera.manual_control = true
 
 	# 步骤1：平滑 zoom 缩小 + 平移到风车
+	animation_player.play("intro")
 	var tween := create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(camera, "zoom", Vector2(zoom_out_value, zoom_out_value), zoom_transition)
