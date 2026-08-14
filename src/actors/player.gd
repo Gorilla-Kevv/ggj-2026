@@ -48,6 +48,8 @@ const MANUAL_WIND_ACCEL: float = 8000.0
 # 第3关热风火花场景：飞行时前方擦出橙红火星，合理化"热区=飞得慢但凝汽回得快"的设定
 const FIRE_SPARKS_SCENE: PackedScene = preload("res://src/effects/stage3_fire_sparks.tscn")
 const STAGE_3_PATH: String = "res://src/scenes/stage_3/stage_3.tscn"
+# 小地图专用标记层 (layer 3, visibility_layer=4)：主视图不渲染，只在小地图 SubViewport 显示
+const MINIMAP_MARKER_LAYER: int = 4
 
 # ---------- 子节点引用 ----------
 # animated_sprite:         AnimatedSprite2D 动画 (idle / rolling / die / underattack)
@@ -67,6 +69,8 @@ signal player_bounced(collision_point: Vector2)
 func _ready() -> void:
 	# 注册到 "player" 组，供 TargetSelector / 敌人 / 检查点查找
 	add_to_group("player")
+	# 主视图不渲染小地图专用标记层 (layer 3)，避免标记泄漏到主画面 (任何场景都生效)
+	get_tree().root.canvas_cull_mask &= ~MINIMAP_MARKER_LAYER
 	# 缓存粒子材质引用
 	if trail_particles and trail_particles.process_material is ParticleProcessMaterial:
 		trail_material = trail_particles.process_material as ParticleProcessMaterial

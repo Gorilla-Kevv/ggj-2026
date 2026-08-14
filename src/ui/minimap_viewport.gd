@@ -27,8 +27,7 @@ var _minimap_layer: CanvasLayer
 
 func _ready() -> void:
 	world_2d = get_tree().root.world_2d
-	# 主视图不渲染 layer 3，避免小地图专用标记(如玩家标记)泄漏到主画面
-	get_tree().root.canvas_cull_mask &= ~MARKER_LAYER
+	# 主视图不渲染 layer 3 由 player.gd 统一处理 (任何场景/关卡都生效)
 	_apply_minimap_layers()
 	_minimap_layer = _find_ancestor_canvas_layer()
 
