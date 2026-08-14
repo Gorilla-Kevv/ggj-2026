@@ -1150,6 +1150,7 @@ position = Vector2(-1808.067, 651.6644)
 color = Color(0.29803923, 1, 0.35686275, 1)
 texture = ExtResource("7_ma3ex")
 texture_scale = 0.65
+metadata/_edit_lock_ = true
 
 [node name="KillZone" parent="thunder2/vfx_thunder_special" unique_id=1192454430 instance=ExtResource("7_cq86n")]
 position = Vector2(159.36938, -261.01074)
@@ -1828,7 +1829,7 @@ metadata/_edit_lock_ = true
 [node name="提示4" type="Area2D" parent="." unique_id=1984008617]
 position = Vector2(3248.0005, -19008.002)
 script = ExtResource("39_i6g42")
-title = "存档点"
+title = "提示"
 message = "提示：好像过不去？
 试试按R吧
 Enter/E 取消弹窗"
