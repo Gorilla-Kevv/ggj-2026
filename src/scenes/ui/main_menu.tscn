@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dlpnd4qfn0ekf"]
 
-[ext_resource type="Script" path="res://src/ui/menu_main.gd" id="1_rwhmm"]
+[ext_resource type="Script" uid="uid://cskixnwmugvf8" path="res://src/ui/menu_main.gd" id="1_rwhmm"]
+[ext_resource type="FontFile" uid="uid://bpi4uuewtft3i" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="2_loxbe"]
+[ext_resource type="Texture2D" uid="uid://tef6vrh0lail" path="res://assets/微信图片_20260814180045_3497_2363.png" id="2_ttmq8"]
 
 [node name="main_menu" type="Control" unique_id=630602452]
 layout_mode = 3
@@ -9,29 +11,44 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -1280.0
 offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_rwhmm")
 
+[node name="微信图片2026081418004534972363" type="Sprite2D" parent="." unique_id=1024465370]
+position = Vector2(704.00006, 400.00003)
+scale = Vector2(0.84, 0.84)
+texture = ExtResource("2_ttmq8")
+
 [node name="Title" type="Label" parent="." unique_id=1729397737]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_top = 120.0
-offset_bottom = 120.0
+offset_left = 80.0
+offset_top = 144.0
+offset_right = 719.0
+offset_bottom = 232.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_fonts/font = ExtResource("2_loxbe")
 theme_override_font_sizes/font_size = 64
 text = "风语者 Wind Whisper"
 horizontal_alignment = 1
 
 [node name="MenuBox" type="VBoxContainer" parent="." unique_id=1802615875]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -100.0
-offset_right = 150.0
-offset_bottom = 300.0
+offset_left = 24.0
+offset_top = 384.0
+offset_right = 324.0
+offset_bottom = 784.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 20
 
 [node name="NewGameButton" type="Button" parent="MenuBox" unique_id=2014260996]
