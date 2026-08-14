@@ -11,8 +11,8 @@ extends Node2D
 # RAMP_TIME:               长按达到满力的时间 (秒)
 # MICRO_BURST_FORCE:       短点微风力度
 # MICRO_BURST_THRESHOLD:   判定为"短点"的按住时间阈值 (秒)
-const MAX_WIND_FORCE: float = 400.0
-const RAMP_TIME: float = 3.5
+var MAX_WIND_FORCE: float = 400.0
+var RAMP_TIME: float = 3.5
 const MICRO_BURST_FORCE: float = 100.0
 const MICRO_BURST_THRESHOLD: float = 0.5
 
@@ -37,6 +37,19 @@ signal micro_burst(target: Node2D, direction: Vector2)
 func _ready() -> void:
 	# 注册到组，供 Player 和其他节点查找
 	add_to_group("wind_system")
+	_load_settings()
+
+func _load_settings() -> void:
+	var s := get_node("/root/Settings")
+	MAX_WIND_FORCE = s.max_wind_force
+	RAMP_TIME = s.wind_ramp_time
+	if not s.setting_changed.is_connected(_on_setting_changed):
+		s.setting_changed.connect(_on_setting_changed)
+
+func _on_setting_changed(key: String, value: float) -> void:
+	match key:
+		"max_wind_force": MAX_WIND_FORCE = value
+		"wind_ramp_time": RAMP_TIME = value
 
 # 主循环：检测鼠标状态变化 → 发射对应信号
 func _process(delta: float) -> void:

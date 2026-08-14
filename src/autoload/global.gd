@@ -12,8 +12,8 @@ extends Node
 # ENERGY_REGEN: 不吹风时每秒回复量 (约7秒从空到满)
 var energy: float = 100.0
 const ENERGY_MAX: float = 100.0
-const ENERGY_DRAIN: float = 4.0
-const ENERGY_REGEN: float = 1.0
+var ENERGY_DRAIN: float = 4.0
+var ENERGY_REGEN: float = 1.0
 
 # ---------- 目标选择状态 ----------
 # selected_target: 当前 R 键选中的操作目标 (主角或可交互物体)
@@ -67,6 +67,19 @@ signal chapter_completed(chapter_id: String)
 func _ready() -> void:
 	energy = ENERGY_MAX
 	load_game()
+	_load_settings()
+
+func _load_settings() -> void:
+	var s := get_node("/root/Settings")
+	ENERGY_DRAIN = s.energy_drain
+	ENERGY_REGEN = s.energy_regen
+	if not s.setting_changed.is_connected(_on_setting_changed):
+		s.setting_changed.connect(_on_setting_changed)
+
+func _on_setting_changed(key: String, value: float) -> void:
+	match key:
+		"energy_drain": ENERGY_DRAIN = value
+		"energy_regen": ENERGY_REGEN = value
 
 # 消耗能量 (每帧由 WindSystem 调用)
 # delta: 上一帧耗时 (秒)

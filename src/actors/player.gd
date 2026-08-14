@@ -27,17 +27,17 @@ var _is_dead: bool = false
 # MIN_BOUNCE_VELOCITY:    低于此竖直速度停止弹跳 (px/s)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
 # WIND_FORCE_MULTIPLIER:  风力→速度的转换系数
-const GRAVITY_SCALE: float = 0.1
-const MAX_SPEED: float = 1000.0
+var GRAVITY_SCALE: float = 0.1
+var MAX_SPEED: float = 1000.0
 const AIR_DRAG_VERTICAL: float = 0.992
-const GROUND_FRICTION: float = 0.8
-const GROUND_BOUNCE: float = 0.5
-const WALL_BOUNCE: float = 0.95
+var GROUND_FRICTION: float = 0.8
+var GROUND_BOUNCE: float = 0.5
+var WALL_BOUNCE: float = 0.95
 const MIN_BOUNCE_VELOCITY: float = 5.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
 # KEY_MOVE_FORCE:          A/D 键左右移动力度 (px/s)
-const KEY_MOVE_FORCE: float = 200.0
+var KEY_MOVE_FORCE: float = 200.0
 # MAX_MANUAL_SPEED:        手动吹风/操控可达到的沿风向速度上限 (px/s)。
 #                          防止玩家单靠左键无限加速绕过机关；环境风/回弹等物理冲量可超过此值。
 const MAX_MANUAL_SPEED: float = 1000.0
@@ -77,11 +77,33 @@ func _ready() -> void:
 	# 重生后定位到检查点
 	_restore_checkpoint()
 	_connect_wind_system()
+	_load_settings()
 	# 第3关: 悬挂热风火花发射器 (仅该关生效)
 	_in_stage_3 = _is_stage_3()
 	if _in_stage_3:
 		_spark_particles = FIRE_SPARKS_SCENE.instantiate()
 		add_child(_spark_particles)
+
+# 从 Settings 单例读取可调物理参数，并监听变化即时生效
+func _load_settings() -> void:
+	var s := get_node("/root/Settings")
+	GRAVITY_SCALE = s.gravity_scale
+	MAX_SPEED = s.max_speed
+	GROUND_FRICTION = s.ground_friction
+	GROUND_BOUNCE = s.ground_bounce
+	WALL_BOUNCE = s.wall_bounce
+	KEY_MOVE_FORCE = s.key_move_force
+	if not s.setting_changed.is_connected(_on_setting_changed):
+		s.setting_changed.connect(_on_setting_changed)
+
+func _on_setting_changed(key: String, value: float) -> void:
+	match key:
+		"gravity_scale": GRAVITY_SCALE = value
+		"max_speed": MAX_SPEED = value
+		"ground_friction": GROUND_FRICTION = value
+		"ground_bounce": GROUND_BOUNCE = value
+		"wall_bounce": WALL_BOUNCE = value
+		"key_move_force": KEY_MOVE_FORCE = value
 
 # 从 Global 恢复检查点位置 (死亡重生/场景重载后调用)
 func _restore_checkpoint() -> void:
