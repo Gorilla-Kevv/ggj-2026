@@ -380,6 +380,10 @@ func die() -> void:
 		audio.stop_music()
 	if audio and audio.has_method("sfx_player_dead"):
 		audio.sfx_player_dead()
+	# 死亡震动 + 黑屏特效 (复用 screen_shaker 脚本)
+	for shaker in get_tree().get_nodes_in_group("screen_shaker"):
+		if shaker.has_method("death_effect"):
+			shaker.death_effect()
 	# 强制镜头锁定玩家
 	var global := get_node("/root/Global")
 	global.selected_target = self
