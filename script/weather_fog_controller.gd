@@ -8,9 +8,10 @@ extends CanvasItem
 
 # 雾的 ShaderMaterial (留空则自动使用本节点的 material)
 @export var fog_material: ShaderMaterial
-# 玩家速度 → shader speed 的缩放系数
-# 玩家速度约 0~1000 px/s，shader speed 默认 0.02，此系数做映射
-@export var speed_scale: float = 0.00005
+# 玩家速度 → shader speed 的缩放系数 (步进 0.00001，可精确调小)
+@export_range(0.0, 0.01, 0.00001) var speed_scale: float = 0.0001
+# shader speed 上限，防止飞行太快时雾流动过于剧烈
+@export var max_speed: float = 0.05
 
 func _process(_delta: float) -> void:
 	# 优先用手动指定的材质，否则用本节点挂载的 material
@@ -25,5 +26,7 @@ func _process(_delta: float) -> void:
 		return
 
 	var vel: Vector2 = player.velocity
-	# 负号 = 相对运动：玩家向右飞，雾向左飘 (模拟穿过雾)
-	mat.set_shader_parameter("speed", -vel * speed_scale)
+	# 正号：玩家向右飞 → speed.x > 0 → 雾向左飘 (相对运动)
+	var shader_speed := vel * speed_scale
+	shader_speed = shader_speed.limit_length(max_speed)
+	mat.set_shader_parameter("speed", shader_speed)
