@@ -19,6 +19,9 @@ size = Vector2(5596, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xmlp7"]
 size = Vector2(464, 32)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qo3o2"]
+size = Vector2(104, 32)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dk3ac"]
 size = Vector2(44, 3196)
 
@@ -337,6 +340,42 @@ shape = SubResource("RectangleShape2D_8fibg")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=280410976]
 position = Vector2(0, 376)
 shape = SubResource("RectangleShape2D_xmlp7")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="." unique_id=262894458]
+position = Vector2(-184, 1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="." unique_id=1013414235]
+position = Vector2(176, 1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="." unique_id=423480761]
+position = Vector2(-176, -1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="." unique_id=94555921]
+position = Vector2(176, -1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="." unique_id=1924413726]
+position = Vector2(2784, -232)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D14" type="CollisionShape2D" parent="." unique_id=1923747654]
+position = Vector2(2784, 168)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D15" type="CollisionShape2D" parent="." unique_id=843213421]
+position = Vector2(-2784, 168)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D16" type="CollisionShape2D" parent="." unique_id=1656051938]
+position = Vector2(-2784, -208)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="." unique_id=1558373173]
 position = Vector2(0, -376)

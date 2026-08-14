@@ -360,7 +360,4 @@ position = Vector2(33.941128, -192.33307)
 position = Vector2(-5.6568527, 0)
 shape = SubResource("RectangleShape2D_j7bjf")
 
-[node name="windline_particles bg" parent="Updraft" index="1" unique_id=381050555]
-visible = false
-
 [editable path="Updraft"]
