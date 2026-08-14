@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://h863uah8i20k"]
 
 [ext_resource type="Texture2D" uid="uid://umkg6vmr3mmn" path="res://assets/关卡二/背景.png" id="1_58x1n"]
-[ext_resource type="Script" uid="uid://2brvkant8hby" path="res://src/systems/target_selector.gd" id="1_652hf"]
 [ext_resource type="Texture2D" uid="uid://tuljece4o5ri" path="res://assets/关卡一/背景.res" id="2_5bb03"]
 [ext_resource type="Texture2D" uid="uid://ctkd3ob2xqboq" path="res://assets/关卡二/贴图集 (2).png" id="2_5grbk"]
 [ext_resource type="Texture2D" uid="uid://b0a442ucaulbc" path="res://assets/关卡二/中景.png" id="2_y6mv1"]
@@ -1012,8 +1011,6 @@ color_ramp = SubResource("GradientTexture1D_k4ml8")
 color_initial_ramp = SubResource("GradientTexture1D_82oyd")
 
 [node name="stage_2" type="Node2D" unique_id=923502148]
-script = ExtResource("1_652hf")
-switch_range = 3000.0
 
 [node name="背景2" type="Parallax2D" parent="." unique_id=589808474]
 z_index = -2
@@ -3508,6 +3505,7 @@ metadata/_edit_lock_ = true
 
 [node name="TargetSelector" parent="world/player" index="2" unique_id=1033369240]
 position = Vector2(5.227539, 1.1152344)
+switch_range = 3000.0
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="world/player" index="3" unique_id=100373247]
