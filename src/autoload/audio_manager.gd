@@ -49,6 +49,13 @@ func _ready() -> void:
 func _on_scene_changed(scene: Node) -> void:
 	if scene == null:
 		return
+	refresh_current_stage_music()
+
+# 根据当前场景刷新 BGM (玩家重生/场景重载后调用)
+func refresh_current_stage_music() -> void:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
 	var path := scene.scene_file_path
 	if path.contains("stage_1"):
 		play_stage_music(1)
@@ -60,14 +67,11 @@ func _on_scene_changed(scene: Node) -> void:
 
 func _process(_delta: float) -> void:
 	# 自定义循环点：播放到 loop_end 时跳回 loop_start
-	if not _loop_active or music_player == null or not music_player.playing:
-		return
-	if music_player.stream == null:
-		return
-	var end := _loop_end if _loop_end >= 0.0 else music_player.stream.get_length()
-	var pos := music_player.get_playback_position()
-	if end > 0.0 and pos >= end - 0.05:
-		music_player.seek(_loop_start)
+	if _loop_active and music_player != null and music_player.playing and music_player.stream != null:
+		var end := _loop_end if _loop_end >= 0.0 else music_player.stream.get_length()
+		var pos := music_player.get_playback_position()
+		if end > 0.0 and pos >= end - 0.05:
+			music_player.seek(_loop_start)
 
 # ---------- 预设 BGM 便捷方法 ----------
 # 各关卡和 Boss 战的音乐路径 (可在此统一维护)
@@ -116,8 +120,15 @@ func play_music_looped(path: String, loop_start: float, loop_end: float = -1.0, 
 	_loop_end = loop_end
 	_play_music_internal(path, fade_time)
 
-func _play_music_internal(path: String, fade_time: float) -> void:
-	if path == _current_music_path:
+# 强制重播当前关卡 BGM (玩家重生用，绕过"同路径跳过"检查)
+func replay_current_music() -> void:
+	if _current_music_path == "":
+		refresh_current_stage_music()
+		return
+	_play_music_internal(_current_music_path, 0.3, true)
+
+func _play_music_internal(path: String, fade_time: float, force: bool = false) -> void:
+	if path == _current_music_path and not force:
 		return
 	_current_music_path = path
 	var t := default_fade_time if fade_time < 0.0 else fade_time

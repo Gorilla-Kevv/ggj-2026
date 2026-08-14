@@ -21,8 +21,8 @@ var _is_dead: bool = false
 # GRAVITY_SCALE:          重力缩放 (1.0=标准重力，抛物线弧)
 # MAX_SPEED:              最大速度限制 (px/s)
 # AIR_DRAG_VERTICAL:      空中竖直空气阻力 (每帧 *= 0.992，产生终端速度感)
-# GROUND_FRICTION:        地面滚动摩擦 (每帧水平速度 *= 0.92)
-# GROUND_BOUNCE:          落地竖直反弹系数 (0.35=弹起35%高度)
+# GROUND_FRICTION:        地面滚动摩擦 (每帧水平速度 *= 0.97)
+# GROUND_BOUNCE:          落地竖直反弹系数 (0.7=弹起70%高度)
 # WALL_BOUNCE:            墙壁反弹系数
 # MIN_BOUNCE_VELOCITY:    低于此竖直速度停止弹跳 (px/s)
 # COLLISION_RADIUS:       圆形碰撞体半径 (px)
@@ -30,9 +30,9 @@ var _is_dead: bool = false
 const GRAVITY_SCALE: float = 0.1
 const MAX_SPEED: float = 1000.0
 const AIR_DRAG_VERTICAL: float = 0.992
-const GROUND_FRICTION: float = 0.2
-const GROUND_BOUNCE: float = 0.35
-const WALL_BOUNCE: float = 1.0
+const GROUND_FRICTION: float = 0.97
+const GROUND_BOUNCE: float = 0.7
+const WALL_BOUNCE: float = 1.2
 const MIN_BOUNCE_VELOCITY: float = 5.0
 const COLLISION_RADIUS: float = 20.0
 const WIND_FORCE_MULTIPLIER: float = 0.5
@@ -40,7 +40,7 @@ const WIND_FORCE_MULTIPLIER: float = 0.5
 const KEY_MOVE_FORCE: float = 200.0
 # MAX_MANUAL_SPEED:        手动吹风/操控可达到的沿风向速度上限 (px/s)。
 #                          防止玩家单靠左键无限加速绕过机关；环境风/回弹等物理冲量可超过此值。
-const MAX_MANUAL_SPEED: float = 350.0
+const MAX_MANUAL_SPEED: float = 1000.0
 # MANUAL_WIND_ACCEL:       手动吹风推动速率 (px/s²)，等效原 move_toward 的 accel*MAX_SPEED
 #                          与 strength 解耦 (初按即满速响应)，只作用于沿风向分量 (热风偏航不受影响)
 const MANUAL_WIND_ACCEL: float = 8000.0
@@ -84,6 +84,10 @@ func _restore_checkpoint() -> void:
 	var global := get_node("/root/Global")
 	# 任何重生都回满能量 (无检查点数据时也要回满)
 	global.refill_energy()
+	# 重生后重播当前关卡 BGM
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio and audio.has_method("replay_current_music"):
+		audio.replay_current_music()
 	if global.current_checkpoint != Vector2.ZERO:
 		global_position = global.current_checkpoint
 		print("[Player] 重生到检查点 坐标=", global.current_checkpoint)
@@ -129,13 +133,14 @@ func _on_wind_updated(target: Node2D, direction: Vector2, strength: float) -> vo
 	_last_wind_strength = strength
 
 	# 沿风向分量朝 target_along 以 MANUAL_WIND_ACCEL 速率逼近 (等效原 move_toward，
-	# 速率足够大才能在每帧 *0.2 的地面摩擦下推得动)；垂直分量完全不动，
+	# 速率足够大才能在每帧 *0.97 的地面摩擦下推得动)；垂直分量完全不动，
 	# 因此手动吹风不会吸收热风的偏航，热风照常把玩家吹偏航/加速。
 	# 速率与 strength 解耦：初按即是满速响应 (起手灵敏)，strength 只决定目标速度。
 	var along: float = velocity.dot(direction)
 	var target_along := MAX_MANUAL_SPEED * strength
 	var rate := MANUAL_WIND_ACCEL * (0.5 if is_on_floor() else 1.0) * get_physics_process_delta_time()
-	var step := clampf(target_along - along, -rate, rate)
+	# 只推不刹：step 下限为 0，避免轻点(strength 小)时把已有速度往回拽
+	var step := clampf(target_along - along, 0.0, rate)
 	velocity += direction * step
 
 func _on_wind_stopped() -> void:

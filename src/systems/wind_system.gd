@@ -14,7 +14,7 @@ extends Node2D
 const MAX_WIND_FORCE: float = 800.0
 const RAMP_TIME: float = 1.5
 const MICRO_BURST_FORCE: float = 200.0
-const MICRO_BURST_THRESHOLD: float = 0.15
+const MICRO_BURST_THRESHOLD: float = 0.5
 
 # ---------- 运行时状态 ----------
 # is_blowing:         当前是否正在吹风
