@@ -229,9 +229,6 @@ func sfx_energy_out() -> void:
 	play_sfx(SFX_ENERGY_OUT, -4.0)
 
 func sfx_fly() -> void:
-	# 5% 概率触发飞行音效，避免频繁吹风时音效过于嘈杂
-	if randf() > 0.01:
-		return
 	play_sfx(SFX_FLY, -6.0)
 
 func sfx_find_player() -> void:
