@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://ca6na8tut763j"]
 
-[ext_resource type="Texture2D" uid="uid://gpgmhtkr1iqa" path="res://assets/关卡二/新新瓦片集.png" id="2_rs3d2"]
-[ext_resource type="Texture2D" uid="uid://d6xs15jlfjej" path="res://assets/关卡二/新瓦片集.png" id="2_utljl"]
+[ext_resource type="Texture2D" uid="uid://bhlx8rn1trawc" path="res://assets/关卡二/新新瓦片集.png" id="2_rs3d2"]
+[ext_resource type="Texture2D" uid="uid://d1djwbir2hwwt" path="res://assets/关卡二/新瓦片集.png" id="2_utljl"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_utljl"]
 polygon = PackedVector2Array(0, -32, -32, -32, -32, -22.617764, -32, 32, -22.513458, 32, -22.198162, -17.99067, -18.071468, -22.627434, 32, -22.6622, 32, -32)
