@@ -9,7 +9,7 @@ extends Control
 # ---------- 跳转场景路径 (Inspector 配置) ----------
 @export var new_game_scene: String = "res://src/scenes/hub_world.tscn"
 @export var continue_scene: String = "res://src/scenes/hub_world.tscn"
-@export var settings_scene: String = ""   # 设置场景路径 (留空则按钮无效)
+@export var settings_scene: String = "res://src/scenes/ui/settings_menu.tscn"
 
 # ---------- 子节点引用 ----------
 @onready var new_game_button: Button = $MenuBox/NewGameButton

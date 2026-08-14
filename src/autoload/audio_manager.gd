@@ -27,6 +27,8 @@ var _loop_active: bool = false    # 是否启用自定义循环点
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS   # 场景切换时不被暂停
 
+	_load_settings()
+
 	# 音乐播放器
 	music_player = AudioStreamPlayer.new()
 	music_player.bus = "Music"
@@ -40,6 +42,25 @@ func _ready() -> void:
 		p.volume_db = sfx_volume_db
 		add_child(p)
 		sfx_players.append(p)
+
+# 从 Settings 读取音量，并监听变化即时生效
+func _load_settings() -> void:
+	var s := get_node("/root/Settings")
+	music_volume_db = s.music_volume_db
+	sfx_volume_db = s.sfx_volume_db
+	if not s.setting_changed.is_connected(_on_setting_changed):
+		s.setting_changed.connect(_on_setting_changed)
+
+func _on_setting_changed(key: String, value: float) -> void:
+	match key:
+		"music_volume_db":
+			music_volume_db = value
+			if music_player:
+				music_player.volume_db = value
+		"sfx_volume_db":
+			sfx_volume_db = value
+			for p in sfx_players:
+				p.volume_db = value
 
 # 每帧轮询场景实例变化 (scene_changed 信号在部分切换路径下不可靠，故不依赖它)
 func _poll_scene_change() -> void:
