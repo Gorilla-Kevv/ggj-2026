@@ -39,6 +39,7 @@ var start_active: bool = false
 
 signal phase_changed(new_phase: Phase)
 signal boss_defeated()
+signal boss_health_changed(current: int, maximum: int)
 
 func _ready() -> void:
 	super._ready()
@@ -61,6 +62,7 @@ func activate() -> void:
 	start_active = true
 	set_physics_process(true)
 	_enter_phase(Phase.SUCTION, false)   # 首次进入不震动
+	boss_health_changed.emit(rock_hits_needed - rock_hit_total, rock_hits_needed)
 
 func _enter_phase(phase: Phase, shake: bool = true) -> void:
 	if current_state == State.DEAD:
@@ -206,6 +208,8 @@ func hit_by_rock(damage: float) -> void:
 	if current_state == State.DEAD: return
 	rock_hit_count += 1
 	rock_hit_total += 1
+	# 通知 HUD 更新血条 (传剩余血量，保证血条递减)
+	boss_health_changed.emit(rock_hits_needed - rock_hit_total, rock_hits_needed)
 	# 播放受击动画 + 强震动
 	_play_hit_anim()
 	_shake(20.0, 0.5)
@@ -283,20 +287,36 @@ func _handle_death() -> void:
 		sprite.sprite_frames.set_animation_loop("dead", false)
 		sprite.play("dead")
 	boss_defeated.emit()
-	# 停留 3 秒（等死亡动画播完），再切回玩家
+	# 停留 3 秒（等死亡动画播完），再渐黑切回大厅
 	await get_tree().create_timer(3.0).timeout
-	_switch_camera_to_player()           # 3秒后切回玩家
-	# 恢复玩家
-	if player and is_instance_valid(player):
-		player.set_physics_process(true)
-		player.set_process(true)
-	# 不销毁，只关碰撞和物理
-	if contact_area:
-		contact_area.monitoring = false
-	if has_node("CollisionShape2D"):
-		$CollisionShape2D.set_deferred("disabled", true)
-	set_physics_process(false)
-	set_process(false)
+	await _fade_out_and_return_to_hub()
+
+# 画面渐黑后切回大厅场景
+func _fade_out_and_return_to_hub() -> void:
+	var tree := get_tree()
+	# 创建全屏黑色遮罩 (CanvasLayer 保证覆盖在最上层)
+	# 注意：挂到 current_scene 下而非 root，切换场景时随旧场景一起销毁，避免残留黑屏
+	var layer := CanvasLayer.new()
+	layer.layer = 128
+	var rect := ColorRect.new()
+	rect.color = Color(0, 0, 0, 0)
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(rect)
+	var scene := tree.current_scene
+	if scene:
+		scene.add_child(layer)
+	else:
+		tree.root.add_child(layer)
+	# 渐黑 (2 秒)
+	var tween := create_tween()
+	tween.tween_property(rect, "color:a", 1.0, 2.0)
+	await tween.finished
+	# 清理进度，避免残留检查点污染大厅落点
+	var global := get_node("/root/Global")
+	global.current_checkpoint = Vector2.ZERO
+	global.last_checkpoint_level = ""
+	# 切回大厅 (旧场景销毁时遮罩一并释放)
+	tree.change_scene_to_file(global.HUB_SCENE)
 
 # 镜头切到 Boss
 func _switch_camera_to_boss() -> void:

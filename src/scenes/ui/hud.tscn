@@ -24,6 +24,25 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_bg"]
+bg_color = Color(0.1, 0.1, 0.12, 0.75)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.85, 0.7, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boss_fill"]
+bg_color = Color(0.85, 0.2, 0.2, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [node name="hud" type="CanvasLayer" unique_id=1694471426]
 script = ExtResource("1_mr4ol")
 
@@ -68,3 +87,58 @@ theme_override_colors/font_color = Color(1, 1, 1, 0.85)
 theme_override_fonts/font = ExtResource("3_q3cwv")
 theme_override_font_sizes/font_size = 20
 text = "R 切换目标    M 打开地图"
+
+[node name="BossUI" type="Control" parent="." unique_id=780512143]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -300.0
+offset_top = 16.0
+offset_right = 300.0
+offset_bottom = 80.0
+grow_horizontal = 2
+
+[node name="BossPhaseLabel" type="Label" parent="BossUI" unique_id=315888021]
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 0.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_fonts/font = ExtResource("3_q3cwv")
+theme_override_font_sizes/font_size = 24
+text = "阶段"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BossHintLabel" type="Label" parent="BossUI" unique_id=633390402]
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.9)
+theme_override_fonts/font = ExtResource("3_q3cwv")
+theme_override_font_sizes/font_size = 16
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BossHealthBar" type="ProgressBar" parent="BossUI" unique_id=489120374]
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_top = 68.0
+offset_bottom = 86.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_boss_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_boss_fill")
+show_percentage = false

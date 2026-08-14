@@ -49,20 +49,27 @@ func _process(_delta: float) -> void:
 			return
 		global_position = (target as Node2D).global_position
 
-	_update_zoom(global.selected_target)
+	# 仅在目标有效时才更新 zoom (已释放实例传给带类型参数会直接崩溃)
+	if global.selected_target != null and is_instance_valid(global.selected_target):
+		_update_zoom(global.selected_target)
+	else:
+		zoom = _default_zoom
 
-# 根据选中目标切换 zoom
-func _update_zoom(target: Node2D) -> void:
+# 根据选中目标切换 zoom (参数不标类型，避免已释放实例在入口崩溃)
+func _update_zoom(target) -> void:
+	if target == null or not is_instance_valid(target):
+		zoom = _default_zoom
+		return
 	if _is_windmill_target(target):
 		zoom = Vector2(windmill_zoom, windmill_zoom)
 	else:
 		zoom = _default_zoom
 
 # 判断选中目标是否属于风车 (力臂或风车主体)
-func _is_windmill_target(node: Node2D) -> bool:
+func _is_windmill_target(node) -> bool:
 	if node == null or not is_instance_valid(node):
 		return false
 	if node.is_in_group("windmill"):
 		return true
-	var parent := node.get_parent()
+	var parent = node.get_parent()
 	return parent != null and parent.is_in_group("windmill")
