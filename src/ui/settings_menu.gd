@@ -100,32 +100,35 @@ func _build_section(parent: HBoxContainer, title_text: String, params: Array) ->
 	for p in params:
 		_build_param(column, p[0], p[1], p[2], p[3], p[4])
 
-# 一个参数: 名称在上，滑块+输入框在下
+# 一个参数: 名称+输入框在上行，滑块独占下行 (全宽，保证可拖动)
 func _build_param(parent: VBoxContainer, key: String, label: String, min_v: float, max_v: float, step: float) -> void:
+	# 上行: 参数名 + 手动输入框
+	var top := HBoxContainer.new()
+	top.add_theme_constant_override("separation", 8)
+	parent.add_child(top)
+
 	var name_label := Label.new()
 	name_label.text = label
 	name_label.add_theme_font_size_override("font_size", 18)
-	parent.add_child(name_label)
-
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
-	parent.add_child(row)
-
-	var slider := HSlider.new()
-	slider.min_value = min_v
-	slider.max_value = max_v
-	slider.step = step
-	slider.value = _settings.get(key)
-	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(slider)
+	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top.add_child(name_label)
 
 	var spin := SpinBox.new()
 	spin.min_value = min_v
 	spin.max_value = max_v
 	spin.step = step
 	spin.value = _settings.get(key)
-	spin.custom_minimum_size = Vector2(90, 0)
-	row.add_child(spin)
+	spin.custom_minimum_size = Vector2(80, 0)
+	top.add_child(spin)
+
+	# 下行: 滑块独占全宽
+	var slider := HSlider.new()
+	slider.min_value = min_v
+	slider.max_value = max_v
+	slider.step = step
+	slider.value = _settings.get(key)
+	slider.custom_minimum_size = Vector2(150, 30)
+	parent.add_child(slider)
 
 	_sliders[key] = slider
 	_spins[key] = spin
