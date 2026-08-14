@@ -42,7 +42,6 @@
 [ext_resource type="Script" uid="uid://c5gt83pc4m7cc" path="res://src/systems/windmill_intro.gd" id="36_346cs"]
 [ext_resource type="PackedScene" uid="uid://cwminimapk2ta" path="res://src/ui/minimap.tscn" id="37_minimap"]
 [ext_resource type="Texture2D" uid="uid://bpynwtnptsido" path="res://assets/关卡及大厅/door2in.tres" id="40_wabap"]
-[ext_resource type="Script" uid="uid://6j4dd4mowip2" path="res://src/environment/updraft.gd" id="43_ocard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_poi7k"]
 size = Vector2(66.1529, 213.4938)
@@ -982,47 +981,6 @@ color_ramp = SubResource("GradientTexture1D_136j4")
 hue_variation_min = -2.2351742e-08
 hue_variation_max = 0.019999977
 anim_offset_max = 1.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_flow"]
-size = Vector2(120, 600)
-
-[sub_resource type="Gradient" id="Gradient_87287"]
-offsets = PackedFloat32Array(0.528)
-colors = PackedColorArray(0.78322595, 0.17890659, 0.2821687, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_b21l8"]
-gradient = SubResource("Gradient_87287")
-width = 1
-height = 32
-fill_to = Vector2(0, 0.5868946)
-
-[sub_resource type="Gradient" id="Gradient_init"]
-colors = PackedColorArray(1, 0.4, 0.25, 1, 1, 0.4, 0.25, 0.6)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_init"]
-gradient = SubResource("Gradient_init")
-
-[sub_resource type="Gradient" id="Gradient_ramp"]
-offsets = PackedFloat32Array(0, 0.5, 1)
-colors = PackedColorArray(1, 0.35, 0.2, 0, 1, 0.3, 0.2, 1, 1, 0.35, 0.2, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ramp"]
-gradient = SubResource("Gradient_ramp")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t1kaq"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(60, 300, 1)
-direction = Vector3(0, -1, 0)
-spread = 20.0
-initial_velocity_min = 80.0
-initial_velocity_max = 160.0
-gravity = Vector3(78.245, -160, 0)
-tangential_accel_min = -25.0
-tangential_accel_max = 25.0
-scale_max = 1.5
-color_ramp = SubResource("GradientTexture1D_ramp")
-color_initial_ramp = SubResource("GradientTexture1D_init")
 
 [sub_resource type="Gradient" id="Gradient_esxs8"]
 colors = PackedColorArray(1, 0.4, 0.25, 1, 1, 0.4, 0.25, 0.6)
@@ -3420,6 +3378,38 @@ debug_color = Color(0, 0.6, 0.69803923, 0)
 libraries/ = SubResource("AnimationLibrary_5bb03")
 autoplay = &"open_light"
 
+[node name="kill_light13" type="Node2D" parent="MultiLayerControl/Pipe/Pipe 35d" unique_id=317712495]
+position = Vector2(12169.843, -2663.1694)
+rotation = -9.401601
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Sprite2D" type="Sprite2D" parent="MultiLayerControl/Pipe/Pipe 35d/kill_light13" unique_id=1134232662]
+self_modulate = Color(0.9411612, 0.65405095, 0.8178334, 1)
+rotation = -3.11343
+scale = Vector2(0.055851784, 0.055851784)
+texture = ExtResource("2_5grbk")
+region_enabled = true
+region_rect = Rect2(2653, 9794, 647, 887)
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="MultiLayerControl/Pipe/Pipe 35d/kill_light13/Sprite2D" unique_id=258595914]
+position = Vector2(-33.829956, -199.72498)
+scale = Vector2(23.296484, 23.296488)
+color = Color(0.8846238, 0, 0.2629019, 1)
+energy = 2.64
+range_item_cull_mask = 2
+texture = ExtResource("34_1d18i")
+
+[node name="kill_zone" parent="MultiLayerControl/Pipe/Pipe 35d/kill_light13/Sprite2D" unique_id=28596570 instance=ExtResource("34_5bb03")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MultiLayerControl/Pipe/Pipe 35d/kill_light13/Sprite2D/kill_zone" unique_id=146072118]
+shape = SubResource("CircleShape2D_1d18i")
+debug_color = Color(0, 0.6, 0.69803923, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MultiLayerControl/Pipe/Pipe 35d/kill_light13" unique_id=1811562014]
+libraries/ = SubResource("AnimationLibrary_5bb03")
+autoplay = &"open_light"
+
 [node name="kill_light12" type="Node2D" parent="MultiLayerControl/Pipe/Pipe 35d" unique_id=1423305165]
 position = Vector2(11254.754, -2655.9766)
 rotation = -9.441313
@@ -3666,34 +3656,6 @@ position = Vector2(-808.0001, -863.99994)
 rotation = -0.7853983
 scale = Vector2(0.9999999, 0.9999999)
 
-[node name="Updraft" type="Area2D" parent="." unique_id=1569074020]
-position = Vector2(3599.0522, -11394.837)
-rotation = 0.5903987
-script = ExtResource("43_ocard")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Updraft" unique_id=1864003472]
-shape = SubResource("RectangleShape2D_flow")
-
-[node name="windline_particles bg" parent="Updraft" unique_id=803870385 instance=ExtResource("9_d3i7k")]
-texture = SubResource("GradientTexture2D_b21l8")
-lifetime = 2.0
-visibility_rect = Rect2(-700, -700, 1400, 1400)
-process_material = SubResource("ParticleProcessMaterial_t1kaq")
-
-[node name="Updraft6" type="Area2D" parent="." unique_id=1985929729]
-position = Vector2(4824, -6487.9995)
-rotation = 0.5903987
-script = ExtResource("43_ocard")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Updraft6" unique_id=1473512216]
-shape = SubResource("RectangleShape2D_flow")
-
-[node name="windline_particles bg" parent="Updraft6" unique_id=1108856413 instance=ExtResource("9_d3i7k")]
-texture = SubResource("GradientTexture2D_b21l8")
-lifetime = 2.0
-visibility_rect = Rect2(-700, -700, 1400, 1400)
-process_material = SubResource("ParticleProcessMaterial_t1kaq")
-
 [node name="Updraft10" parent="." unique_id=1408358043 instance=ExtResource("28_eu8ha")]
 position = Vector2(1215.9998, -4616)
 rotation = 2.3591115
@@ -3705,12 +3667,55 @@ process_material = SubResource("ParticleProcessMaterial_on7ce")
 position = Vector2(3736.0002, -4024.0005)
 rotation = 0.38397244
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Updraft11" unique_id=601786106]
-position = Vector2(-225.43074, -1177.2764)
-shape = SubResource("RectangleShape2D_flow")
-
-[node name="windline_particles bg" parent="Updraft11" index="2" unique_id=381050555]
+[node name="windline_particles bg" parent="Updraft11" index="1" unique_id=381050555]
 process_material = SubResource("ParticleProcessMaterial_on7ce")
+
+[node name="Updraft12" parent="." unique_id=1090110444 instance=ExtResource("28_eu8ha")]
+position = Vector2(4064.0002, -5320)
+rotation = 0.52283806
+
+[node name="windline_particles bg" parent="Updraft12" index="1" unique_id=381050555]
+process_material = SubResource("ParticleProcessMaterial_on7ce")
+
+[node name="Updraft13" parent="." unique_id=1787825577 instance=ExtResource("28_eu8ha")]
+position = Vector2(4744, -6368)
+rotation = 0.52283806
+
+[node name="windline_particles bg" parent="Updraft13" index="1" unique_id=381050555]
+process_material = SubResource("ParticleProcessMaterial_on7ce")
+
+[node name="Updraft14" parent="." unique_id=487610570 instance=ExtResource("28_eu8ha")]
+position = Vector2(3808, -11407.999)
+rotation = 0.52283806
+
+[node name="CollisionShape2D" parent="Updraft14" index="0" unique_id=1864003472]
+metadata/_edit_lock_ = true
+
+[node name="windline_particles bg" parent="Updraft14" index="1" unique_id=381050555]
+process_material = SubResource("ParticleProcessMaterial_on7ce")
+metadata/_edit_lock_ = true
+
+[node name="Updraft15" parent="." unique_id=1517239423 instance=ExtResource("28_eu8ha")]
+position = Vector2(3424, -11296)
+rotation = 0.52283806
+
+[node name="CollisionShape2D" parent="Updraft15" index="0" unique_id=1864003472]
+metadata/_edit_lock_ = true
+
+[node name="windline_particles bg" parent="Updraft15" index="1" unique_id=381050555]
+process_material = SubResource("ParticleProcessMaterial_on7ce")
+metadata/_edit_lock_ = true
+
+[node name="Updraft16" parent="." unique_id=1221007333 instance=ExtResource("28_eu8ha")]
+position = Vector2(4072, -9712)
+rotation = -0.7941248
+
+[node name="CollisionShape2D" parent="Updraft16" index="0" unique_id=1864003472]
+metadata/_edit_lock_ = true
+
+[node name="windline_particles bg" parent="Updraft16" index="1" unique_id=381050555]
+process_material = SubResource("ParticleProcessMaterial_on7ce")
+metadata/_edit_lock_ = true
 
 [node name="Updraft3" parent="." unique_id=530957559 instance=ExtResource("28_eu8ha")]
 position = Vector2(-888, -4064)
@@ -3753,5 +3758,10 @@ process_material = SubResource("ParticleProcessMaterial_on7ce")
 [editable path="exit/ExitPortal"]
 [editable path="Updraft10"]
 [editable path="Updraft11"]
+[editable path="Updraft12"]
+[editable path="Updraft13"]
+[editable path="Updraft14"]
+[editable path="Updraft15"]
+[editable path="Updraft16"]
 [editable path="Updraft3"]
 [editable path="Updraft9"]
