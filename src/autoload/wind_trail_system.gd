@@ -15,7 +15,8 @@ const TRAIL_SCENE: PackedScene = preload("res://src/scenes/wind_trail_object.tsc
 # base_box_extents:        基准发射盒尺寸
 # base_scale:              基准粒子缩放
 # base_trail_lifetime:     基准拖尾时长
-# scan_interval:           动态物体重扫间隔 (秒)，捕获运行中新增的可交互物体
+# scan_interval:                    动态物体重扫间隔 (秒)，捕获运行中新增的可交互物体
+# rotation_trail_amount_multiplier: 旋转臂 (风车臂) 拖尾数量倍率 (臂无碰撞体，默认体积偏小)
 @export var trail_speed_threshold: float = 30.0
 @export var reference_volume: float = 10000.0
 @export var base_amount: int = 18
@@ -23,6 +24,7 @@ const TRAIL_SCENE: PackedScene = preload("res://src/scenes/wind_trail_object.tsc
 @export var base_scale: float = 0.5
 @export var base_trail_lifetime: float = 0.62
 @export var scan_interval: float = 0.5
+@export var rotation_trail_amount_multiplier: float = 3.0
 
 # ---------- 运行时状态 ----------
 # _trails:            body -> 拖尾 GPUParticles2D
@@ -91,7 +93,11 @@ func _mount_trail(body: Node2D) -> void:
 	mat.emission_box_extents = base_box_extents * k
 	mat.scale_min = base_scale * k
 	mat.scale_max = base_scale * 1.5 * k
-	emitter.amount = clampi(int(base_amount * k * k), 4, 64)
+	var amount := int(base_amount * k * k)
+	if not (body is RigidBody2D):
+		# 旋转臂 (风车臂) 无碰撞体，默认体积偏小，额外放大数量
+		amount = int(amount * rotation_trail_amount_multiplier)
+	emitter.amount = clampi(amount, 4, 256)
 	emitter.trail_lifetime = clampf(base_trail_lifetime * k, 0.3, 1.5)
 
 	_trails[body] = emitter
