@@ -1452,7 +1452,7 @@ tile_map_layer = NodePath("../../mid")
 target_camera = NodePath("../Camera2D")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("7_ndbc8")]
-position = Vector2(4115.5195, -19265.264)
+position = Vector2(177.93604, 670.3069)
 
 [node name="TargetSelector" parent="world/player" index="2" unique_id=1033369240]
 switch_range = 1000.0
@@ -1799,6 +1799,7 @@ fog_material = SubResource("ShaderMaterial_2gepm")
 
 [node name="提示1" parent="." unique_id=1455231856 instance=ExtResource("39_a8bax")]
 position = Vector2(152, 1040)
+scale = Vector2(1, 2.1999974)
 
 [node name="提示2" type="Area2D" parent="." unique_id=1803326976]
 position = Vector2(5296.0005, -5696.0005)
