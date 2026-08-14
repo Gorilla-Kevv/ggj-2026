@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://dxc45k5npw38v" path="res://src/scenes/kill_zone.tscn" id="34_5bb03"]
 [ext_resource type="Texture2D" uid="uid://bauwhyi7jm8ex" path="res://assets/关卡一/场景道具图集.png" id="35_wabap"]
 [ext_resource type="Script" uid="uid://c5gt83pc4m7cc" path="res://src/systems/windmill_intro.gd" id="36_346cs"]
+[ext_resource type="PackedScene" uid="uid://cwminimapk2s9" path="res://src/ui/minimap.tscn" id="37_minimap"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrc0g"]
 size = Vector2(14.663452, 118.6521)
@@ -3421,6 +3422,8 @@ texture_scale = 3.46
 metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("20_d6rfp")]
+
+[node name="Minimap" parent="." instance=ExtResource("37_minimap")]
 
 [node name="Windmill" parent="." unique_id=1507389595 instance=ExtResource("28_c074i")]
 position = Vector2(4088, -14928)

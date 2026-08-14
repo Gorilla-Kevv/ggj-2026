@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GGJ2026"
-run/main_scene="uid://h863uah8i20k"
+run/main_scene="uid://5rlg4reaioiq"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -38,7 +38,7 @@ project/assembly_name="GGJ2026"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
+enabled=PackedStringArray()
 
 [global_group]
 
@@ -91,3 +91,4 @@ map={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(1, 0.9529412, 0.6901961, 1)
