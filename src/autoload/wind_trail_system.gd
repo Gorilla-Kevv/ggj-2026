@@ -34,6 +34,7 @@ var _scan_timer: float = 0.0
 var _last_scene: Node = null
 
 func _ready() -> void:
+	_last_scene = get_tree().current_scene
 	_scan_and_mount()
 
 func _process(delta: float) -> void:
@@ -66,6 +67,9 @@ func _mount_trail(body: RigidBody2D) -> void:
 	emitter.emitting = false
 
 	var mat := emitter.process_material as ParticleProcessMaterial
+	if mat == null:
+		emitter.queue_free()
+		return
 	var k := _linear_scale(body)
 
 	# 体积自适应：发射盒、粒子缩放、数量、拖尾长度等比缩放
@@ -109,14 +113,16 @@ func _update_trails() -> void:
 			_trails.erase(body)
 			_materials.erase(body)
 			continue
+		var rb := body as RigidBody2D
+		var vel: Vector2 = rb.linear_velocity
+		var speed: float = vel.length()
+		if speed < trail_speed_threshold:
+			(_trails[body] as GPUParticles2D).emitting = false
+			continue
 		var emitter: GPUParticles2D = _trails[body]
 		var mat: ParticleProcessMaterial = _materials[body]
-		var speed: float = (body as RigidBody2D).linear_velocity.length()
-		if speed < trail_speed_threshold:
-			emitter.emitting = false
-			continue
 		emitter.emitting = true
-		var dir: Vector2 = -(body as RigidBody2D).linear_velocity.normalized()
+		var dir: Vector2 = -vel.normalized()
 		mat.direction = Vector3(dir.x, dir.y, 0.0)
 		mat.initial_velocity_min = speed * 0.35
 		mat.initial_velocity_max = speed * 0.7
