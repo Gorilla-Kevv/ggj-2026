@@ -5,7 +5,6 @@
 # 背景风场 (系统 1) 暂缓，后续在此文件内扩展。
 # ============================================================
 extends Node
-class_name WindTrailSystem
 
 const TRAIL_SCENE: PackedScene = preload("res://src/scenes/wind_trail_object.tscn")
 
