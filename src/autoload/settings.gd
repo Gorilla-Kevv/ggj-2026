@@ -67,7 +67,10 @@ func save_settings() -> void:
 	config.save(SAVE_PATH)
 
 func _all_keys() -> Array[String]:
-	return DEFAULT_VALUES.keys()
+	var keys: Array[String] = []
+	for key in DEFAULT_VALUES.keys():
+		keys.append(key)
+	return keys
 
 # 设置某参数并广播信号
 func set_param(key: String, value: float) -> void:
