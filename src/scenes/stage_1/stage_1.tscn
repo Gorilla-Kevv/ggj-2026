@@ -37,6 +37,7 @@
 [ext_resource type="Shader" uid="uid://o75swr3ddmo1" path="res://shaders/weather_fog_heavy.gdshader" id="36_i6g42"]
 [ext_resource type="Script" uid="uid://cnau331vy5xsn" path="res://script/weather_fog_controller.gd" id="37_j8dy8"]
 [ext_resource type="Shader" uid="uid://vmvypt2pf4ss" path="res://shaders/weather_fog_light.gdshader" id="38_a8bax"]
+[ext_resource type="PackedScene" uid="uid://bpt2v0k0illrc" path="res://src/scenes/提示.tscn" id="39_a8bax"]
 [ext_resource type="Script" uid="uid://b8hjmtvdcegj7" path="res://src/environment/hint_trigger.gd" id="39_i6g42"]
 [ext_resource type="PackedScene" uid="uid://c5joifw24wcsm" path="res://src/scenes/screen_shaker.tscn" id="39_j8dy8"]
 
@@ -799,9 +800,6 @@ shader_parameter/alpha_p = 9.76
 shader = ExtResource("36_i6g42")
 shader_parameter/density = 0.25
 shader_parameter/speed = Vector2(0.02, 0.01)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6g42"]
-size = Vector2(699.66254, 227.70847)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8dy8"]
 size = Vector2(1117.8313, 227.70847)
@@ -1793,16 +1791,8 @@ fog_material = SubResource("ShaderMaterial_2gepm")
 
 [node name="ScreenShaker" parent="." unique_id=1018084538 instance=ExtResource("39_j8dy8")]
 
-[node name="提示1" type="Area2D" parent="." unique_id=1868623686]
-position = Vector2(348.34985, 444.33228)
-script = ExtResource("39_i6g42")
-title = "玩法1"
-message = "提示：鼠标按下吹风， 长按蓄力吹风，短按瞬时吹风
-Enter/E 取消弹窗"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="提示1" unique_id=850820012]
-position = Vector2(-140.18112, 659.522)
-shape = SubResource("RectangleShape2D_i6g42")
+[node name="提示1" parent="." unique_id=1455231856 instance=ExtResource("39_a8bax")]
+position = Vector2(152, 1040)
 
 [node name="提示2" type="Area2D" parent="." unique_id=1803326976]
 position = Vector2(5296.0005, -5696.0005)
