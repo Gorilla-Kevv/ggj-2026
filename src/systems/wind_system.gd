@@ -14,7 +14,7 @@ extends Node2D
 const MAX_WIND_FORCE: float = 800.0
 const RAMP_TIME: float = 1.5
 const MICRO_BURST_FORCE: float = 200.0
-const MICRO_BURST_THRESHOLD: float = 0.15
+const MICRO_BURST_THRESHOLD: float = 0.5
 
 # ---------- 运行时状态 ----------
 # is_blowing:         当前是否正在吹风
@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 	# --- 按住中：持续吹风，累计力度，消耗能量 ---
 	if is_blowing and mouse_pressed:
 		blow_hold_time += delta
-		if global.selected_target == null:
+		if global.selected_target == null or not is_instance_valid(global.selected_target):
 			_stop_wind()
 			return
 		global.drain_energy(delta)
@@ -90,7 +90,7 @@ func _process(delta: float) -> void:
 	if just_released and is_blowing:
 		if blow_hold_time < MICRO_BURST_THRESHOLD:
 			micro_burst.emit(global.selected_target, _get_wind_direction())
-			if global.selected_target.is_in_group("interactable"):
+			if global.selected_target != null and is_instance_valid(global.selected_target) and global.selected_target.is_in_group("interactable"):
 				if global.selected_target.has_method("apply_wind_force"):
 					global.selected_target.apply_wind_force(_get_wind_direction() * 100.0)
 				else:

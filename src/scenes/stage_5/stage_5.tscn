@@ -265,7 +265,7 @@ position = Vector2(226.06375, 29.515285)
 shape = SubResource("WorldBoundaryShape2D_2n0xl")
 
 [node name="upper bound3" type="StaticBody2D" parent="world" unique_id=1902094432]
-position = Vector2(2496, -51)
+position = Vector2(2357, -84)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="world/upper bound3" unique_id=382550247]
@@ -312,7 +312,7 @@ position = Vector2(-8243.001, 15585.001)
 scale = Vector2(2.39, 3.8)
 
 [node name="thunder2" parent="." unique_id=1118934425 instance=ExtResource("11_1c84j")]
-position = Vector2(-5507, 15585.001)
+position = Vector2(-5429, 15585)
 scale = Vector2(2.39, 3.78)
 
 [node name="door" parent="." unique_id=1842986555 instance=ExtResource("12_v3oy4")]

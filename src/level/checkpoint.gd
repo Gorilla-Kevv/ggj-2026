@@ -18,6 +18,12 @@ func _ready() -> void:
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 	_update_visual()
+	# 若默认激活，则立即写入 Global 检查点数据
+	if is_active:
+		var global := get_node("/root/Global")
+		global.current_checkpoint = global_position
+		global.last_checkpoint_level = get_tree().current_scene.scene_file_path
+		print("[Checkpoint] 默认激活 坐标=", global_position, " 关卡=", global.last_checkpoint_level)
 
 # 碰撞回调：玩家首次触碰 → 激活
 func _on_body_entered(body: Node2D) -> void:
@@ -34,6 +40,10 @@ func activate() -> void:
 	global.refill_energy()
 	print("[Checkpoint] 激活 坐标=", global.current_checkpoint, " 关卡=", global.last_checkpoint_level)
 	_update_visual()
+	# 检查点激活音效
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio and audio.has_method("sfx_checkpoint"):
+		audio.sfx_checkpoint()
 	checkpoint_activated.emit(self)
 
 # 视觉状态：已激活=亮绿 + "CHECKED!" / 未激活=白 + "CHECKPOINT"

@@ -34,6 +34,10 @@ func _process(delta: float) -> void:
 	if player == null: return
 	if player.global_position.x >= trigger_x:
 		_triggered = true
+		# Boss 动画触发瞬间启动音乐
+		var audio := get_node_or_null("/root/AudioManager")
+		if audio and audio.has_method("play_boss_fight_music"):
+			audio.play_boss_fight_music()
 		_play_intro()
 
 func _play_intro() -> void:

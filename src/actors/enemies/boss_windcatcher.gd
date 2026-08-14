@@ -15,7 +15,7 @@ var _blast_timer: float = 0.0
 @export var blast_duration: float = 5.0
 @export var calm_duration: float = 15.0
 @export var debris_interval: float = 0.64
-@export var debris_speed: float = 600.0
+@export var debris_speed: float = 400.0
 @export var debris_paths: Array[String] = []
 @export var rock_scene: PackedScene
 @export var rock_hits_needed: int = 4        # 累计砸满4次死亡
@@ -257,9 +257,20 @@ func _handle_death() -> void:
 	# 断开受击动画回调，防止死亡后触发待机切换
 	if sprite and sprite.animation_finished.is_connected(_on_hit_anim_finished):
 		sprite.animation_finished.disconnect(_on_hit_anim_finished)
+	# 锁定玩家（停止物理和输入）
+	var player := get_tree().get_first_node_in_group("player")
+	if player:
+		player.set_physics_process(false)
+		player.set_process(false)
 	# 清空剩余石头
 	_clear_rocks()
 	_shake(25.0, 0.6)                    # 强震动
+	# 播放 Boss 死亡 BGM + 死亡音效
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio and audio.has_method("play_boss_dead_music"):
+		audio.play_boss_dead_music()
+	if audio and audio.has_method("sfx_boss_dead"):
+		audio.sfx_boss_dead()
 	_switch_camera_to_boss()             # 镜头切到 Boss
 	# 播放 Boss 挂载的 AnimationPlayer 的 dead 动画
 	var boss_anim := get_node_or_null("AnimationPlayer") as AnimationPlayer
@@ -275,6 +286,10 @@ func _handle_death() -> void:
 	# 停留 3 秒（等死亡动画播完），再切回玩家
 	await get_tree().create_timer(3.0).timeout
 	_switch_camera_to_player()           # 3秒后切回玩家
+	# 恢复玩家
+	if player and is_instance_valid(player):
+		player.set_physics_process(true)
+		player.set_process(true)
 	# 不销毁，只关碰撞和物理
 	if contact_area:
 		contact_area.monitoring = false

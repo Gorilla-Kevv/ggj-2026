@@ -75,6 +75,10 @@ func drain_energy(delta: float) -> void:
 	energy_changed.emit(energy)
 	if energy <= 0.0:
 		energy_depleted.emit()
+		# 能量耗尽音效
+		var audio := get_node_or_null("/root/AudioManager")
+		if audio and audio.has_method("sfx_energy_out"):
+			audio.sfx_energy_out()
 
 # 移动能量消耗倍率: 按当前关卡调整 (第3关消耗 x2，其他关 1x)
 func _get_drain_multiplier() -> float:
