@@ -43,7 +43,7 @@ project/assembly_name="GGJ2026"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
+enabled=PackedStringArray()
 
 [global_group]
 

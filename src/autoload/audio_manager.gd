@@ -11,13 +11,17 @@
 extends Node
 
 # ---------- 导出参数 ----------
-@export var music_volume_db: float = -10.0    # 音乐音量 (分贝)
+@export var music_volume_db: float = 0.0    # 音乐音量 (分贝)
 @export var sfx_volume_db: float = -6.0       # 音效音量 (分贝)
 @export var default_fade_time: float = 1.0    # 默认淡入淡出时长 (秒)
 
 # ---------- 节点引用 ----------
 var music_player: AudioStreamPlayer
 var sfx_players: Array[AudioStreamPlayer] = []
+var _fly_player: AudioStreamPlayer = null    # 长按飞行白噪音循环 (任务2)
+var _ambient_player: AudioStreamPlayer = null # 背景环境音循环 (任务3)
+var _fly_hold_active: bool = false            # 飞行白噪音播放中标记
+var _ambient_active: bool = false             # 环境音播放中标记
 var _current_music_path: String = ""
 var _tracked_scene: Node = null         # 已跟踪的场景实例 (用于检测切换/重载)
 var _loop_start: float = 0.0      # 循环起点（秒），0=从头循环
@@ -43,6 +47,18 @@ func _ready() -> void:
 		add_child(p)
 		sfx_players.append(p)
 
+	# 长按飞行白噪音循环播放器 (任务2，独立于池，可随时 start/stop)
+	_fly_player = AudioStreamPlayer.new()
+	_fly_player.bus = "SFX"
+	_fly_player.volume_db = sfx_volume_db #- 4.0
+	add_child(_fly_player)
+
+	# 背景环境音循环播放器 (任务3)
+	_ambient_player = AudioStreamPlayer.new()
+	_ambient_player.bus = "SFX"
+	_ambient_player.volume_db = sfx_volume_db
+	add_child(_ambient_player)
+
 # 从 Settings 读取音量，并监听变化即时生效
 func _load_settings() -> void:
 	var s := get_node("/root/Settings")
@@ -64,6 +80,10 @@ func _on_setting_changed(key: String, value: float) -> void:
 			sfx_volume_db = value
 			for p in sfx_players:
 				p.volume_db = value
+			if _fly_player:
+				_fly_player.volume_db = value - 4.0
+			if _ambient_player:
+				_ambient_player.volume_db = value
 
 # 应用总音量到 Master bus
 func _apply_master_volume(db: float) -> void:
@@ -136,6 +156,12 @@ const SFX_FIND_PLAYER := "res://assets/fx/find the player.wav"
 const SFX_DEAD := "res://assets/fx/dead.wav"
 const SFX_DEAD_2 := "res://assets/fx/dead_2.wav"
 const SFX_CHECKPOINT := "res://assets/fx/checkpoint.wav"
+# 短时点击音效 (白噪音短片段，micro burst 一次性播放)
+const SFX_FLY_TAP := "res://assets/fx/白噪音/Track 5 (已合并).wav"
+# 长按飞行音效 (循环播放，16s 白噪音)
+const SFX_FLY_HOLD := "res://assets/fx/白噪音/fly_hold.wav"
+# 背景环境音 (循环播放)
+const AMBIENT := "res://assets/fx/白噪音/环境音.wav"
 
 func play_stage_music(stage: int, force: bool = false) -> void:
 	match stage:
@@ -245,6 +271,58 @@ func sfx_boss_dead() -> void:
 
 func sfx_checkpoint() -> void:
 	play_sfx(SFX_CHECKPOINT, -4.0)
+
+# ---------- 短时点击音效 (任务2) ----------
+# 短按(不足阈值)时播放一次白噪音片段，不循环
+func sfx_fly_tap() -> void:
+	play_sfx(SFX_FLY_TAP, -8.0)
+
+# ---------- 长按飞行白噪音 (任务2) ----------
+# 长按吹风时循环播放白噪音，松开/短按停止
+func sfx_fly_hold_start() -> void:
+	if _fly_hold_active:
+		return
+	var stream := load(SFX_FLY_HOLD) as AudioStreamWAV
+	if stream == null:
+		push_warning("AudioManager: 无法加载飞行白噪音 " + SFX_FLY_HOLD)
+		return
+	_fly_hold_active = true
+	_fly_player.stream = _make_looping(stream)
+	_fly_player.play()
+
+func sfx_fly_hold_stop() -> void:
+	_fly_hold_active = false
+	_fly_player.stop()
+
+# ---------- 背景环境音 (任务3) ----------
+# 循环播放背景白噪音/环境音，供关卡或开场调用
+# path: 音频文件路径 (如新导入的白噪音)
+func play_ambient(path: String, volume_db: float = -12.0) -> void:
+	var stream := load(path) as AudioStreamWAV
+	if stream == null:
+		push_warning("AudioManager: 无法加载环境音 " + path)
+		return
+	_ambient_active = true
+	_ambient_player.stream = _make_looping(stream)
+	_ambient_player.volume_db = volume_db
+	_ambient_player.play()
+
+# 播放默认环境音 (环境音.wav)
+func play_default_ambient(volume_db: float = -12.0) -> void:
+	play_ambient(AMBIENT, volume_db)
+
+func stop_ambient() -> void:
+	_ambient_active = false
+	_ambient_player.stop()
+
+# 复制 WAV 并设置为从头到尾的原生循环 (零间隙，避免 finished 信号重播的卡顿)
+func _make_looping(stream: AudioStreamWAV) -> AudioStreamWAV:
+	var looped := stream.duplicate() as AudioStreamWAV
+	looped.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	looped.loop_begin = 0
+	# loop_end 单位为采样帧数 = 时长(秒) × 采样率
+	looped.loop_end = int(looped.get_length() * looped.mix_rate)
+	return looped
 
 # ---------- 内部实现 ----------
 

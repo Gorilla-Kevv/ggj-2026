@@ -24,7 +24,7 @@ var energy_regen: float = 1.0           # 能量回复
 
 # ---------- 音乐音效 ----------
 var master_volume_db: float = 0.0       # 总音量 (分贝)
-var music_volume_db: float = -10.0      # 音乐音量 (分贝)
+var music_volume_db: float = 0.0      # 音乐音量 (分贝)
 var sfx_volume_db: float = -6.0         # 音效音量 (分贝)
 
 # 默认值表 (恢复默认用)
@@ -40,7 +40,7 @@ const DEFAULT_VALUES: Dictionary = {
 	"energy_drain": 4.0,
 	"energy_regen": 1.0,
 	"master_volume_db": 0.0,
-	"music_volume_db": -10.0,
+	"music_volume_db": 0.0,
 	"sfx_volume_db": -6.0,
 }
 

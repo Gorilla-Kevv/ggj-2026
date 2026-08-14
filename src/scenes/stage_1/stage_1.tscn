@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://c4n1sxje4rbxe"]
 
 [ext_resource type="Texture2D" uid="uid://tuljece4o5ri" path="res://assets/关卡一/背景.res" id="1_2b4sv"]
+[ext_resource type="Script" uid="uid://0iqoutyp80sl" path="res://script/stage_1.gd" id="1_i6g42"]
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="1_krhqc"]
 [ext_resource type="Texture2D" uid="uid://dpjv22yg0wn1q" path="res://assets/关卡一/背景(无水印.png" id="1_s4gg2"]
 [ext_resource type="Texture2D" uid="uid://dv4woirntpg5r" path="res://assets/关卡一/中景.res" id="2_37afl"]
@@ -805,6 +806,7 @@ shader_parameter/speed = Vector2(0.02, 0.01)
 size = Vector2(1117.8313, 227.70847)
 
 [node name="stage-1" type="Node2D" unique_id=1265220519]
+script = ExtResource("1_i6g42")
 metadata/_edit_horizontal_guides_ = [-636.0]
 
 [node name="background" type="Node2D" parent="." unique_id=1925680275]
