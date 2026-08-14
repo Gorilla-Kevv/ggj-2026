@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://e3flxsyosgos" path="res://assets/关卡二/风扇.png" id="5_n4ogn"]
 [ext_resource type="PackedScene" path="res://src/scenes/updraft.tscn" id="6_8o7qj"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_e4l6a"]
+[ext_resource type="Script" uid="uid://bq7q3xui66x3y" path="res://src/environment/safe_zone.gd" id="6_j7bjf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kqj6e"]
 atlas = ExtResource("5_n4ogn")
@@ -298,6 +299,12 @@ size = Vector2(112.154976, 12.482574)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j7bjf"]
 size = Vector2(248.90164, 600)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3t4ca"]
+size = Vector2(548.71497, 1039.5475)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2l7n"]
+size = Vector2(1318.4302, 273.82758)
+
 [node name="MovablePipe" type="RigidBody2D" unique_id=1378360413]
 rotation = 0.7853982
 scale = Vector2(0.9999999, 0.9999999)
@@ -359,5 +366,16 @@ position = Vector2(33.941128, -192.33307)
 [node name="CollisionShape2D" parent="Updraft" index="0" unique_id=1864003472]
 position = Vector2(-5.6568527, 0)
 shape = SubResource("RectangleShape2D_j7bjf")
+
+[node name="safezone" type="Area2D" parent="." unique_id=1779529911]
+script = ExtResource("6_j7bjf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="safezone" unique_id=1034094374]
+position = Vector2(-8.485245, -509.77393)
+shape = SubResource("RectangleShape2D_3t4ca")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="safezone" unique_id=2097876300]
+position = Vector2(-381.64642, 72.38985)
+shape = SubResource("RectangleShape2D_w2l7n")
 
 [editable path="Updraft"]

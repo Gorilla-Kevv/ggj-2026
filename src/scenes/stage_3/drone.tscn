@@ -345,9 +345,11 @@ collision_mask = 2
 script = ExtResource("1_drne")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=561289314]
+scale = Vector2(1.9760988, 0.31281242)
 shape = SubResource("CircleShape2D_body")
 
 [node name="ContactArea" type="Area2D" parent="." unique_id=955029287]
+scale = Vector2(1.4000006, 0.23999983)
 collision_layer = 0
 
 [node name="ContactShape" type="CollisionShape2D" parent="ContactArea" unique_id=506813221]

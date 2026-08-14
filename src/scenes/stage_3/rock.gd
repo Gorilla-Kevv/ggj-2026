@@ -49,6 +49,13 @@ func break_rock() -> void:
 	if _broken:
 		return
 	_broken = true
+	# 立即从 interactable 组移除，防止 _refresh_targets 重新加入
+	remove_from_group("interactable")
+	# 若当前选中的是本石头，清空引用，让目标选择器刷新后自动切回玩家
+	var global := get_node_or_null("/root/Global")
+	if global and global.selected_target == self:
+		global.selected_target = null
+	get_tree().call_group("target_selector", "_refresh_targets")
 	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("broken"):
 		animated_sprite.animation = "broken"
 		animated_sprite.frame = 0

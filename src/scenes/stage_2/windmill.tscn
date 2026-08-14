@@ -2,13 +2,14 @@
 
 [ext_resource type="Script" uid="uid://ek5x7ch418ib" path="res://src/interactables/windmill_platform.gd" id="1_r5rnk"]
 [ext_resource type="Texture2D" uid="uid://dvhd3vpjqfien" path="res://assets/关卡二/贴图集 (2).png" id="2_pns7p"]
+[ext_resource type="Script" uid="uid://bq7q3xui66x3y" path="res://src/environment/safe_zone.gd" id="2_qo3o2"]
 [ext_resource type="Script" uid="uid://b5foj6www8uu4" path="res://src/interactables/windmill_arm.gd" id="3_xmlp7"]
 [ext_resource type="TileSet" uid="uid://bm5gl7ecdsnjj" path="res://assets/关卡二/管道_水平.tres" id="4_xmlp7"]
 [ext_resource type="Texture2D" uid="uid://e3flxsyosgos" path="res://assets/关卡二/风扇.png" id="5_3it3s"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_huw4e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3it3s"]
-size = Vector2(5456, 408)
+size = Vector2(5456, 440)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huw4e"]
 size = Vector2(360, 2976)
@@ -324,9 +325,10 @@ collision_layer = 4
 script = ExtResource("1_r5rnk")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1142786217]
+script = ExtResource("2_qo3o2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1321938176]
-position = Vector2(8, -20)
+position = Vector2(8, -36)
 shape = SubResource("RectangleShape2D_3it3s")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=939435512]
