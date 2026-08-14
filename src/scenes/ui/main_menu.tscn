@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://dlpnd4qfn0ekf"]
+
+[ext_resource type="Script" path="res://src/ui/menu_main.gd" id="1_rwhmm"]
+
+[node name="main_menu" type="Control" unique_id=630602452]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -720.0
+script = ExtResource("1_rwhmm")
+
+[node name="Title" type="Label" parent="." unique_id=1729397737]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 120.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "风语者 Wind Whisper"
+horizontal_alignment = 1
+
+[node name="MenuBox" type="VBoxContainer" parent="." unique_id=1802615875]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 300.0
+theme_override_constants/separation = 20
+
+[node name="NewGameButton" type="Button" parent="MenuBox" unique_id=2014260996]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "新游戏"
+
+[node name="ContinueButton" type="Button" parent="MenuBox" unique_id=71632700]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "继续"
+
+[node name="SettingsButton" type="Button" parent="MenuBox" unique_id=35374174]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "设置"
+
+[node name="QuitButton" type="Button" parent="MenuBox" unique_id=285516822]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "退出"
