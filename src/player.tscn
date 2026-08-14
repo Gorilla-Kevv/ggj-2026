@@ -283,8 +283,8 @@ animations = [{
 radius = 40.0
 
 [node name="Player" type="CharacterBody2D" unique_id=100373247]
-collision_mask = 31
 visibility_layer = 5
+collision_mask = 31
 script = ExtResource("1_lowyb")
 
 [node name="WindAnchor" type="Marker2D" parent="." unique_id=1712369073]
@@ -307,7 +307,6 @@ position = Vector2(0, -9)
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1000940467]
 visibility_layer = 4
 position = Vector2(-2, -47)
-scale = Vector2(0.4124424, 0.4124424)
 texture = ExtResource("2_bktlc")
 region_enabled = true
 region_rect = Rect2(782, 532, 228, 217)

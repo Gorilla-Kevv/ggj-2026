@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dlcf5lf15i7xc" path="res://src/scenes/场景物体/door.tscn" id="12_v3oy4"]
 [ext_resource type="Script" uid="uid://bbawbdmrcr80" path="res://src/effects/blast_wind_effect.gd" id="13_blastfx"]
 [ext_resource type="PackedScene" uid="uid://cbh1p11uub8c3" path="res://src/scenes/checkpoint.tscn" id="13_ckpt"]
+[ext_resource type="PackedScene" uid="uid://cwminimapk2s9" path="res://src/ui/minimap.tscn" id="14_minimap"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pnyal"]
 texture = ExtResource("7_a74nb")
@@ -283,6 +284,8 @@ rotation = -3.1415927
 shape = SubResource("WorldBoundaryShape2D_pnyal")
 
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("7_b6aon")]
+
+[node name="Minimap" parent="." instance=ExtResource("14_minimap")]
 
 [node name="BossIntro" type="Node2D" parent="." unique_id=305741689]
 script = ExtResource("12_intro")
