@@ -1,15 +1,26 @@
 [gd_scene format=3 uid="uid://cugfsheqd7vpe"]
 
 [ext_resource type="Script" uid="uid://baugevgwb3nk3" path="res://script/switchpoint.gd" id="1_3fe5c"]
+[ext_resource type="Script" uid="uid://b8rdl1pg7feak" path="res://src/level/checkpoint.gd" id="2_okrye"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2aqsu"]
-size = Vector2(82, 98)
+size = Vector2(82, 208)
 
 [node name="switchpoint" type="Area2D" unique_id=1636037829]
 script = ExtResource("1_3fe5c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1778284780]
+scale = Vector2(1.66, 1.66)
 shape = SubResource("RectangleShape2D_2aqsu")
+debug_color = Color(0, 0.60038817, 0.70000815, 0)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1478489457]
+script = ExtResource("2_okrye")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=154416343]
+scale = Vector2(1.66, 1.66)
+shape = SubResource("RectangleShape2D_2aqsu")
+debug_color = Color(0, 0.60038817, 0.70000815, 0)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
