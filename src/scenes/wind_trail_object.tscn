@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[sub_resource type="Gradient" id="Gradient_trail"]
+offsets = PackedFloat32Array(0, 0.5353805, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.4, 0.7, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_trail"]
+gradient = SubResource("Gradient_trail")
+width = 4
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_init"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_init"]
+gradient = SubResource("Gradient_init")
+
+[sub_resource type="Gradient" id="Gradient_ramp"]
+offsets = PackedFloat32Array(0, 0.53001463, 1)
+colors = PackedColorArray(0.2, 0.6, 1, 1, 1, 1, 1, 1, 0.2, 0.6, 1, 0.22745098)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ramp"]
+gradient = SubResource("Gradient_ramp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_trail" resource_local_to_scene=true]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(70, 70, 1)
+gravity = Vector3(0, 98, 0)
+scale_min = 0.5
+scale_max = 1.0
+color_ramp = SubResource("GradientTexture1D_ramp")
+color_initial_ramp = SubResource("GradientTexture1D_init")
+
+[node name="WindTrailObject" type="GPUParticles2D"]
+amount = 18
+texture = SubResource("GradientTexture2D_trail")
+lifetime = 1.2
+preprocess = 1.0
+randomness = 0.44
+trail_enabled = true
+trail_lifetime = 0.62
+process_material = SubResource("ParticleProcessMaterial_trail")
