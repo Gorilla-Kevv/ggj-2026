@@ -23,8 +23,26 @@ var energy_drain: float = 4.0           # 吹风能量消耗
 var energy_regen: float = 1.0           # 能量回复
 
 # ---------- 音乐音效 ----------
+var master_volume_db: float = 0.0       # 总音量 (分贝)
 var music_volume_db: float = -10.0      # 音乐音量 (分贝)
 var sfx_volume_db: float = -6.0         # 音效音量 (分贝)
+
+# 默认值表 (恢复默认用)
+const DEFAULT_VALUES: Dictionary = {
+	"gravity_scale": 0.1,
+	"max_speed": 1000.0,
+	"ground_friction": 0.8,
+	"ground_bounce": 0.5,
+	"wall_bounce": 0.95,
+	"key_move_force": 200.0,
+	"max_wind_force": 400.0,
+	"wind_ramp_time": 3.5,
+	"energy_drain": 4.0,
+	"energy_regen": 1.0,
+	"master_volume_db": 0.0,
+	"music_volume_db": -10.0,
+	"sfx_volume_db": -6.0,
+}
 
 # 设置变化信号 (参数名, 新值)
 signal setting_changed(key: String, value: float)
@@ -49,12 +67,7 @@ func save_settings() -> void:
 	config.save(SAVE_PATH)
 
 func _all_keys() -> Array[String]:
-	return [
-		"gravity_scale", "max_speed", "ground_friction", "ground_bounce",
-		"wall_bounce", "key_move_force",
-		"max_wind_force", "wind_ramp_time", "energy_drain", "energy_regen",
-		"music_volume_db", "sfx_volume_db",
-	]
+	return DEFAULT_VALUES.keys()
 
 # 设置某参数并广播信号
 func set_param(key: String, value: float) -> void:
@@ -62,3 +75,9 @@ func set_param(key: String, value: float) -> void:
 		return
 	set(key, value)
 	setting_changed.emit(key, value)
+
+# 恢复所有参数为默认值并广播信号
+func reset_all() -> void:
+	for key in _all_keys():
+		set(key, DEFAULT_VALUES[key])
+		setting_changed.emit(key, DEFAULT_VALUES[key])

@@ -48,11 +48,14 @@ func _load_settings() -> void:
 	var s := get_node("/root/Settings")
 	music_volume_db = s.music_volume_db
 	sfx_volume_db = s.sfx_volume_db
+	_apply_master_volume(s.master_volume_db)
 	if not s.setting_changed.is_connected(_on_setting_changed):
 		s.setting_changed.connect(_on_setting_changed)
 
 func _on_setting_changed(key: String, value: float) -> void:
 	match key:
+		"master_volume_db":
+			_apply_master_volume(value)
 		"music_volume_db":
 			music_volume_db = value
 			if music_player:
@@ -61,6 +64,12 @@ func _on_setting_changed(key: String, value: float) -> void:
 			sfx_volume_db = value
 			for p in sfx_players:
 				p.volume_db = value
+
+# 应用总音量到 Master bus
+func _apply_master_volume(db: float) -> void:
+	var idx := AudioServer.get_bus_index("Master")
+	if idx >= 0:
+		AudioServer.set_bus_volume_db(idx, db)
 
 # 每帧轮询场景实例变化 (scene_changed 信号在部分切换路径下不可靠，故不依赖它)
 func _poll_scene_change() -> void:
