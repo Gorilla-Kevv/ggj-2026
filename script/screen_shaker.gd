@@ -20,24 +20,7 @@ func screen_shake(strength: float, duration: float) -> void:
 	)
 
 
-# 死亡特效：震动 + 黑屏闪一下 (最简方式：运行时生成全屏黑幕，淡入淡出后自毁)
+# 死亡特效：震动 + 黑屏闪一下 (最简方式：运行时生成全屏黑幕，淡入淡出后自毁)取消黑屏
+
 func death_effect() -> void:
 	screen_shake(15.0, 0.6)
-	_flash_black(0.35, 0.4, 0.6)
-
-
-func _flash_black(fade_in: float, hold: float, fade_out: float) -> void:
-	var layer := CanvasLayer.new()
-	layer.layer = 100
-	var rect := ColorRect.new()
-	rect.color = Color(0, 0, 0, 0)
-	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	layer.add_child(rect)
-	add_child(layer)
-
-	var tween := create_tween()
-	tween.tween_property(rect, "color", Color.BLACK, fade_in)
-	tween.tween_interval(hold)
-	tween.tween_property(rect, "color", Color(0, 0, 0, 0), fade_out)
-	tween.tween_callback(layer.queue_free)
