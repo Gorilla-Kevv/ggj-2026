@@ -1,0 +1,59 @@
+[gd_scene format=4 uid="uid://cwminimapk2ta"]
+
+[ext_resource type="Script" uid="uid://ctoxnah3v271s" path="res://src/ui/minimap_viewport.gd" id="1_minimap"]
+[ext_resource type="Shader" uid="uid://dm8xbk4f0n5ty" path="res://src/ui/minimap_flat.gdshader" id="2_flat"]
+[ext_resource type="Texture2D" uid="uid://b4rjtqovmingc" path="res://assets/characters/minimap_circle_mask.png" id="3_circle"]
+[ext_resource type="Texture2D" uid="uid://b51nq6ftvetb7" path="res://assets/characters/minimap_frame_circular_handpainted_thin_v2.png" id="4_frame"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_circle"]
+texture = ExtResource("3_circle")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flat"]
+shader = ExtResource("2_flat")
+shader_parameter/block_uv = 0.02
+shader_parameter/levels = 5
+
+[node name="Minimap" type="CanvasLayer"]
+layer = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+clip_children = 1
+offset_left = 57.0
+offset_top = 56.0
+offset_right = 327.0
+offset_bottom = 326.0
+scale = Vector2(0.6, 0.6)
+theme_override_styles/panel = SubResource("StyleBoxTexture_circle")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/SubViewportContainer"]
+handle_input_locally = false
+canvas_cull_mask = 6
+size = Vector2i(270, 270)
+render_target_update_mode = 4
+script = ExtResource("1_minimap")
+zoom = Vector2(0.1, 0.1)
+
+[node name="PostFX" type="CanvasLayer" parent="PanelContainer/SubViewportContainer/SubViewport"]
+layer = 1
+
+[node name="Flatten" type="ColorRect" parent="PanelContainer/SubViewportContainer/SubViewport/PostFX"]
+visibility_layer = 4
+material = SubResource("ShaderMaterial_flat")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = 23.0
+offset_top = 22.0
+offset_right = 406.0
+offset_bottom = 405.0
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("4_frame")

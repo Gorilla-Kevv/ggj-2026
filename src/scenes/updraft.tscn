@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://m1bllphcpxtj"]
+
+[ext_resource type="Script" uid="uid://6j4dd4mowip2" path="res://src/environment/updraft.gd" id="1_up"]
+[ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="2_0lhqv"]
+[ext_resource type="Material" uid="uid://p2jbpktsmdmr" path="res://src/scenes/updraft_wind_material.tres" id="3_b21l8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_flow"]
+size = Vector2(120, 600)
+
+[sub_resource type="Gradient" id="Gradient_251hh"]
+offsets = PackedFloat32Array(0.528)
+colors = PackedColorArray(0.78322595, 0.17890659, 0.2821687, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b21l8"]
+gradient = SubResource("Gradient_251hh")
+width = 1
+height = 32
+fill_to = Vector2(0, 0.5868946)
+
+[node name="Updraft" type="Area2D" unique_id=542354484]
+script = ExtResource("1_up")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1864003472]
+shape = SubResource("RectangleShape2D_flow")
+
+[node name="windline_particles bg" parent="." unique_id=381050555 instance=ExtResource("2_0lhqv")]
+position = Vector2(0, 0)
+texture = SubResource("GradientTexture2D_b21l8")
+lifetime = 2.0
+local_coords = false
+visibility_rect = Rect2(-700, -700, 1400, 1400)
+process_material = ExtResource("3_b21l8")

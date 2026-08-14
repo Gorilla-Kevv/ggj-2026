@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bwq3f1n2kxj4"]
+
+[ext_resource type="Script" uid="uid://c42dt6tq5au0l" path="res://src/level/level_door.gd" id="1_ldsc"]
+[ext_resource type="Texture2D" uid="uid://d1341buy7wgct" path="res://assets/关卡及大厅/level_entrances_5x2_states.png" id="2_qn8tl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w85gm"]
+atlas = ExtResource("2_qn8tl")
+region = Rect2(24, 38, 341, 335)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_enter"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hint"]
+radius = 208.08652
+
+[node name="LevelDoor" type="Node2D" unique_id=1040225753]
+script = ExtResource("1_ldsc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1059461289]
+texture = SubResource("AtlasTexture_w85gm")
+
+[node name="EnterArea" type="Area2D" parent="." unique_id=1945246650]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnterArea" unique_id=1373988765]
+shape = SubResource("CircleShape2D_enter")
+
+[node name="HintArea" type="Area2D" parent="." unique_id=1698335977]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HintArea" unique_id=267517157]
+shape = SubResource("CircleShape2D_hint")
+
+[node name="NameLabel" type="Label" parent="." unique_id=1625074892]
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = -118.0
+horizontal_alignment = 1
+vertical_alignment = 1

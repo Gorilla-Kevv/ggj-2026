@@ -1,0 +1,565 @@
+[gd_scene format=4 uid="uid://dp6uewl43s6le"]
+
+[ext_resource type="Script" uid="uid://ek5x7ch418ib" path="res://src/interactables/windmill_platform.gd" id="1_r5rnk"]
+[ext_resource type="Texture2D" uid="uid://dvhd3vpjqfien" path="res://assets/关卡二/贴图集 (2).png" id="2_pns7p"]
+[ext_resource type="Script" uid="uid://bq7q3xui66x3y" path="res://src/environment/safe_zone.gd" id="2_qo3o2"]
+[ext_resource type="Script" uid="uid://b5foj6www8uu4" path="res://src/interactables/windmill_arm.gd" id="3_xmlp7"]
+[ext_resource type="TileSet" uid="uid://bm5gl7ecdsnjj" path="res://assets/关卡二/管道_水平.tres" id="4_xmlp7"]
+[ext_resource type="Texture2D" uid="uid://e3flxsyosgos" path="res://assets/关卡二/风扇.png" id="5_3it3s"]
+[ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_huw4e"]
+[ext_resource type="Texture2D" uid="uid://cwlhw6g7b6fbq" path="res://assets/关卡二/灯光.tres" id="8_3it3s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3it3s"]
+size = Vector2(5456, 440)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_huw4e"]
+size = Vector2(360, 2976)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fibg"]
+size = Vector2(5596, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmlp7"]
+size = Vector2(464, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qo3o2"]
+size = Vector2(104, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dk3ac"]
+size = Vector2(44, 3196)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_645lv"]
+size = Vector2(190, 448)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqj6e"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hijbd"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0akiw"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5grbk"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 0, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtxcl"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xohn7"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rlwbg"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plmj3"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 480, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3i7k"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rob4u"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dnujg"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fnx1"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 960, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1umi"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ofj8"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ma88b"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ivpn3"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 1440, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6rfp"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pi25y"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymkpu"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sobb"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 1920, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a5rn"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_652hf"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c074i"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib1sk"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 2400, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b58jk"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqx2n"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trxhs"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydxt3"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 2880, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pes4y"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(0, 3360, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeisy"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(836, 3360, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_346cs"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(1672, 3360, 836, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1d18i"]
+atlas = ExtResource("5_3it3s")
+region = Rect2(2508, 3360, 836, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8fibg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqj6e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hijbd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0akiw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5grbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtxcl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xohn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rlwbg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plmj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3i7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rob4u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dnujg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fnx1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1umi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ofj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ma88b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ivpn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6rfp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pi25y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymkpu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sobb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a5rn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_652hf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c074i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ib1sk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b58jk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqx2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trxhs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydxt3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pes4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeisy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_346cs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1d18i")
+}],
+"loop": true,
+"name": &"fan",
+"speed": 15.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_trxhs"]
+offsets = PackedFloat32Array(0, 0.518024, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 0.77254903, 0.85882354, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dk3ac"]
+gradient = SubResource("Gradient_trxhs")
+width = 1
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_645lv"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3pjab"]
+gradient = SubResource("Gradient_645lv")
+
+[sub_resource type="Gradient" id="Gradient_ydxt3"]
+offsets = PackedFloat32Array(0, 0.4714495, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ukbbq"]
+gradient = SubResource("Gradient_ydxt3")
+
+[sub_resource type="Curve" id="Curve_jeisy"]
+_limits = [-200.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.24271843, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.5048543, -1.836029), 0.0, 0.0, 0, 0, Vector2(0.7475728, -1.836029), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_jeisy"]
+curve = SubResource("Curve_jeisy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2lvvb"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(200, 106.59, 1)
+gravity = Vector3(0, 200, 0)
+tangential_accel_min = -2.2351742e-06
+tangential_accel_max = 5.9999976
+tangential_accel_curve = SubResource("CurveTexture_jeisy")
+damping_max = 100.00001
+scale_min = 1.5
+scale_max = 1.8
+color_ramp = SubResource("GradientTexture1D_ukbbq")
+color_initial_ramp = SubResource("GradientTexture1D_3pjab")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xmlp7"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(200, 106.59, 1)
+gravity = Vector3(100, 0, 0)
+tangential_accel_min = -2.2351742e-06
+tangential_accel_max = 5.9999976
+tangential_accel_curve = SubResource("CurveTexture_jeisy")
+damping_max = 100.00001
+scale_min = 1.5
+scale_max = 1.8
+color_ramp = SubResource("GradientTexture1D_ukbbq")
+color_initial_ramp = SubResource("GradientTexture1D_3pjab")
+
+[node name="Windmill" type="AnimatableBody2D" unique_id=1507389595]
+collision_layer = 4
+script = ExtResource("1_r5rnk")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1142786217]
+script = ExtResource("2_qo3o2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1321938176]
+position = Vector2(8, -36)
+shape = SubResource("RectangleShape2D_3it3s")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" unique_id=939435512]
+position = Vector2(4, -16)
+shape = SubResource("RectangleShape2D_huw4e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=28035490]
+position = Vector2(0, 200)
+shape = SubResource("RectangleShape2D_8fibg")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=280410976]
+position = Vector2(0, 456)
+shape = SubResource("RectangleShape2D_xmlp7")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="." unique_id=262894458]
+position = Vector2(-184, 1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="." unique_id=1013414235]
+position = Vector2(176, 1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="." unique_id=423480761]
+position = Vector2(-176, -1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="." unique_id=94555921]
+position = Vector2(176, -1584)
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="." unique_id=1924413726]
+position = Vector2(2784, -232)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D14" type="CollisionShape2D" parent="." unique_id=1923747654]
+position = Vector2(2784, 168)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D15" type="CollisionShape2D" parent="." unique_id=843213421]
+position = Vector2(-2784, 168)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D16" type="CollisionShape2D" parent="." unique_id=1656051938]
+position = Vector2(-2784, -208)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_qo3o2")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="." unique_id=1558373173]
+position = Vector2(0, -456)
+shape = SubResource("RectangleShape2D_xmlp7")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=44304847]
+position = Vector2(0, -264)
+shape = SubResource("RectangleShape2D_8fibg")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="." unique_id=529419553]
+position = Vector2(-208, 0)
+shape = SubResource("RectangleShape2D_dk3ac")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="." unique_id=1366647306]
+position = Vector2(208, 0)
+shape = SubResource("RectangleShape2D_dk3ac")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="." unique_id=1374146986]
+position = Vector2(432, -32)
+shape = SubResource("RectangleShape2D_645lv")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="." unique_id=822898261]
+position = Vector2(-425, -32)
+shape = SubResource("RectangleShape2D_645lv")
+
+[node name="CenterSprite" type="Node2D" parent="." unique_id=609277501]
+scale = Vector2(0.64527, 0.64527005)
+
+[node name="Sprite2D" type="Sprite2D" parent="CenterSprite" unique_id=961407682]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+texture = ExtResource("2_pns7p")
+region_enabled = true
+region_rect = Rect2(4652, 5475, 615, 1337)
+
+[node name="Sprite2D2" type="Sprite2D" parent="CenterSprite" unique_id=1849650542]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+rotation = -1.5707964
+texture = ExtResource("2_pns7p")
+region_enabled = true
+region_rect = Rect2(4652, 5475, 615, 1337)
+
+[node name="Arm_Top" type="Node2D" parent="." unique_id=2040137976]
+position = Vector2(0, -1600)
+script = ExtResource("3_xmlp7")
+arm_name = "转动管道上部"
+
+[node name="Pipe horizon4" type="TileMapLayer" parent="Arm_Top" unique_id=543610917]
+scale = Vector2(1.0000001, 1.0000001)
+tile_map_data = PackedByteArray("AAD9/wAAAQACAAAAABD9/wEAAQAAAAEAACD9/wIAAQAAAAEAACD9/wMAAQAAAAEAACD9/wQAAQAAAAEAACD9/wUAAQAAAAEAACD9/wYAAQAAAAEAACD9/wcAAQAAAAEAACD9/wgAAQAAAAEAACD9/wkAAQAAAAEAACD9/woAAQAAAAEAACD9/wsAAQAAAAEAACD9/wwAAQAAAAEAACD9/w0AAQAAAAEAACD9/w4AAQAAAAEAACD9/w8AAQAAAAEAACD9/xAAAQAAAAEAACD+/wAAAgABAAQAACD+/wEAAQAEAAEAACD+/wIAAQAEAAEAACD+/wMAAQAEAAEAACD+/wQAAQAEAAEAACD+/wUAAQAEAAEAACD+/wYAAQAEAAEAACD+/wcAAQAEAAEAACD+/wgAAQAEAAEAACD+/wkAAQAEAAEAACD+/woAAQAEAAEAACD+/wsAAQAEAAEAACD+/wwAAQAEAAEAACD+/w0AAQAEAAEAACD+/w4AAQAEAAEAACD+/w8AAQABAAEAACD+/xAAAQABAAEAACD//wAAAgABAAQAACD//wEAAQAEAAEAACD//wIAAQAEAAEAACD//wMAAQAEAAEAACD//wQAAQAEAAEAACD//wUAAQAEAAEAACD//wYAAQAEAAEAACD//wcAAQAEAAEAACD//wgAAQAEAAEAACD//wkAAQAEAAEAACD//woAAQAEAAEAACD//wsAAQAEAAEAACD//wwAAQAEAAEAACD//w0AAQAEAAEAACD//w4AAQAEAAEAACD//w8AAQABAAEAACD//xAAAQABAAEAACAAAAAAAgABAAQAACAAAAEAAQAEAAEAACAAAAIAAQAEAAEAACAAAAMAAQAEAAEAACAAAAQAAQAEAAEAACAAAAUAAQAEAAEAACAAAAYAAQAEAAEAACAAAAcAAQAEAAEAACAAAAgAAQAEAAEAACAAAAkAAQAEAAEAACAAAAoAAQAEAAEAACAAAAsAAQAEAAEAACAAAAwAAQAEAAEAACAAAA0AAQAEAAEAACAAAA4AAQAEAAEAACAAAA8AAQABAAEAACAAABAAAQABAAEAACABAAAAAgABAAQAACABAAEAAQAEAAEAACABAAIAAQAEAAEAACABAAMAAQAEAAEAACABAAQAAQAEAAEAACABAAUAAQAEAAEAACABAAYAAQAEAAEAACABAAcAAQAEAAEAACABAAgAAQAEAAEAACABAAkAAQAEAAEAACABAAoAAQAEAAEAACABAAsAAQAEAAEAACABAAwAAQAEAAEAACABAA0AAQAEAAEAACABAA4AAQAEAAEAACABAA8AAQABAAEAACABABAAAQABAAEAACACAAAAAQAAAAAAABACAAEAAQACAAEAACACAAIAAQACAAEAACACAAMAAQACAAEAACACAAQAAQACAAEAACACAAUAAQACAAEAACACAAYAAQACAAEAACACAAcAAQACAAEAACACAAgAAQACAAEAACACAAkAAQACAAEAACACAAoAAQACAAEAACACAAsAAQACAAEAACACAAwAAQACAAEAACACAA0AAQACAAEAACACAA4AAQACAAEAACACAA8AAQACAAEAACACABAAAQACAAEAACD9/xEAAQAAAAEAACD9/xIAAQAAAAAAACD+/xEAAQABAAEAACD+/xIAAQABAAAAACD//xEAAQABAAEAACD//xIAAQABAAAAACAAABEAAQABAAEAACAAABIAAQABAAAAACABABEAAQABAAEAACABABIAAQABAAAAACACABEAAQACAAEAACACABIAAQACAAAAACA=")
+tile_set = ExtResource("4_xmlp7")
+collision_enabled = false
+
+[node name="风扇" type="Node2D" parent="Arm_Top/Pipe horizon4" unique_id=1730743337]
+position = Vector2(0, 1129.9998)
+
+[node name="风扇" type="AnimatedSprite2D" parent="Arm_Top/Pipe horizon4/风扇" unique_id=297350515]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+position = Vector2(6.1035156e-05, -3.0517578e-05)
+rotation = -1.5662044
+scale = Vector2(0.49780533, 0.74050224)
+sprite_frames = SubResource("SpriteFrames_8fibg")
+animation = &"fan"
+autoplay = "fan"
+flip_h = true
+
+[node name="windline_particles bg" parent="Arm_Top/Pipe horizon4/风扇" unique_id=1325153034 instance=ExtResource("6_huw4e")]
+visible = false
+position = Vector2(-776, -224.00015)
+amount = 40
+texture = SubResource("GradientTexture2D_dk3ac")
+trail_lifetime = 1.35
+process_material = SubResource("ParticleProcessMaterial_2lvvb")
+
+[node name="WindAnchor" type="Marker2D" parent="Arm_Top" unique_id=1624580008]
+
+[node name="Arm_Right" type="Node2D" parent="." unique_id=1312587478]
+position = Vector2(-2800, 0)
+script = ExtResource("3_xmlp7")
+arm_name = "转动管道右部"
+
+[node name="Pipe horizon5" type="TileMapLayer" parent="Arm_Right" unique_id=681972372]
+scale = Vector2(1.0000001, 1.0000001)
+tile_map_data = PackedByteArray("AAAAAP3/AgAAAAQAAHAAAP7/AgAAAAQAAHAAAP//AgAAAAQAAHAAAAAAAgAAAAQAAHAAAAEAAgAAAAQAAHAAAAIAAQACAAAAAEABAP3/AQABAAEAABABAP7/AQABAAEAABABAP//AQABAAEAABABAAAAAQABAAEAABABAAEAAQABAAEAABABAAIAAQABAAAAACACAP3/AQABAAEAABACAP7/AQABAAEAABACAP//AQABAAEAABACAAAAAQABAAEAABACAAEAAQABAAEAABACAAIAAQABAAAAACADAP3/AQABAAEAABADAP7/AQABAAEAABADAP//AQABAAEAABADAAAAAQABAAEAABADAAEAAQABAAEAABADAAIAAQABAAAAACAEAP3/AQABAAEAABAEAP7/AQABAAEAABAEAP//AQABAAEAABAEAAAAAQABAAEAABAEAAEAAQABAAEAABAEAAIAAQABAAAAACAFAP3/AQABAAEAABAFAP7/AQABAAEAABAFAP//AQABAAEAABAFAAAAAQABAAEAABAFAAEAAQABAAEAABAFAAIAAQABAAAAACAGAP3/AQABAAEAABAGAP7/AQABAAEAABAGAP//AQABAAEAABAGAAAAAQABAAEAABAGAAEAAQABAAEAABAGAAIAAQABAAAAACAHAP3/AQABAAEAABAHAP7/AQABAAEAABAHAP//AQABAAEAABAHAAAAAQABAAEAABAHAAEAAQABAAEAABAHAAIAAQABAAAAACAIAP3/AQABAAEAABAIAP7/AQABAAEAABAIAP//AQABAAEAABAIAAAAAQABAAEAABAIAAEAAQABAAEAABAIAAIAAQABAAAAACAJAP3/AQABAAEAABAJAP7/AQABAAEAABAJAP//AQABAAEAABAJAAAAAQABAAEAABAJAAEAAQABAAEAABAJAAIAAQABAAAAACAKAP3/AQABAAEAABAKAP7/AQABAAEAABAKAP//AQABAAEAABAKAAAAAQABAAEAABAKAAEAAQABAAEAABAKAAIAAQABAAAAACALAP3/AQABAAEAABALAP7/AQABAAEAABALAP//AQABAAEAABALAAAAAQABAAEAABALAAEAAQABAAEAABALAAIAAQABAAAAACAMAP3/AQABAAEAABAMAP7/AQABAAEAABAMAP//AQABAAEAABAMAAAAAQABAAEAABAMAAEAAQABAAEAABAMAAIAAQABAAAAACANAP3/AQABAAEAABANAP7/AQABAAEAABANAP//AQABAAEAABANAAAAAQABAAEAABANAAEAAQABAAEAABANAAIAAQABAAAAACAOAP3/AQABAAEAABAOAP7/AQABAAEAABAOAP//AQABAAEAABAOAAAAAQABAAEAABAOAAEAAQABAAEAABAOAAIAAQABAAAAACAPAP3/AQABAAEAABAPAP7/AQABAAEAABAPAP//AQABAAEAABAPAAAAAQABAAEAABAPAAEAAQABAAEAABAPAAIAAQABAAAAACAQAP3/AQABAAEAABAQAP7/AQABAAEAABAQAP//AQABAAEAABAQAAAAAQABAAEAABAQAAEAAQABAAEAABAQAAIAAQABAAAAACARAP3/AQABAAEAABARAP7/AQAEAAEAABARAP//AQAEAAEAABARAAAAAQABAAEAABARAAEAAQAEAAEAABARAAIAAQABAAIAABASAP3/AQAEAAEAABASAP7/AQAEAAEAABASAP//AQABAAEAABASAAAAAQABAAEAABASAAEAAQAEAAEAABASAAIAAQAEAAIAABATAP3/AQABAAEAABATAP7/AQABAAEAABATAP//AQABAAEAABATAAAAAQAEAAEAABATAAEAAQAEAAEAABATAAIAAQABAAIAABAUAP3/AQAEAAEAABAUAP7/AQABAAEAABAUAP//AQABAAEAABAUAAAAAQABAAEAABAUAAEAAQABAAEAABAUAAIAAQABAAIAABAVAP3/AQABAAEAABAVAP7/AQABAAEAABAVAP//AQAEAAEAABAVAAAAAQABAAEAABAVAAEAAQABAAEAABAVAAIAAQABAAIAABAWAP3/AQAEAAEAABAWAP7/AQABAAEAABAWAP//AQABAAEAABAWAAAAAQABAAEAABAWAAEAAQAEAAEAABAWAAIAAQAEAAIAABAXAP3/AQABAAEAABAXAP7/AQABAAEAABAXAP//AQABAAEAABAXAAAAAQAEAAEAABAXAAEAAQAEAAEAABAXAAIAAQABAAIAABAYAP3/AQABAAEAABAYAP7/AQAEAAEAABAYAP//AQAEAAEAABAYAAAAAQAEAAEAABAYAAEAAQAEAAEAABAYAAIAAQABAAIAABAZAP3/AQABAAEAABAZAP7/AQABAAEAABAZAP//AQABAAEAABAZAAAAAQAEAAEAABAZAAEAAQABAAEAABAZAAIAAQAEAAIAABAaAP3/AQAEAAEAABAaAP7/AQABAAEAABAaAP//AQAEAAEAABAaAAAAAQAEAAEAABAaAAEAAQABAAEAABAaAAIAAQAEAAIAABAbAP3/AQAEAAEAABAbAP7/AQAEAAEAABAbAP//AQAEAAEAABAbAAAAAQAEAAEAABAbAAEAAQAEAAEAABAbAAIAAQABAAIAABAcAP3/AQABAAEAABAcAP7/AQABAAEAABAcAP//AQABAAEAABAcAAAAAQABAAEAABAcAAEAAQABAAEAABAcAAIAAQABAAAAACAdAP3/AQABAAEAABAdAP7/AQABAAEAABAdAP//AQABAAEAABAdAAAAAQABAAEAABAdAAEAAQABAAEAABAdAAIAAQABAAAAACAeAP3/AQABAAEAABAeAP7/AQABAAEAABAeAP//AQABAAEAABAeAAAAAQABAAEAABAeAAEAAQABAAEAABAeAAIAAQABAAAAACAfAP3/AQABAAEAABAfAP7/AQABAAEAABAfAP//AQABAAEAABAfAAAAAQABAAEAABAfAAEAAQABAAEAABAfAAIAAQABAAAAACAgAP3/AQABAAEAABAgAP7/AQABAAEAABAgAP//AQABAAEAABAgAAAAAQABAAEAABAgAAEAAQABAAEAABAgAAIAAQABAAAAACAhAP3/AQABAAEAABAhAP7/AQABAAEAABAhAP//AQABAAEAABAhAAAAAQABAAEAABAhAAEAAQABAAEAABAhAAIAAQABAAAAACAiAP3/AQABAAEAABAiAP7/AQABAAEAABAiAP//AQABAAEAABAiAAAAAQABAAEAABAiAAEAAQABAAEAABAiAAIAAQABAAAAACAjAP3/AQABAAEAABAjAP7/AQABAAEAABAjAP//AQABAAEAABAjAAAAAQABAAEAABAjAAEAAQABAAEAABAjAAIAAQABAAAAACAkAP3/AQABAAEAABAkAP7/AQABAAEAABAkAP//AQABAAEAABAkAAAAAQABAAEAABAkAAEAAQABAAEAABAkAAIAAQABAAAAACAlAP3/AQAAAAEAABAlAP7/AQAAAAEAABAlAP//AQAAAAEAABAlAAAAAQAAAAEAABAlAAEAAQAAAAEAABAlAAIAAQACAAAAACAAAPz/AQAAAAAAAEABAPz/AQABAAAAABACAPz/AQABAAAAABADAPz/AQABAAAAABAEAPz/AQABAAAAABAFAPz/AQABAAAAABAGAPz/AQABAAAAABAHAPz/AQABAAAAABAIAPz/AQABAAAAABAJAPz/AQABAAAAABAKAPz/AQABAAAAABALAPz/AQABAAAAABAMAPz/AQABAAAAABANAPz/AQABAAAAABAOAPz/AQABAAAAABAPAPz/AQABAAAAABAQAPz/AQAEAAAAABARAPz/AQABAAAAABASAPz/AQAEAAAAABATAPz/AQABAAAAABAUAPz/AQABAAAAABAVAPz/AQABAAAAABAWAPz/AQAEAAAAABAXAPz/AQAEAAAAABAYAPz/AQABAAAAABAZAPz/AQAEAAAAABAaAPz/AQAEAAAAABAbAPz/AQABAAAAABAcAPz/AQABAAAAABAdAPz/AQABAAAAABAeAPz/AQABAAAAABAfAPz/AQABAAAAABAgAPz/AQABAAAAABAhAPz/AQABAAAAABAiAPz/AQABAAAAABAjAPz/AQABAAAAABAkAPz/AQABAAAAABAlAPz/AQAAAAAAABA=")
+tile_set = ExtResource("4_xmlp7")
+collision_enabled = false
+
+[node name="风扇2" type="Node2D" parent="Arm_Right/Pipe horizon5" unique_id=1479675843]
+position = Vector2(2359.9998, -16)
+
+[node name="风扇" type="AnimatedSprite2D" parent="Arm_Right/Pipe horizon5/风扇2" unique_id=883882605]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+position = Vector2(-7.999756, 6.000125)
+rotation = -3.140979
+scale = Vector2(0.49780533, 0.74050224)
+sprite_frames = SubResource("SpriteFrames_8fibg")
+animation = &"fan"
+autoplay = "fan"
+flip_h = true
+
+[node name="windline_particles bg" parent="Arm_Right/Pipe horizon5/风扇2" unique_id=312240136 instance=ExtResource("6_huw4e")]
+visible = false
+position = Vector2(-927.99976, -272)
+amount = 40
+texture = SubResource("GradientTexture2D_dk3ac")
+trail_lifetime = 1.35
+process_material = SubResource("ParticleProcessMaterial_xmlp7")
+
+[node name="WindAnchor2" type="Marker2D" parent="Arm_Right" unique_id=372749085]
+
+[node name="Arm_Bottom" type="Node2D" parent="." unique_id=1884085659]
+position = Vector2(0, 1600)
+script = ExtResource("3_xmlp7")
+arm_name = "转动管道底部"
+
+[node name="Pipe horizon2" type="TileMapLayer" parent="Arm_Bottom" unique_id=670600718]
+tile_map_data = PackedByteArray("AAD9/+3/AQAAAAAAAAD9/+7/AQAAAAEAAAD9/+//AQAAAAEAAAD9//D/AQAAAAEAAAD9//H/AQAAAAEAAAD9//L/AQAAAAEAAAD9//P/AQAAAAEAAAD9//T/AQAAAAEAAAD9//X/AQAAAAEAAAD9//b/AQAAAAEAAAD9//f/AQAAAAEAAAD9//j/AQAAAAEAAAD9//n/AQAAAAEAAAD9//r/AQAAAAEAAAD9//v/AQAAAAEAAAD9//z/AQAAAAEAAAD9//3/AQAAAAEAAAD9//7/AQAAAAEAAAD9////AQACAAAAADD+/+3/AQABAAAAAAD+/+7/AQABAAEAAAD+/+//AQABAAEAAAD+//D/AQABAAEAAAD+//H/AQAEAAEAAAD+//L/AQAEAAEAAAD+//P/AQAEAAEAAAD+//T/AQAEAAEAAAD+//X/AQAEAAEAAAD+//b/AQAEAAEAAAD+//f/AQAEAAEAAAD+//j/AQAEAAEAAAD+//n/AQAEAAEAAAD+//r/AQAEAAEAAAD+//v/AQAEAAEAAAD+//z/AQAEAAEAAAD+//3/AQAEAAEAAAD+//7/AQAEAAEAAAD+////AgABAAQAAAD//+3/AQABAAAAAAD//+7/AQABAAEAAAD//+//AQABAAEAAAD///D/AQABAAEAAAD///H/AQAEAAEAAAD///L/AQAEAAEAAAD///P/AQAEAAEAAAD///T/AQAEAAEAAAD///X/AQAEAAEAAAD///b/AQAEAAEAAAD///f/AQAEAAEAAAD///j/AQAEAAEAAAD///n/AQAEAAEAAAD///r/AQAEAAEAAAD///v/AQAEAAEAAAD///z/AQAEAAEAAAD///3/AQAEAAEAAAD///7/AQAEAAEAAAD/////AgABAAQAAAAAAO3/AQABAAAAAAAAAO7/AQABAAEAAAAAAO//AQABAAEAAAAAAPD/AQABAAEAAAAAAPH/AQAEAAEAAAAAAPL/AQAEAAEAAAAAAPP/AQAEAAEAAAAAAPT/AQAEAAEAAAAAAPX/AQAEAAEAAAAAAPb/AQAEAAEAAAAAAPf/AQAEAAEAAAAAAPj/AQAEAAEAAAAAAPn/AQAEAAEAAAAAAPr/AQAEAAEAAAAAAPv/AQAEAAEAAAAAAPz/AQAEAAEAAAAAAP3/AQAEAAEAAAAAAP7/AQAEAAEAAAAAAP//AgABAAQAAAABAO3/AQABAAAAAAABAO7/AQABAAEAAAABAO//AQABAAEAAAABAPD/AQABAAEAAAABAPH/AQAEAAEAAAABAPL/AQAEAAEAAAABAPP/AQAEAAEAAAABAPT/AQAEAAEAAAABAPX/AQAEAAEAAAABAPb/AQAEAAEAAAABAPf/AQAEAAEAAAABAPj/AQAEAAEAAAABAPn/AQAEAAEAAAABAPr/AQAEAAEAAAABAPv/AQAEAAEAAAABAPz/AQAEAAEAAAABAP3/AQAEAAEAAAABAP7/AQAEAAEAAAABAP//AgABAAQAAAACAO3/AQACAAAAAAACAO7/AQACAAEAAAACAO//AQACAAEAAAACAPD/AQACAAEAAAACAPH/AQACAAEAAAACAPL/AQACAAEAAAACAPP/AQACAAEAAAACAPT/AQACAAEAAAACAPX/AQACAAEAAAACAPb/AQACAAEAAAACAPf/AQACAAEAAAACAPj/AQACAAEAAAACAPn/AQACAAEAAAACAPr/AQACAAEAAAACAPv/AQACAAEAAAACAPz/AQACAAEAAAACAP3/AQACAAEAAAACAP7/AQACAAEAAAACAP//AQAAAAAAADA=")
+tile_set = ExtResource("4_xmlp7")
+collision_enabled = false
+
+[node name="风扇" type="Node2D" parent="Arm_Bottom/Pipe horizon2" unique_id=447378886]
+position = Vector2(0, -1136)
+
+[node name="风扇" type="AnimatedSprite2D" parent="Arm_Bottom/Pipe horizon2/风扇" unique_id=1274619117]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+position = Vector2(0, 6.000122)
+rotation = 1.5707964
+scale = Vector2(0.49780533, 0.74050224)
+sprite_frames = SubResource("SpriteFrames_8fibg")
+animation = &"fan"
+autoplay = "fan"
+flip_h = true
+
+[node name="windline_particles bg" parent="Arm_Bottom/Pipe horizon2/风扇" unique_id=381050555 instance=ExtResource("6_huw4e")]
+visible = false
+position = Vector2(-776, -224.00015)
+amount = 40
+texture = SubResource("GradientTexture2D_dk3ac")
+trail_lifetime = 1.35
+process_material = SubResource("ParticleProcessMaterial_2lvvb")
+
+[node name="WindAnchor3" type="Marker2D" parent="Arm_Bottom" unique_id=665357275]
+
+[node name="Arm_Left" type="Node2D" parent="." unique_id=1483151165]
+position = Vector2(2800, 0)
+script = ExtResource("3_xmlp7")
+arm_name = "转动管道左部"
+
+[node name="Pipe horizon3" type="TileMapLayer" parent="Arm_Left" unique_id=1037086148]
+scale = Vector2(1.0000001, 1.0000001)
+tile_map_data = PackedByteArray("AADa//z/AQAAAAAAAADa//3/AQAAAAEAAADa//7/AQAAAAEAAADa////AQAAAAEAAADa/wAAAQAAAAEAAADa/wEAAQAAAAEAAADa/wIAAQACAAAAADDb//z/AQABAAAAAADb//3/AQABAAEAAADb//7/AQABAAEAAADb////AQABAAEAAADb/wAAAQABAAEAAADb/wEAAQABAAEAAADb/wIAAQABAAAAADDc//z/AQABAAAAAADc//3/AQABAAEAAADc//7/AQABAAEAAADc////AQABAAEAAADc/wAAAQABAAEAAADc/wEAAQABAAEAAADc/wIAAQABAAAAADDd//z/AQABAAAAAADd//3/AQABAAEAAADd//7/AQABAAEAAADd////AQABAAEAAADd/wAAAQABAAEAAADd/wEAAQABAAEAAADd/wIAAQABAAAAADDe//z/AQABAAAAAADe//3/AQABAAEAAADe//7/AQABAAEAAADe////AQABAAEAAADe/wAAAQABAAEAAADe/wEAAQABAAEAAADe/wIAAQABAAAAADDf//z/AQABAAAAAADf//3/AQABAAEAAADf//7/AQABAAEAAADf////AQABAAEAAADf/wAAAQABAAEAAADf/wEAAQABAAEAAADf/wIAAQABAAAAADDg//z/AQABAAAAAADg//3/AQABAAEAAADg//7/AQABAAEAAADg////AQABAAEAAADg/wAAAQABAAEAAADg/wEAAQABAAEAAADg/wIAAQABAAAAADDh//z/AQABAAAAAADh//3/AQABAAEAAADh//7/AQABAAEAAADh////AQABAAEAAADh/wAAAQABAAEAAADh/wEAAQABAAEAAADh/wIAAQABAAAAADDi//z/AQABAAAAAADi//3/AQABAAEAAADi//7/AQABAAEAAADi////AQABAAEAAADi/wAAAQABAAEAAADi/wEAAQABAAEAAADi/wIAAQABAAAAADDj//z/AQABAAAAAADj//3/AQABAAEAAADj//7/AQABAAEAAADj////AQABAAEAAADj/wAAAQABAAEAAADj/wEAAQABAAEAAADj/wIAAQABAAAAADDk//z/AQABAAAAAADk//3/AQAEAAEAAADk//7/AQAEAAEAAADk////AQAEAAEAAADk/wAAAQAEAAEAAADk/wEAAQAEAAEAAADk/wIAAQABAAIAAADl//z/AQAEAAAAAADl//3/AQAEAAEAAADl//7/AQABAAEAAADl////AQAEAAEAAADl/wAAAQAEAAEAAADl/wEAAQABAAEAAADl/wIAAQAEAAIAAADm//z/AQAEAAAAAADm//3/AQABAAEAAADm//7/AQABAAEAAADm////AQABAAEAAADm/wAAAQAEAAEAAADm/wEAAQABAAEAAADm/wIAAQAEAAIAAADn//z/AQABAAAAAADn//3/AQABAAEAAADn//7/AQAEAAEAAADn////AQAEAAEAAADn/wAAAQAEAAEAAADn/wEAAQAEAAEAAADn/wIAAQABAAIAAADo//z/AQAEAAAAAADo//3/AQABAAEAAADo//7/AQABAAEAAADo////AQABAAEAAADo/wAAAQAEAAEAAADo/wEAAQAEAAEAAADo/wIAAQABAAIAAADp//z/AQAEAAAAAADp//3/AQAEAAEAAADp//7/AQABAAEAAADp////AQABAAEAAADp/wAAAQABAAEAAADp/wEAAQAEAAEAAADp/wIAAQAEAAIAAADq//z/AQABAAAAAADq//3/AQABAAEAAADq//7/AQABAAEAAADq////AQAEAAEAAADq/wAAAQABAAEAAADq/wEAAQABAAEAAADq/wIAAQABAAIAAADr//z/AQABAAAAAADr//3/AQAEAAEAAADr//7/AQABAAEAAADr////AQABAAEAAADr/wAAAQABAAEAAADr/wEAAQABAAEAAADr/wIAAQABAAIAAADs//z/AQABAAAAAADs//3/AQABAAEAAADs//7/AQABAAEAAADs////AQABAAEAAADs/wAAAQAEAAEAAADs/wEAAQAEAAEAAADs/wIAAQABAAIAAADt//z/AQAEAAAAAADt//3/AQAEAAEAAADt//7/AQAEAAEAAADt////AQABAAEAAADt/wAAAQABAAEAAADt/wEAAQAEAAEAAADt/wIAAQAEAAIAAADu//z/AQABAAAAAADu//3/AQABAAEAAADu//7/AQAEAAEAAADu////AQAEAAEAAADu/wAAAQABAAEAAADu/wEAAQAEAAEAAADu/wIAAQABAAIAAADv//z/AQAEAAAAAADv//3/AQABAAEAAADv//7/AQABAAEAAADv////AQABAAEAAADv/wAAAQABAAEAAADv/wEAAQABAAEAAADv/wIAAQABAAAAADDw//z/AQABAAAAAADw//3/AQABAAEAAADw//7/AQABAAEAAADw////AQABAAEAAADw/wAAAQABAAEAAADw/wEAAQABAAEAAADw/wIAAQABAAAAADDx//z/AQABAAAAAADx//3/AQABAAEAAADx//7/AQABAAEAAADx////AQABAAEAAADx/wAAAQABAAEAAADx/wEAAQABAAEAAADx/wIAAQABAAAAADDy//z/AQABAAAAAADy//3/AQABAAEAAADy//7/AQABAAEAAADy////AQABAAEAAADy/wAAAQABAAEAAADy/wEAAQABAAEAAADy/wIAAQABAAAAADDz//z/AQABAAAAAADz//3/AQABAAEAAADz//7/AQABAAEAAADz////AQABAAEAAADz/wAAAQABAAEAAADz/wEAAQABAAEAAADz/wIAAQABAAAAADD0//z/AQABAAAAAAD0//3/AQABAAEAAAD0//7/AQABAAEAAAD0////AQABAAEAAAD0/wAAAQABAAEAAAD0/wEAAQABAAEAAAD0/wIAAQABAAAAADD1//z/AQABAAAAAAD1//3/AQABAAEAAAD1//7/AQABAAEAAAD1////AQABAAEAAAD1/wAAAQABAAEAAAD1/wEAAQABAAEAAAD1/wIAAQABAAAAADD2//z/AQABAAAAAAD2//3/AQABAAEAAAD2//7/AQABAAEAAAD2////AQABAAEAAAD2/wAAAQABAAEAAAD2/wEAAQABAAEAAAD2/wIAAQABAAAAADD3//z/AQABAAAAAAD3//3/AQABAAEAAAD3//7/AQABAAEAAAD3////AQABAAEAAAD3/wAAAQABAAEAAAD3/wEAAQABAAEAAAD3/wIAAQABAAAAADD4//z/AQABAAAAAAD4//3/AQABAAEAAAD4//7/AQABAAEAAAD4////AQABAAEAAAD4/wAAAQABAAEAAAD4/wEAAQABAAEAAAD4/wIAAQABAAAAADD5//z/AQABAAAAAAD5//3/AQABAAEAAAD5//7/AQABAAEAAAD5////AQABAAEAAAD5/wAAAQABAAEAAAD5/wEAAQABAAEAAAD5/wIAAQABAAAAADD6//z/AQABAAAAAAD6//3/AQABAAEAAAD6//7/AQABAAEAAAD6////AQABAAEAAAD6/wAAAQABAAEAAAD6/wEAAQABAAEAAAD6/wIAAQABAAAAADD7//z/AQABAAAAAAD7//3/AQABAAEAAAD7//7/AQABAAEAAAD7////AQABAAEAAAD7/wAAAQABAAEAAAD7/wEAAQABAAEAAAD7/wIAAQABAAAAADD8//z/AQABAAAAAAD8//3/AQABAAEAAAD8//7/AQABAAEAAAD8////AQABAAEAAAD8/wAAAQABAAEAAAD8/wEAAQABAAEAAAD8/wIAAQABAAAAADD9//z/AQABAAAAAAD9//3/AQABAAEAAAD9//7/AQABAAEAAAD9////AQABAAEAAAD9/wAAAQABAAEAAAD9/wEAAQABAAEAAAD9/wIAAQABAAAAADD+//z/AQABAAAAAAD+//3/AQABAAEAAAD+//7/AQABAAEAAAD+////AQABAAEAAAD+/wAAAQABAAEAAAD+/wEAAQABAAEAAAD+/wIAAQABAAAAADD///z/AQAAAAAAAFD///3/AgAAAAQAAGD///7/AgAAAAQAAGD/////AgAAAAQAAGD//wAAAgAAAAQAAGD//wEAAgAAAAQAAGD//wIAAQACAAAAAFA=")
+tile_set = ExtResource("4_xmlp7")
+collision_enabled = false
+metadata/_edit_lock_ = true
+
+[node name="风扇2" type="Node2D" parent="Arm_Left/Pipe horizon3" unique_id=1383254737]
+position = Vector2(-2351.9998, 15.999999)
+
+[node name="风扇" type="AnimatedSprite2D" parent="Arm_Left/Pipe horizon3/风扇2" unique_id=241996423]
+modulate = Color(0.18431373, 0.17254902, 0.18039216, 1)
+position = Vector2(0, -1.999876)
+scale = Vector2(0.49780533, 0.74050224)
+sprite_frames = SubResource("SpriteFrames_8fibg")
+animation = &"fan"
+autoplay = "fan"
+flip_h = true
+
+[node name="windline_particles bg" parent="Arm_Left/Pipe horizon3/风扇2" unique_id=1224778972 instance=ExtResource("6_huw4e")]
+visible = false
+position = Vector2(-927.99976, -272)
+amount = 40
+texture = SubResource("GradientTexture2D_dk3ac")
+trail_lifetime = 1.35
+process_material = SubResource("ParticleProcessMaterial_xmlp7")
+
+[node name="WindAnchor4" type="Marker2D" parent="Arm_Left" unique_id=1744526704]
+
+[node name="PointLight2D3" type="PointLight2D" parent="." unique_id=359269450]
+scale = Vector2(2.205, 2.205)
+color = Color(0.5381158, 1, 0.5753457, 1)
+energy = 10.0
+texture = ExtResource("8_3it3s")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

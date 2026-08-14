@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c5joifw24wcsm"]
+
+[ext_resource type="Script" uid="uid://djw8vpg5m15ek" path="res://script/screen_shaker.gd" id="1_r25l2"]
+
+[node name="ScreenShaker" type="Node" unique_id=1018084538]
+script = ExtResource("1_r25l2")

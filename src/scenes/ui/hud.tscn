@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dabbr3phkpidy"]
+
+[ext_resource type="Script" uid="uid://qof7sulbhere" path="res://src/ui/hud.gd" id="1_mr4ol"]
+[ext_resource type="FontFile" uid="uid://dx2hdfdvn5jcn" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="3_q3cwv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q3cwv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5904921, 0.5833453, 0.23244771, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqg30"]
+bg_color = Color(0.40392157, 0.7921569, 0.7607843, 0.56078434)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="hud" type="CanvasLayer" unique_id=1694471426]
+script = ExtResource("1_mr4ol")
+
+[node name="EnergyBar" type="ProgressBar" parent="." unique_id=278860218]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.95800006
+anchor_right = 0.5
+anchor_bottom = 0.95800006
+offset_left = -209.0
+offset_top = -13.784058
+offset_right = 209.0
+offset_bottom = 13.215942
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_q3cwv")
+theme_override_styles/background = SubResource("StyleBoxFlat_q3cwv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dqg30")
+
+[node name="TargetLabel" type="Label" parent="." unique_id=1948874300]
+anchors_preset = -1
+anchor_left = 0.46400002
+anchor_top = 0.89000005
+anchor_right = 0.537
+anchor_bottom = 0.924
+offset_left = 1.4719849
+offset_top = -0.72003174
+offset_right = 0.37597656
+offset_bottom = 0.24798584
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_q3cwv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ControlsHint" type="Label" parent="." unique_id=229345171]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 520.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.85)
+theme_override_fonts/font = ExtResource("3_q3cwv")
+theme_override_font_sizes/font_size = 20
+text = "R 切换目标    M 打开地图"
