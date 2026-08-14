@@ -11,12 +11,11 @@ config_version=5
 [application]
 
 config/name="风语者 Wind Whisper"
-config/tags=PackedStringArray("主分支")
+config/tags=PackedStringArray("dev")
 run/main_scene="res://src/scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="uid://bj3nnycxyatt0"
 config/windows_native_icon="res://icon.ico"
-config/tags=PackedStringArray("bug修复")
 
 [audio]
 
