@@ -10,10 +10,11 @@ config_version=5
 
 [application]
 
-config/name="GGJ2026"
+config/name="风语者 Wind Whisper"
 run/main_scene="res://src/scenes/ui/main_menu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://bj3nnycxyatt0"
+config/windows_native_icon="res://icon.ico"
 
 [audio]
 
@@ -21,11 +22,11 @@ default_bus_layout="res://assets/audio/default_bus_layout.tres"
 
 [autoload]
 
-Settings="*res://src/autoload/settings.gd"
 Global="*res://src/autoload/global.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 MCPRuntimeProbe="*uid://bsg12huaf1u5i"
 AudioManager="*res://src/autoload/audio_manager.gd"
+Settings="*res://src/autoload/settings.gd"
 
 [display]
 
