@@ -28,6 +28,7 @@ _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 MCPRuntimeProbe="*uid://bsg12huaf1u5i"
 AudioManager="*res://src/autoload/audio_manager.gd"
 Settings="*res://src/autoload/settings.gd"
+WindTrailSystem="*res://src/autoload/wind_trail_system.gd"
 
 [display]
 
