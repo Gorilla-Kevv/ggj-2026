@@ -33,7 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://cv7n6kehynb4u" path="res://src/scenes/vfx/圣光bg_particles.tscn" id="21_x8quu"]
 [ext_resource type="Texture2D" uid="uid://t7db5tjl07mh" path="res://assets/关卡一/实验管破碎.tres" id="25_2i242"]
 [ext_resource type="FontFile" uid="uid://bpi4uuewtft3i" path="res://assets/temp/fonts/AaShunFengShunShuiShunCaiShen-2.ttf" id="28_2b4sv"]
-[ext_resource type="PackedScene" uid="uid://cwminimapk2s9" path="res://src/ui/minimap.tscn" id="29_minimap"]
+[ext_resource type="PackedScene" uid="uid://cwminimapk2ta" path="res://src/ui/minimap.tscn" id="29_minimap"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pinah"]
 atlas = ExtResource("2_88t4y")
@@ -1413,7 +1413,7 @@ tile_map_layer = NodePath("../../mid")
 target_camera = NodePath("../Camera2D")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("7_ndbc8")]
-position = Vector2(160.5747, 1065.5587)
+position = Vector2(-1595.2703, -4389.317)
 
 [node name="windline_particles bg" parent="world" unique_id=381050555 instance=ExtResource("6_do0c6")]
 position = Vector2(-248, 384)
@@ -1650,7 +1650,7 @@ shape = SubResource("RectangleShape2D_jnn5y")
 
 [node name="HUD" parent="." unique_id=1694471426 instance=ExtResource("11_ol0ao")]
 
-[node name="Minimap" parent="." instance=ExtResource("29_minimap")]
+[node name="Minimap" parent="." unique_id=1313498711 instance=ExtResource("29_minimap")]
 
 [node name="interactBody" parent="." unique_id=125772546 groups=["interactable"] instance=ExtResource("17_jvrvq")]
 position = Vector2(3256, -18424)
@@ -1737,6 +1737,7 @@ position = Vector2(-2064, -3944)
 color = Color(0.29803923, 1, 0.35686275, 1)
 texture = ExtResource("7_ma3ex")
 texture_scale = 0.65
+metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="glass" to="glass" method="_on_body_entered"]
 
