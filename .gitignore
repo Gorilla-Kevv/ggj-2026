@@ -13,3 +13,4 @@ export_presets.cfg
 *.import
 *.import.bak
 /release
+*.exe
