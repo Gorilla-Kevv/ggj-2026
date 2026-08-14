@@ -805,6 +805,9 @@ shader_parameter/speed = Vector2(0.02, 0.01)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8dy8"]
 size = Vector2(1117.8313, 227.70847)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8bax"]
+size = Vector2(429.83118, 227.70847)
+
 [node name="stage-1" type="Node2D" unique_id=1265220519]
 script = ExtResource("1_i6g42")
 metadata/_edit_horizontal_guides_ = [-636.0]
@@ -1837,6 +1840,19 @@ Enter/E 取消弹窗"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="提示4" unique_id=805437834]
 position = Vector2(193.08447, 16)
 shape = SubResource("RectangleShape2D_j8dy8")
+metadata/_edit_lock_ = true
+
+[node name="提示5" type="Area2D" parent="." unique_id=566295065]
+position = Vector2(1416, -11744)
+script = ExtResource("39_i6g42")
+title = "提示"
+message = "咋又给我挡住了？
+鬼！
+Enter/E 取消弹窗"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="提示5" unique_id=778431291]
+position = Vector2(-150.91553, 16)
+shape = SubResource("RectangleShape2D_a8bax")
 metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="glass" to="glass" method="_on_body_entered"]
