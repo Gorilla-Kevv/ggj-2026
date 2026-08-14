@@ -1,9 +1,9 @@
 [gd_scene format=4 uid="uid://5rlg4reaioiq"]
 
-[ext_resource type="Shader" uid="uid://o75swr3ddmo1" path="res://shaders/weather_fog.gdshader" id="3_kt4f8"]
+[ext_resource type="Shader" uid="uid://o75swr3ddmo1" path="res://shaders/weather_fog_heavy.gdshader" id="3_kt4f8"]
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="3_wo7qi"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="4_fexyi"]
-[ext_resource type="Shader" uid="uid://vmvypt2pf4ss" path="res://shaders/weather_fog2.gdshader" id="4_llfit"]
+[ext_resource type="Shader" uid="uid://vmvypt2pf4ss" path="res://shaders/weather_fog_light.gdshader" id="4_llfit"]
 [ext_resource type="Texture2D" uid="uid://c5kkwn6h5d6x2" path="res://assets/关卡及大厅/lobby_parallax_near_1024x1536.png" id="5_ojrv2"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
@@ -36,14 +36,14 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_syfrf"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tpsr5"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_40snv"]
 noise = SubResource("FastNoiseLite_syfrf")
 seamless = true
 seamless_blend_skirt = 0.32
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_llfit"]
 shader = ExtResource("3_kt4f8")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_tpsr5")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_40snv")
 shader_parameter/density = 0.026000001235
 shader_parameter/speed = Vector2(0, -0.1)
 

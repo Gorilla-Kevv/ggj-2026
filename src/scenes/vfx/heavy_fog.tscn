@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cets2xmh26q0m"]
 
-[ext_resource type="Shader" uid="uid://o75swr3ddmo1" path="res://shaders/weather_fog.gdshader" id="1_buu0l"]
-[ext_resource type="Shader" uid="uid://vmvypt2pf4ss" path="res://shaders/weather_fog2.gdshader" id="2_syfrf"]
+[ext_resource type="Shader" uid="uid://o75swr3ddmo1" path="res://shaders/weather_fog_heavy.gdshader" id="1_buu0l"]
+[ext_resource type="Shader" uid="uid://vmvypt2pf4ss" path="res://shaders/weather_fog_light.gdshader" id="2_syfrf"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_syfrf"]
 
