@@ -1,8 +1,8 @@
 # ============================================================
 # WindTrailSystem — 可交互物体风迹粒子跟踪系统 (系统 2)
-# Autoload 单例：自动扫描 "interactable" 组里的 RigidBody2D，
-# 为每个挂载一个速度驱动、体积自适应的风迹拖尾粒子。
-# 背景风场 (系统 1) 暂缓，后续在此文件内扩展。
+# Autoload 单例：自动扫描 "interactable" 组，
+# 为每个 RigidBody2D 或旋转的风车臂 (Node2D) 挂载速度驱动、
+# 体积自适应的风迹拖尾粒子。背景风场 (系统 1) 暂缓。
 # ============================================================
 extends Node
 
@@ -25,10 +25,12 @@ const TRAIL_SCENE: PackedScene = preload("res://src/scenes/wind_trail_object.tsc
 @export var scan_interval: float = 0.5
 
 # ---------- 运行时状态 ----------
-# _trails:     body -> 拖尾 GPUParticles2D
-# _materials:  body -> 拖尾 ParticleProcessMaterial (独立实例)
+# _trails:            body -> 拖尾 GPUParticles2D
+# _materials:         body -> 拖尾 ParticleProcessMaterial (独立实例)
+# _rotation_parents:  旋转臂 (Node2D) -> 其旋转平台父节点 (含 angular_velocity)
 var _trails: Dictionary = {}
 var _materials: Dictionary = {}
+var _rotation_parents: Dictionary = {}
 var _scan_timer: float = 0.0
 var _last_scene: Node = null
 
@@ -52,14 +54,28 @@ func _process(delta: float) -> void:
 
 	_update_trails()
 
-# 扫描 interactable 组，为每个 RigidBody2D 挂载拖尾 (幂等)
+# 扫描 interactable 组，为每个 RigidBody2D 或旋转臂 (Node2D) 挂载拖尾 (幂等)
 func _scan_and_mount() -> void:
 	for body in get_tree().get_nodes_in_group("interactable"):
-		if body is RigidBody2D and not _trails.has(body):
-			_mount_trail(body as RigidBody2D)
+		if _trails.has(body):
+			continue
+		if body is RigidBody2D:
+			_mount_trail(body as Node2D)
+		elif body is Node2D:
+			var parent := _find_rotation_parent(body as Node2D)
+			if parent != null:
+				_mount_trail(body as Node2D)
+				_rotation_parents[body] = parent
+
+# 判断 Node2D 是否是旋转的风车臂 (父节点在 "windmill" 组)
+func _find_rotation_parent(body: Node2D) -> Node2D:
+	var p := body.get_parent()
+	if p is Node2D and p.is_in_group("windmill"):
+		return p as Node2D
+	return null
 
 # 为单个物体挂载拖尾，并按体积等比缩放
-func _mount_trail(body: RigidBody2D) -> void:
+func _mount_trail(body: Node2D) -> void:
 	var emitter: GPUParticles2D = TRAIL_SCENE.instantiate()
 	body.add_child(emitter)
 	emitter.position = Vector2.ZERO
@@ -82,11 +98,11 @@ func _mount_trail(body: RigidBody2D) -> void:
 	_materials[body] = mat
 
 # 线性尺寸缩放因子 = sqrt(面积 / 基准体积)
-func _linear_scale(body: RigidBody2D) -> float:
+func _linear_scale(body: Node2D) -> float:
 	return sqrt(_compute_area(body) / reference_volume)
 
 # 估算物体体积 (碰撞形状面积，含形状节点自身 scale)
-func _compute_area(body: RigidBody2D) -> float:
+func _compute_area(body: Node2D) -> float:
 	for child in body.get_children():
 		if child is CollisionShape2D:
 			var cs := child as CollisionShape2D
@@ -105,15 +121,26 @@ func _compute_area(body: RigidBody2D) -> float:
 				return PI * r * r + 2.0 * r * cap.height * s.y
 	return reference_volume
 
+# 计算物体的当前速度：RigidBody2D 用线速度，旋转臂用切向速度
+func _get_velocity(body: Node2D) -> Vector2:
+	if body is RigidBody2D:
+		return (body as RigidBody2D).linear_velocity
+	if _rotation_parents.has(body):
+		var parent = _rotation_parents[body]
+		var omega: float = parent.angular_velocity
+		var r: Vector2 = body.global_position - parent.global_position
+		return omega * Vector2(-r.y, r.x)
+	return Vector2.ZERO
+
 # 每帧按速度驱动拖尾；同时清理已释放的物体
 func _update_trails() -> void:
 	for body in _trails.keys():
 		if not is_instance_valid(body):
 			_trails.erase(body)
 			_materials.erase(body)
+			_rotation_parents.erase(body)
 			continue
-		var rb := body as RigidBody2D
-		var vel: Vector2 = rb.linear_velocity
+		var vel: Vector2 = _get_velocity(body as Node2D)
 		var speed: float = vel.length()
 		if speed < trail_speed_threshold:
 			(_trails[body] as GPUParticles2D).emitting = false
@@ -133,3 +160,4 @@ func _clear_all() -> void:
 			(emitter as GPUParticles2D).queue_free()
 	_trails.clear()
 	_materials.clear()
+	_rotation_parents.clear()
