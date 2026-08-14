@@ -401,3 +401,25 @@ func _respawn() -> void:
 	else:
 		print("[Player] 重载当前场景")
 		get_tree().reload_current_scene()
+
+# ---------- 撤销：回到检查点 (B 键) ----------
+
+# 输入：B 键回到重生点
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("undo"):
+		_return_to_checkpoint()
+
+# 回到重生点：有检查点则传送回检查点位置，否则重载场景回出生点
+func _return_to_checkpoint() -> void:
+	if _is_dead:
+		return
+	var global := get_node("/root/Global")
+	if global.current_checkpoint != Vector2.ZERO:
+		global_position = global.current_checkpoint
+		velocity = Vector2.ZERO
+		global.refill_energy()
+		_enter_idle()
+		print("[Player] 撤销回到检查点 ", global.current_checkpoint)
+	else:
+		print("[Player] 无检查点，重载回出生点")
+		get_tree().reload_current_scene()
