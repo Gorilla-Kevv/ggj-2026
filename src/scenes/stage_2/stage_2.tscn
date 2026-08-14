@@ -3505,7 +3505,6 @@ metadata/_edit_lock_ = true
 
 [node name="TargetSelector" parent="world/player" index="2" unique_id=1033369240]
 position = Vector2(5.227539, 1.1152344)
-switch_range = 3000.0
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="world/player" index="3" unique_id=100373247]
