@@ -541,6 +541,7 @@ manual_limit_bottom = 2500.0
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("3_wo7qi")]
 z_index = 4
+position = Vector2(-128, 232)
 
 [node name="HUD" parent="world" unique_id=111301308 instance=ExtResource("4_fexyi")]
 
@@ -639,10 +640,12 @@ z_index = 1
 position = Vector2(-10.963623, 1.5509033)
 
 [node name="提示1" parent="." unique_id=1455231856 instance=ExtResource("26_nlasg")]
+position = Vector2(-128, 224)
 title = "大厅"
 message = "这是游戏大厅，用于选择关卡
 靠近传送门可以查看	关卡数
 左下角可以清空存档
 Enter/E 取消弹窗"
+show_once = false
 
 [editable path="BGParallax/heavyFog"]

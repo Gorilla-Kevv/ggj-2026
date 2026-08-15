@@ -3508,7 +3508,7 @@ target_camera = NodePath("../Camera2D")
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("8_plmj3")]
 z_index = 2
-position = Vector2(-1422.9176, -1697.4032)
+position = Vector2(4915.702, -12982.868)
 
 [node name="WindSystem" parent="world/player" index="0" unique_id=1869246313]
 position = Vector2(5.227539, 1.1152344)
