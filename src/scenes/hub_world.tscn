@@ -640,8 +640,8 @@ position = Vector2(-10.963623, 1.5509033)
 
 [node name="提示1" parent="." unique_id=1455231856 instance=ExtResource("26_nlasg")]
 title = "大厅"
-message = "这是游戏大厅
-用于控制关卡
+message = "这是游戏大厅，用于选择关卡
+靠近传送门可以查看	关卡数
 左下角可以清空存档
 Enter/E 取消弹窗"
 
