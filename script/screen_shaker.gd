@@ -18,3 +18,9 @@ func screen_shake(strength: float, duration: float) -> void:
 		0.0,
 		duration
 	)
+
+
+# 死亡特效：震动 + 黑屏闪一下 (最简方式：运行时生成全屏黑幕，淡入淡出后自毁)取消黑屏
+
+func death_effect() -> void:
+	screen_shake(15.0, 0.6)
