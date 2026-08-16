@@ -4,20 +4,20 @@
 [ext_resource type="PackedScene" uid="uid://dj0k4m4f7htqg" path="res://src/scenes/player_pack.tscn" id="3_wo7qi"]
 [ext_resource type="PackedScene" uid="uid://dabbr3phkpidy" path="res://src/scenes/ui/hud.tscn" id="4_fexyi"]
 [ext_resource type="Shader" uid="uid://vmvypt2pf4ss" path="res://shaders/weather_fog_light.gdshader" id="4_llfit"]
-[ext_resource type="Texture2D" uid="uid://c5kkwn6h5d6x2" path="res://assets/关卡及大厅/lobby_parallax_near_1024x1536.png" id="5_ojrv2"]
+[ext_resource type="Texture2D" uid="uid://bovsk3dt6nbr0" path="res://assets/关卡及大厅/lobby_parallax_near_1024x1536.png" id="5_ojrv2"]
 [ext_resource type="PackedScene" uid="uid://drx7bgu4vhjg5" path="res://src/scenes/windline_particles bg.tscn" id="6_8uww5"]
 [ext_resource type="PackedScene" uid="uid://bwq3f1n2kxj4" path="res://src/scenes/level_door.tscn" id="6_k5b87"]
-[ext_resource type="Texture2D" uid="uid://dom8n30bhs3hh" path="res://assets/关卡一/瓦片.png" id="8_h1hsm"]
+[ext_resource type="Texture2D" uid="uid://xs1i8as1xuyy" path="res://assets/关卡一/瓦片.png" id="8_h1hsm"]
 [ext_resource type="Texture2D" uid="uid://dklvlmoymcqg1" path="res://assets/关卡及大厅/door1in.tres" id="8_wo7qi"]
-[ext_resource type="Texture2D" uid="uid://oj3yvd8jmiaw" path="res://assets/关卡及大厅/lobby_hall_tileset_64_atlas_16x16.png" id="9_55ke6"]
+[ext_resource type="Texture2D" uid="uid://by2d15s66fqqi" path="res://assets/关卡及大厅/lobby_hall_tileset_64_atlas_16x16.png" id="9_55ke6"]
 [ext_resource type="Script" uid="uid://wwwoknmjsb5s" path="res://src/systems/camera_controller.gd" id="9_hm4b0"]
 [ext_resource type="Texture2D" uid="uid://bc1xamc7680ge" path="res://assets/关卡及大厅/door1out.tres" id="9_ojrv2"]
 [ext_resource type="PackedScene" uid="uid://cv7n6kehynb4u" path="res://src/scenes/vfx/圣光bg_particles.tscn" id="10_3dqv0"]
 [ext_resource type="Script" uid="uid://cr73o0opu2tbj" path="res://script/world_camera.gd" id="10_wo7qi"]
 [ext_resource type="PackedScene" path="res://src/scenes/reset_save_button.tscn" id="12_ojrv2"]
 [ext_resource type="Script" uid="uid://btb3s734vlc36" path="res://script/floating.gd" id="13_04vn8"]
-[ext_resource type="Texture2D" uid="uid://ci52c5mbyt8ei" path="res://assets/关卡及大厅/lobby_parallax_far_1024x1536.png" id="13_vjnyx"]
-[ext_resource type="Texture2D" uid="uid://cvow6t8opx2tq" path="res://assets/关卡及大厅/lobby_parallax_mid_1024x1536.png" id="14_3dqv0"]
+[ext_resource type="Texture2D" uid="uid://dta6xf3jx8dl" path="res://assets/关卡及大厅/lobby_parallax_far_1024x1536.png" id="13_vjnyx"]
+[ext_resource type="Texture2D" uid="uid://bibqwaqen47iu" path="res://assets/关卡及大厅/lobby_parallax_mid_1024x1536.png" id="14_3dqv0"]
 [ext_resource type="Texture2D" uid="uid://bpynwtnptsido" path="res://assets/关卡及大厅/door2in.tres" id="14_dq2pn"]
 [ext_resource type="Texture2D" uid="uid://e4mkck3nt7ey" path="res://assets/关卡及大厅/door2out.tres" id="15_kt4f8"]
 [ext_resource type="PackedScene" uid="uid://cets2xmh26q0m" path="res://src/scenes/vfx/heavy_fog.tscn" id="16_dq2pn"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://dwyhd37v28osj" path="res://assets/关卡及大厅/door3out.tres" id="22_h1hsm"]
 [ext_resource type="Texture2D" uid="uid://bm4mgo00qqpf2" path="res://assets/关卡及大厅/door5in.tres" id="24_40snv"]
 [ext_resource type="Texture2D" uid="uid://bxsibmg630ftf" path="res://assets/关卡及大厅/door5out.tres" id="25_nlasg"]
+[ext_resource type="PackedScene" uid="uid://bpt2v0k0illrc" path="res://src/scenes/提示.tscn" id="26_nlasg"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ost8a"]
 
@@ -540,6 +541,7 @@ manual_limit_bottom = 2500.0
 
 [node name="player" parent="world" unique_id=1191854658 instance=ExtResource("3_wo7qi")]
 z_index = 4
+position = Vector2(-128, 232)
 
 [node name="HUD" parent="world" unique_id=111301308 instance=ExtResource("4_fexyi")]
 
@@ -636,5 +638,14 @@ cleared_texture = ExtResource("25_nlasg")
 [node name="圣光bgParticles2" parent="doors/d5" unique_id=1617176555 instance=ExtResource("10_3dqv0")]
 z_index = 1
 position = Vector2(-10.963623, 1.5509033)
+
+[node name="提示1" parent="." unique_id=1455231856 instance=ExtResource("26_nlasg")]
+position = Vector2(-128, 224)
+title = "大厅"
+message = "这是游戏大厅，用于选择关卡
+靠近传送门可以查看	关卡数
+左下角可以清空存档
+Enter/E 取消弹窗"
+show_once = false
 
 [editable path="BGParallax/heavyFog"]

@@ -60,6 +60,8 @@ const MINIMAP_MARKER_LAYER: int = 4
 @onready var trail_material: ParticleProcessMaterial = null
 var _spark_particles: GPUParticles2D = null
 var _in_stage_3: bool = false
+# 飞行白噪音是否正在播放 (按运动状态驱动，而非按键)
+var _fly_hold_playing: bool = false
 
 # 发出死亡信号，供外部 (关卡管理/音效) 监听
 signal player_died()
@@ -135,11 +137,18 @@ func _connect_wind_system() -> void:
 # 当前风力强度缓存 (吹风时更新，风停后保留最后一次值供衰减参考)
 var _last_wind_strength: float = 0.0
 var _is_being_blown: bool = false
+# 按键开始时间 (用于长短按判断：长按启动飞行音效，短按启动点击音效)
+var _press_start_msec: int = 0
+# 长按判定阈值 (毫秒，与 wind_system 的 MICRO_BURST_THRESHOLD 一致)
+const FLY_HOLD_THRESHOLD_MSEC: int = 500
 
 func _on_wind_started(_target: Node2D, _direction: Vector2) -> void:
 	if _target == self:
 		_is_being_blown = true
+		_press_start_msec = Time.get_ticks_msec()
 		_enter_rolling()
+		# 按键控制优先级最高：立即打断惯性飞行音效，等长短按判定
+		_stop_fly_hold()
 		# 飞行音效
 		var audio := get_node_or_null("/root/AudioManager")
 		if audio and audio.has_method("sfx_fly"):
@@ -153,6 +162,10 @@ func _on_wind_updated(target: Node2D, direction: Vector2, strength: float) -> vo
 	if target != self:
 		return
 	_last_wind_strength = strength
+
+	# 长按越过阈值 → 启动飞行白噪音 (短按不启动)
+	if not _fly_hold_playing and Time.get_ticks_msec() - _press_start_msec >= FLY_HOLD_THRESHOLD_MSEC:
+		_start_fly_hold()
 
 	# 沿风向分量朝 target_along 以 MANUAL_WIND_ACCEL 速率逼近 (等效原 move_toward，
 	# 速率足够大才能在每帧 *0.97 的地面摩擦下推得动)；垂直分量完全不动，
@@ -168,6 +181,8 @@ func _on_wind_updated(target: Node2D, direction: Vector2, strength: float) -> vo
 func _on_wind_stopped() -> void:
 	# 风停后不再标记为吹风状态，动画速度交由 _process 根据 velocity 衰减
 	_is_being_blown = false
+	# 不再立即停飞行音效：松手后若仍在惯性飞行，_update_fly_hold_sound 会保持播放；
+	# 若落地/减速，下一帧运动状态判断会自动停止，避免"停止→重启"的咔哒
 	# 落地则回到 idle
 	if is_on_floor():
 		_enter_idle()
@@ -178,6 +193,10 @@ func _on_micro_burst(target: Node2D, direction: Vector2) -> void:
 		velocity += direction * 200.0
 		velocity = velocity.limit_length(MAX_SPEED)
 		_is_being_blown = false
+		# 短按点击音效 (白噪音短片段)
+		var audio := get_node_or_null("/root/AudioManager")
+		if audio and audio.has_method("sfx_fly_tap"):
+			audio.sfx_fly_tap()
 
 # ---------- 动画状态切换 ----------
 
@@ -230,6 +249,7 @@ func play_underattack() -> void:
 func _process(_delta: float) -> void:
 	_update_trail()
 	_update_sparks()
+	_update_fly_hold_sound()
 
 	if current_anim != AnimState.ROLLING or animated_sprite == null:
 		return
@@ -276,6 +296,33 @@ func _update_sparks() -> void:
 	_spark_particles.rotation = velocity.angle()
 	_spark_particles.position = Vector2(COLLISION_RADIUS + 6.0, 0.0)
 	_spark_particles.amount = clampi(int(speed / 40.0), 4, 12)
+
+# 飞行白噪音：根据运动状态播放/停止 (不在地面且有速度 = 飞行中)
+# 仅在非按键控制时由运动状态驱动；按键控制期间由长短按判定接管
+func _update_fly_hold_sound() -> void:
+	# 按键控制中：长短按判定接管，运动状态不干预
+	if _is_being_blown:
+		return
+
+	var flying := not is_on_floor() and velocity.length() > 30.0
+	if flying and not _fly_hold_playing:
+		_start_fly_hold()
+	elif not flying and _fly_hold_playing:
+		_stop_fly_hold()
+
+# 启动飞行白噪音 (循环)
+func _start_fly_hold() -> void:
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio and audio.has_method("sfx_fly_hold_start"):
+		audio.sfx_fly_hold_start()
+	_fly_hold_playing = true
+
+# 停止飞行白噪音
+func _stop_fly_hold() -> void:
+	var audio := get_node_or_null("/root/AudioManager")
+	if audio and audio.has_method("sfx_fly_hold_stop"):
+		audio.sfx_fly_hold_stop()
+	_fly_hold_playing = false
 
 # 关卡判断: 是否第3关 (逐帧按当前场景判定，换关自动失效)
 func _is_stage_3() -> bool:
@@ -380,6 +427,14 @@ func die() -> void:
 		audio.stop_music()
 	if audio and audio.has_method("sfx_player_dead"):
 		audio.sfx_player_dead()
+	# 停止飞行白噪音
+	if audio and audio.has_method("sfx_fly_hold_stop"):
+		audio.sfx_fly_hold_stop()
+	_fly_hold_playing = false
+	# 死亡震动 + 黑屏特效 (复用 screen_shaker 脚本)
+	for shaker in get_tree().get_nodes_in_group("screen_shaker"):
+		if shaker.has_method("death_effect"):
+			shaker.death_effect()
 	# 强制镜头锁定玩家
 	var global := get_node("/root/Global")
 	global.selected_target = self
@@ -396,4 +451,26 @@ func _respawn() -> void:
 		get_tree().change_scene_to_file(global.last_checkpoint_level)
 	else:
 		print("[Player] 重载当前场景")
+		get_tree().reload_current_scene()
+
+# ---------- 撤销：回到检查点 (B 键) ----------
+
+# 输入：B 键回到重生点
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("undo"):
+		_return_to_checkpoint()
+
+# 回到重生点：有检查点则传送回检查点位置，否则重载场景回出生点
+func _return_to_checkpoint() -> void:
+	if _is_dead:
+		return
+	var global := get_node("/root/Global")
+	if global.current_checkpoint != Vector2.ZERO:
+		global_position = global.current_checkpoint
+		velocity = Vector2.ZERO
+		global.refill_energy()
+		_enter_idle()
+		print("[Player] 撤销回到检查点 ", global.current_checkpoint)
+	else:
+		print("[Player] 无检查点，重载回出生点")
 		get_tree().reload_current_scene()
