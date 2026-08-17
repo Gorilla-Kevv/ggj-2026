@@ -598,7 +598,7 @@ manual_limit_right = 25517.0
 manual_limit_bottom = 38.0
 
 [node name="player" parent="world" unique_id=2100000004 instance=ExtResource("6_ndbc8")]
-position = Vector2(199.35278, -345.69247)
+position = Vector2(7087.759, -1717.0449)
 rotation = -0.028971216
 
 [node name="HUD" parent="." unique_id=2100000005 instance=ExtResource("7_hud")]
